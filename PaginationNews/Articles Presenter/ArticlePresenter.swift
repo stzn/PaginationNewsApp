@@ -28,12 +28,13 @@ public final class ArticlePresenter {
 }
 
 final class PublishedAtDateFormatter {
-    static var formatter: RelativeDateTimeFormatter = {
+    static func format(from date: Date,
+                       relativeTo standard: Date = Date(),
+                       calendar: Calendar = .current,
+                       locale: Locale = .current) -> String {
         let formatter = RelativeDateTimeFormatter()
-        return formatter
-    }()
-
-    static func format(from date: Date, relativeTo standard: Date = Date()) -> String {
-        formatter.localizedString(for: date, relativeTo: standard)
+        formatter.calendar = calendar
+        formatter.locale = locale
+        return formatter.localizedString(for: date, relativeTo: standard)
     }
 }
