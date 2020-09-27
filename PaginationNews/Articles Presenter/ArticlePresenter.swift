@@ -8,11 +8,14 @@
 import UIKit
 
 public final class ArticlePresenter {
-    public static func map(_ article: Article) -> ArticleViewModel {
+    public static func map(_ article: Article,
+                           calendar: Calendar = .current,
+                           locale: Locale = .current) -> ArticleViewModel {
         ArticleViewModel(id: article.id,
               author: article.author ?? "",
               title: article.title,
-              publishedAt: PublishedAtDateFormatter.format(from: article.publishedAt),
+              publishedAt: createFormattedPulishedAtString(article.publishedAt,
+                                                           calendar: calendar, locale: locale),
               link: createLink(article.linkString),
               description: article.description ?? "")
     }
@@ -25,16 +28,12 @@ public final class ArticlePresenter {
             string: link,
             attributes: [.link: link])
     }
-}
 
-final class PublishedAtDateFormatter {
-    static func format(from date: Date,
-                       relativeTo standard: Date = Date(),
-                       calendar: Calendar = .current,
-                       locale: Locale = .current) -> String {
+    private static func createFormattedPulishedAtString(
+        _ publishedAt: Date, calendar: Calendar, locale: Locale) -> String {
         let formatter = RelativeDateTimeFormatter()
         formatter.calendar = calendar
         formatter.locale = locale
-        return formatter.localizedString(for: date, relativeTo: standard)
+        return formatter.localizedString(for: publishedAt, relativeTo: Date())
     }
 }

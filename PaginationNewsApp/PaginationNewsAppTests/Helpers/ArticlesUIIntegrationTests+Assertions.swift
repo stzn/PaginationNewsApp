@@ -38,7 +38,7 @@ extension ArticlesUIIntegrationTests {
 
         XCTAssertEqual(cell.linkText, article.linkString, "Expected author text to be \(String(describing: article.linkString)) for view at index (\(index)", file: file, line: line)
 
-        XCTAssertEqual(cell.publishedAtText, PublishedAtDateFormatter.format(from: article.publishedAt), "Expected author text to be \(String(describing: article.linkString)) for view at index (\(index)", file: file, line: line)
+        XCTAssertEqual(cell.publishedAtText, ArticlePresenter.map(article).publishedAt, "Expected author text to be \(String(describing: article.publishedAt)) for view at index (\(index)", file: file, line: line)
 
         XCTAssertEqual(cell.descriptionText, article.description, "Expected description text to be \(String(describing: article.description)) for view at index (\(index)", file: file, line: line)
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ArticleViewModel {
+public struct ArticleViewModel: Equatable {
     public let id: UUID
     let author: String
     public let title: String

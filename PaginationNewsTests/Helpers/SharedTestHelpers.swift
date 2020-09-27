@@ -25,9 +25,17 @@ var uniqueArticle: Article {
             sourceName: "any source name")
 }
 
-
 struct AnyView: ContentView {
     func display(_ viewModel: Never) {}
     typealias ViewModel = Never
 }
 
+extension Date {
+    func adding(minutes: Int, calendar: Calendar = Calendar(identifier: .gregorian)) -> Date {
+        return calendar.date(byAdding: .minute, value: minutes, to: self)!
+    }
+
+    func adding(days: Int, calendar: Calendar = Calendar(identifier: .gregorian)) -> Date {
+        return calendar.date(byAdding: .day, value: days, to: self)!
+    }
+}
