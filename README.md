@@ -1,4 +1,7 @@
 # PaginationNewsApp
 Practice for a composable and testable app
 
-You need your api key. Please create it from here. (https://newsapi.org/)
+## How to run this sample
+Need your api key.  
+Create it from here. (https://newsapi.org/)  
+Then set it to `APIConstants.apiKey`
