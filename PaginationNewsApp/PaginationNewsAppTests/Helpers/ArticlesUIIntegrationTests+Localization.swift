@@ -1,0 +1,21 @@
+//
+//  ArticlesUIIntegrationTests+Localization.swift
+//  PaginationNewsAppTests
+//
+//
+
+import Foundation
+import XCTest
+import PaginationNews
+
+extension ArticlesUIIntegrationTests {
+    func localized(_ key: String, file: StaticString = #filePath, line: UInt = #line) -> String {
+        let table = "Articles"
+        let bundle = Bundle(for: ArticlesPresenter.self)
+        let value = bundle.localizedString(forKey: key, value: nil, table: table)
+        if value == key {
+            XCTFail("Missing localized string for key: \(key) in table: \(table)", file: file, line: line)
+        }
+        return value
+    }
+}

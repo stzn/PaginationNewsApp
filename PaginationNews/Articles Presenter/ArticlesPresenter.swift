@@ -1,0 +1,26 @@
+//
+//  ArticlesPresenter.swift
+//  PaginationNews
+//
+
+//
+
+import Foundation
+
+public protocol ArticlesView {
+    func display(_ viewModels: ArticlesViewModel)
+}
+
+public final class ArticlesPresenter {
+    public static func map(_ articles: [Article], pageNumber: Int) -> ArticlesViewModel {
+        .init(articles: articles, pageNumber: pageNumber)
+    }
+
+    private static let tableName = "Articles"
+    public static var title: String {
+        return NSLocalizedString("VIEW_TITLE",
+                                 tableName: tableName,
+                                 bundle: Bundle(for: Self.self),
+                                 comment: "title of Articles View")
+    }
+}
