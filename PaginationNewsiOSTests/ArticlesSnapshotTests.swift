@@ -33,7 +33,7 @@ class ArticlesSnapshotTests: XCTestCase {
     func test_articlesWithErrorMessage() {
         let sut = makeSUT()
 
-        sut.display(.error(message: "This is a\nmulti-line\nerror message"))
+        sut.display(.error(message: "This is a\nmulti-line\nerror message", retryButtonTitle: "Retry"))
 
         assert(
             snapshot: sut.snapshot(for: .iPhone8(style: .light)),
@@ -165,11 +165,11 @@ private final class ArticleStub: ArticleCellControllerDelegate {
         controller?.display(.init(isLoading: false))
 
         guard let image = image else {
-            controller?.display(.init(message: "any error"))
+            controller?.display(.init(message: "any error", retryButtonTitle: "Retry"))
             return
         }
         controller?.display(image)
-        controller?.display(.init(message: nil))
+        controller?.display(.init(message: nil, retryButtonTitle: nil))
     }
 
     func didCancelImageRequest() {}

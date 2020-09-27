@@ -2,7 +2,6 @@
 //  ErrorView.swift
 //  PaginationNews
 //
-
 //
 
 import Combine
@@ -34,7 +33,6 @@ final class ErrorUIView: UIView {
 
     private(set) lazy var retryButton: UIButton = {
         let button = UIButton()
-        button.setTitle("リトライ", for: .normal)
         button.tintColor = .white
         button.backgroundColor = .systemRed
         button.titleLabel?.font = .preferredFont(forTextStyle: .body)
@@ -64,8 +62,9 @@ final class ErrorUIView: UIView {
         ])
     }
 
-    func setMessage(_ message: String?) {
+    func setMessage(_ message: String?, retryButtonTitle: String?) {
         errorLabel.text = message
+        retryButton.setTitle(retryButtonTitle, for: .normal)
     }
 
     @objc private func retry() {

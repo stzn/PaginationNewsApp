@@ -137,21 +137,22 @@ extension ArticlesViewController: LoadingView, ErrorView {
     }
 
     public func display(_ viewModel: ErrorViewModel) {
-        if let message = viewModel.message {
-            showError(message)
+        if let message = viewModel.message,
+           let retryButtonTitle = viewModel.retryButtonTitle {
+            showError(message, retryButtonTitle: retryButtonTitle)
         } else {
             hideError()
         }
     }
 
-    private func showError(_ message: String) {
+    private func showError(_ message: String, retryButtonTitle: String) {
         view.addSubview(errorView)
         errorView.frame = view.bounds
-        errorView.setMessage(message)
+        errorView.setMessage(message, retryButtonTitle: retryButtonTitle)
     }
 
     private func hideError() {
-        errorView.setMessage(nil)
+        errorView.setMessage(nil, retryButtonTitle: nil)
         errorView.removeFromSuperview()
     }
 }

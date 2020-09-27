@@ -29,7 +29,14 @@ public final class Presenter<Content, View: ContentView> {
         return NSLocalizedString("VIEW_CONNECTION_ERROR",
                                  tableName: "Shared",
                                  bundle: Bundle(for: Self.self),
-                                 comment: "Error message displayed when we can't load the image feed from the server")
+                                 comment: "Error message displayed when we can't load the article from the server")
+    }
+
+    var retryButtonTitle: String {
+        return NSLocalizedString("RETRY_BUTTON",
+                                 tableName: "Shared",
+                                 bundle: Bundle(for: Self.self),
+                                 comment: "Retry button displayed when we can't load the article from the server")
     }
 
     public init(contentView: View,
@@ -43,7 +50,7 @@ public final class Presenter<Content, View: ContentView> {
     }
 
     public func didStartLoading() {
-        errorView.display(.init(message: nil))
+        errorView.display(.init(message: nil, retryButtonTitle: nil))
         loadingView.display(.init(isLoading: true))
     }
 
@@ -52,12 +59,14 @@ public final class Presenter<Content, View: ContentView> {
         do {
             contentView.display(try mapper(content))
         } catch {
-            errorView.display(.init(message: error.localizedDescription))
+            errorView.display(.init(message: error.localizedDescription,
+                                    retryButtonTitle: retryButtonTitle))
         }
     }
 
     public func didFinishLoading(with error: Error) {
-        errorView.display(.init(message: loadError))
+        errorView.display(.init(message: loadError,
+                                retryButtonTitle: retryButtonTitle))
         loadingView.display(.init(isLoading: false))
     }
 
