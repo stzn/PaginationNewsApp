@@ -32,14 +32,14 @@ final class ErrorUIView: UIView {
         retrySubject.eraseToAnyPublisher()
     }
 
-    private lazy var retryButton: UIButton = {
-        let button = UIButton(primaryAction: .init(title: "リトライ") { _ in
-            self.retrySubject.send()
-        })
+    private(set) lazy var retryButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("リトライ", for: .normal)
         button.tintColor = .white
         button.backgroundColor = .systemRed
         button.titleLabel?.font = .preferredFont(forTextStyle: .body)
         button.layer.cornerRadius = 8
+        button.addTarget(self, action: #selector(retry), for: .touchUpInside)
         return button
     }()
 
@@ -66,6 +66,10 @@ final class ErrorUIView: UIView {
 
     func setMessage(_ message: String?) {
         errorLabel.text = message
+    }
+
+    @objc private func retry() {
+        self.retrySubject.send()
     }
 }
 

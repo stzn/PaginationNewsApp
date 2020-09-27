@@ -94,6 +94,30 @@ class ArticlesUIIntegrationTests: XCTestCase {
         assertThat(sut, isRendering: [article0])
     }
 
+    func test_retryButtonTapOnErrorView_rendersLoadedArticles() {
+        let article0 = uniqueArticle
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeArticlesLoadingWithError(at: 0)
+        assertThat(sut, isRendering: [])
+        XCTAssertNotNil(sut.errorView.errorLabel.text)
+
+        sut.simulateRetryOnError()
+        loader.completeArticlesLoading(with: [article0], at: 1)
+        assertThat(sut, isRendering: [article0])
+        XCTAssertNil(sut.errorView.errorLabel.text)
+    }
+
+    func test_loadArticleCompletion_showsErrorView() {
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        loader.completeArticlesLoadingWithError(at: 0)
+        assertThat(sut, isRendering: [])
+        XCTAssertNotNil(sut.errorView.errorLabel.text)
+    }
+
     func test_loadArticleCompletion_rendersErrorMessageOnErrorUntilNextReload() {
         let (sut, loader) = makeSUT()
 

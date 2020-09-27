@@ -61,6 +61,10 @@ extension ArticlesViewController {
         delegate?.collectionView?(collectionView, didSelectItemAt: index)
     }
 
+    func simulateRetryOnError() {
+        errorView.retryButton.simulateTap()
+    }
+
     func renderedArticleImageData(at index: Int) -> Data? {
         return simulateArticleViewVisible(at: index)?.renderedImage
     }

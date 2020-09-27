@@ -51,6 +51,7 @@ public final class ArticlesViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.title = "Articles"
         setupCollectionView()
+        setupBindings()
         refresh()
     }
 
@@ -65,6 +66,14 @@ public final class ArticlesViewController: UIViewController {
         var snapshot = dataSource.snapshot()
         snapshot.appendItems(cellControllers, toSection: 0)
         dataSource.apply(snapshot, animatingDifferences: true)
+    }
+}
+
+extension ArticlesViewController {
+    func setupBindings() {
+        errorView.retryPublisher.sink { [weak self] in
+            self?.refreshDelegate.didRequestRefresh()
+        }.store(in: &cancellables)
     }
 }
 
