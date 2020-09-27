@@ -55,14 +55,14 @@ public final class ArticlesViewController: UIViewController {
         refresh()
     }
 
-    public func append(_ cellControllers: [ArticleCellController]) {
+    public func set(_ cellControllers: [ArticleCellController]) {
         var snapshot = NSDiffableDataSourceSnapshot<Int, ArticleCellController>()
         snapshot.appendSections([0])
-        snapshot.appendItems(cellControllers, toSection: 0)
+        snapshot.appendItems(cellControllers)
         dataSource.apply(snapshot, animatingDifferences: false)
     }
 
-    public func set(_ cellControllers: [ArticleCellController]) {
+    public func append(_ cellControllers: [ArticleCellController]) {
         var snapshot = dataSource.snapshot()
         snapshot.appendItems(cellControllers, toSection: 0)
         dataSource.apply(snapshot, animatingDifferences: true)

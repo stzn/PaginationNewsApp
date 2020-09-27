@@ -24,9 +24,9 @@ final class ArticlesViewAdapter: ContentView {
 
     func display(_ viewModel: ArticlesViewModel) {
         if viewModel.pageNumber == 1 {
-            controller?.append(viewModel.articles.map(map))
-        } else {
             controller?.set(viewModel.articles.map(map))
+        } else {
+            controller?.append(viewModel.articles.map(map))
         }
     }
 

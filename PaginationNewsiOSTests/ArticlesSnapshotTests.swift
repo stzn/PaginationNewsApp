@@ -12,7 +12,7 @@ class ArticlesSnapshotTests: XCTestCase {
     func test_emptyArticles() {
         let sut = makeSUT()
 
-        sut.append(emptyArticles())
+        sut.set(emptyArticles())
 
         let navigationController = UINavigationController(rootViewController: sut)
         assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .light)), named: "EMPTY_ARTICLES_light")
@@ -140,7 +140,7 @@ private extension ArticlesViewController {
             stub.controller = cellController
             return cellController
         }
-        append(cells)
+        set(cells)
     }
 }
 
