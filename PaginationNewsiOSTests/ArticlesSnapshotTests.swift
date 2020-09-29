@@ -135,7 +135,6 @@ private extension ArticlesViewController {
         let cells: [ArticleCellController] = stubs.map { stub in
             let cellController = ArticleCellController(
                 viewModel: stub.viewModel,
-                errorImage: UIImage.make(withColor: .white),
                 delegate: stub)
             stub.controller = cellController
             return cellController

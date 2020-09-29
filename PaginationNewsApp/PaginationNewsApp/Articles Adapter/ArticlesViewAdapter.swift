@@ -10,8 +10,6 @@ import UIKit
 import PaginationNews
 import PaginationNewsiOS
 
-let imageForError = UIImage(named: "noImage")!
-
 final class ArticlesViewAdapter: ContentView {
     private weak var controller: ArticlesViewController?
     private let imageLoader: (URL) -> AnyPublisher<Data, Error>
@@ -30,13 +28,14 @@ final class ArticlesViewAdapter: ContentView {
         }
     }
 
+    private struct NoImageError: Error {}
+
     private func map(_ model: Article) -> ArticleCellController {
         let adapter = PresentationAdapter { model.urlToImage != nil ?
                     self.imageLoader(model.urlToImage!)
-                    : self.noImagePublisher
+                    : Fail(error: NoImageError()).eraseToAnyPublisher()
         }
         let view = ArticleCellController(viewModel: ArticlePresenter.map(model),
-                                         errorImage: imageForError,
                                          delegate: adapter)
 
         adapter.presenter = Presenter(
@@ -46,10 +45,6 @@ final class ArticlesViewAdapter: ContentView {
             mapper: UIImage.tryMap)
 
         return view
-    }
-
-    private var noImagePublisher: AnyPublisher<Data, Error> {
-        Just(imageForError.pngData()!).setFailureType(to: Error.self).eraseToAnyPublisher()
     }
 }
 

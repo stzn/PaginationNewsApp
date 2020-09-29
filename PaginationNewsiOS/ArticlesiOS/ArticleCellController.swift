@@ -14,11 +14,14 @@ public protocol ArticleCellControllerDelegate {
 }
 
 public final class ArticleCellController: Hashable, ContentView {
+    static let errorImage = UIImage(named: "noImage",
+                                    in: Bundle(for: ArticleCellController.self),
+                                    with: nil)!
+
     public typealias ViewModel = UIImage?
 
     private let viewModel: ArticleViewModel
     private let delegate: ArticleCellControllerDelegate
-    private let errorImage: UIImage
     private var cell: ArticleCell?
 
     static func createLink(_ link: URL) -> NSAttributedString {
@@ -35,9 +38,8 @@ public final class ArticleCellController: Hashable, ContentView {
         hasher.combine(viewModel.id)
     }
 
-    public init(viewModel: ArticleViewModel, errorImage: UIImage, delegate: ArticleCellControllerDelegate) {
+    public init(viewModel: ArticleViewModel, delegate: ArticleCellControllerDelegate) {
         self.viewModel = viewModel
-        self.errorImage = errorImage
         self.delegate = delegate
     }
 
@@ -81,7 +83,7 @@ extension ArticleCellController: LoadingView {
 extension ArticleCellController: ErrorView {
     public func display(_ viewModel: ErrorViewModel) {
         if viewModel.message != nil {
-            cell?.articleImageView.setImageAnimated(errorImage)
+            cell?.articleImageView.setImageAnimated(Self.errorImage)
         }
     }
 }

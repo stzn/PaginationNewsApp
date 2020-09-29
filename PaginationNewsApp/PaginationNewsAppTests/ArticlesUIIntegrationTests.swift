@@ -385,4 +385,6 @@ class ArticlesUIIntegrationTests: XCTestCase {
     private var anyURL: URL {
         URL(string: "http://any-url\(UUID().uuidString).com")!
     }
+
+    private let imageForError = ArticleCellController.errorImage
 }
