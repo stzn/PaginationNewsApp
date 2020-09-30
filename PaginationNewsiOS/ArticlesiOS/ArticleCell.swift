@@ -19,6 +19,7 @@ public final class ArticleCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title3)
         label.numberOfLines = 0
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
         return label
     }()
 
@@ -34,6 +35,7 @@ public final class ArticleCell: UICollectionViewCell {
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.setContentHuggingPriority(.defaultLow, for: .vertical)
         return label
     }()
 
@@ -42,6 +44,8 @@ public final class ArticleCell: UICollectionViewCell {
     lazy var separator: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray
+        view.setContentHuggingPriority(.required, for: .vertical)
+        view.setContentCompressionResistancePriority(.required, for: .vertical)
         return view
     }()
 
@@ -80,7 +84,7 @@ public final class ArticleCell: UICollectionViewCell {
         do {
             let summaryContainerView = UIView()
             containerStackView.addArrangedSubview(summaryContainerView)
-            containerStackView.translatesAutoresizingMaskIntoConstraints = false
+            summaryContainerView.translatesAutoresizingMaskIntoConstraints = false
 
             summaryContainerView.addSubview(articleImageView)
             articleImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -100,8 +104,7 @@ public final class ArticleCell: UICollectionViewCell {
                 summaryContainerView.bottomAnchor.constraint(equalTo: articleImageView.bottomAnchor),
                 detailStackView.leadingAnchor.constraint(equalTo: articleImageView.trailingAnchor, constant: 8),
                 detailStackView.trailingAnchor.constraint(equalTo: summaryContainerView.trailingAnchor),
-                detailStackView.topAnchor.constraint(equalTo: summaryContainerView.topAnchor),
-                detailStackView.bottomAnchor.constraint(equalTo: summaryContainerView.bottomAnchor),
+                detailStackView.centerYAnchor.constraint(equalTo: summaryContainerView.centerYAnchor),
                 articleImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.4),
                 articleImageView.widthAnchor.constraint(equalTo: articleImageView.heightAnchor),
             ])
@@ -127,14 +130,5 @@ public final class ArticleCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             separator.heightAnchor.constraint(equalToConstant: 1),
         ])
-    }
-
-    func resetUI() {
-        articleImageView.image = nil
-        titleLabel.text = nil
-        authorLabel.text = nil
-        publishedAtLabel.text = nil
-        linkLabel.text = nil
-        descriptionLabel.text = nil
     }
 }

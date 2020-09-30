@@ -49,6 +49,7 @@ public final class ArticleCellController: Hashable, ContentView {
         cell.linkLabel.attributedText = viewModel.link
         cell.publishedAtLabel.text = viewModel.publishedAt
         cell.descriptionLabel.text = viewModel.description
+        cell.articleImageView.image = nil
 
         self.cell = cell
     }
@@ -67,7 +68,6 @@ public final class ArticleCellController: Hashable, ContentView {
     }
 
     private func releaseCellForReuse() {
-        cell?.resetUI()
         cell = nil
     }
 }
