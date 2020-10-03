@@ -148,7 +148,13 @@ extension ArticlesViewController: LoadingView, ErrorView {
 
     private func showError(_ message: String, retryButtonTitle: String) {
         view.addSubview(errorView)
-        errorView.frame = view.bounds
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            errorView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            errorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            errorView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            errorView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+        ])
         errorView.setMessage(message, retryButtonTitle: retryButtonTitle)
     }
 

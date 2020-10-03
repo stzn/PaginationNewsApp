@@ -22,6 +22,7 @@ final class ErrorUIView: UIView {
         label.tintColor = .systemRed
         label.textAlignment = .center
         label.font = .preferredFont(forTextStyle: .title3)
+        label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         return label
     }()
@@ -36,6 +37,7 @@ final class ErrorUIView: UIView {
         button.tintColor = .white
         button.backgroundColor = .systemRed
         button.titleLabel?.font = .preferredFont(forTextStyle: .body)
+        button.titleLabel?.adjustsFontForContentSizeCategory = true
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(retry), for: .touchUpInside)
         return button
