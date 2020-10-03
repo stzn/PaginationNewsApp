@@ -204,7 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				D69D2603250DCF74000605F8 /* View */,
-				D69D25FC250DCB9D000605F8 /* ArticlesiOS */,
+				D69D25FC250DCB9D000605F8 /* ArticlesUI */,
 				D63F138B2519CE6A0083267B /* PaginationNewsiOS.h */,
 				D63F138C2519CE6A0083267B /* Info.plist */,
 				D68964E22523E26B00E10145 /* Assets.xcassets */,
@@ -304,7 +304,7 @@
 			path = "Articles Feature";
 			sourceTree = "<group>";
 		};
-		D69D25FC250DCB9D000605F8 /* ArticlesiOS */ = {
+		D69D25FC250DCB9D000605F8 /* ArticlesUI */ = {
 			isa = PBXGroup;
 			children = (
 				D69D25FD250DCBBB000605F8 /* ArticlesViewController.swift */,
@@ -312,7 +312,7 @@
 				D69D260A250DD2E6000605F8 /* ArticleCell.swift */,
 				D6848A8F250DE346003889A9 /* ArticleCellController.swift */,
 			);
-			path = ArticlesiOS;
+			path = ArticlesUI;
 			sourceTree = "<group>";
 		};
 		D69D2602250DCF69000605F8 /* Shared */ = {
