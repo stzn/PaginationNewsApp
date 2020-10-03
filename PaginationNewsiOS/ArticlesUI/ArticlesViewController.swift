@@ -9,14 +9,6 @@ import Combine
 import UIKit
 import PaginationNews
 
-public protocol ArticlesPagingViewControllerDelegate {
-    func didRequestPage()
-}
-
-public protocol ArticlesViewControllerDelegate {
-    func didRequestRefresh()
-}
-
 public final class ArticlesViewController: UIViewController {
     typealias Section = Int
     typealias DataSource = UICollectionViewDiffableDataSource<Section, ArticleCellController>
@@ -32,14 +24,15 @@ public final class ArticlesViewController: UIViewController {
 
     private(set) lazy var errorView = ErrorUIView()
     let refreshControl = UIRefreshControl()
-    let pagingDelegate: ArticlesPagingViewControllerDelegate
-    let refreshDelegate: ArticlesViewControllerDelegate
+
+    private let onRefresh: () -> Void
+    private let onPageRequest: () -> Void
 
     public init?(coder: NSCoder,
-          pagingDelegate: ArticlesPagingViewControllerDelegate,
-          refreshDelegate: ArticlesViewControllerDelegate) {
-        self.pagingDelegate = pagingDelegate
-        self.refreshDelegate = refreshDelegate
+                 onRefresh: @escaping () -> Void,
+                 onPageRequest: @escaping () -> Void) {
+        self.onRefresh = onRefresh
+        self.onPageRequest = onPageRequest
         super.init(coder: coder)
     }
 
@@ -73,7 +66,7 @@ extension ArticlesViewController {
     func setupBindings() {
         errorView.retryPublisher.sink { [weak self] in
             self?.hideError()
-            self?.refreshDelegate.didRequestRefresh()
+            self?.onRefresh()
         }.store(in: &cancellables)
     }
 }
@@ -91,7 +84,7 @@ extension ArticlesViewController {
     }
 
     @objc private func refresh() {
-        refreshDelegate.didRequestRefresh()
+        onRefresh()
     }
 
     private func setupDataSoruce() {
@@ -186,7 +179,7 @@ extension ArticlesViewController: UICollectionViewDelegate {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         if offsetY > contentHeight - scrollView.frame.height {
-            pagingDelegate.didRequestPage()
+            onPageRequest()
         }
     }
 }

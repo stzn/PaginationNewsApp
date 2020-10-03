@@ -20,8 +20,8 @@ final class ArticlesUIComposer {
     ) -> ArticlesViewController {
         let presentationAdapter = ArticlesPagingPresentationAdapter<ArticlesViewAdapter>(loader: articlesLoader,
                                                                                          perPageCount: perPageCount)
-        let viewController = makeArticlesViewController(pagingDelegate: presentationAdapter,
-                                                        refreshDelegate: presentationAdapter,
+        let viewController = makeArticlesViewController(onRefresh: presentationAdapter.didRequestRefresh,
+                                                        onPageRequest: presentationAdapter.didRequestPage,
                                                         title: ArticlesPresenter.title)
         presentationAdapter.presenter = Presenter(
             contentView: ArticlesViewAdapter(controller: viewController, imageLoader: imageLoader),
@@ -31,15 +31,14 @@ final class ArticlesUIComposer {
         return viewController
     }
 
-    private static func makeArticlesViewController(pagingDelegate: ArticlesPagingViewControllerDelegate,
-                                                   refreshDelegate: ArticlesViewControllerDelegate,
-                                                   title: String) -> ArticlesViewController {
+    private static func makeArticlesViewController(
+        onRefresh: @escaping () -> Void,
+        onPageRequest: @escaping () -> Void,
+        title: String) -> ArticlesViewController {
         let bundle = Bundle(for: ArticlesViewController.self)
         let storyboard = UIStoryboard(name: "ArticlesViewController", bundle: bundle)
         guard let articlesController = (storyboard.instantiateInitialViewController { coder in
-            ArticlesViewController(coder: coder,
-                                   pagingDelegate: pagingDelegate,
-                                   refreshDelegate: refreshDelegate)
+            ArticlesViewController(coder: coder, onRefresh: onRefresh, onPageRequest: onPageRequest)
         }) else {
             fatalError()
         }
@@ -47,3 +46,4 @@ final class ArticlesUIComposer {
         return articlesController
     }
 }
+

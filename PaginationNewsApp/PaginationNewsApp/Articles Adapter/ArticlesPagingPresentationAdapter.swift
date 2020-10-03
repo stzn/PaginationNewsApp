@@ -65,13 +65,13 @@ final class ArticlesPagingPresentationAdapter<View: ContentView> {
     }
 }
 
-extension ArticlesPagingPresentationAdapter: ArticlesPagingViewControllerDelegate {
+extension ArticlesPagingPresentationAdapter {
     func didRequestPage() {
         loadContent()
     }
 }
 
-extension ArticlesPagingPresentationAdapter: ArticlesViewControllerDelegate {
+extension ArticlesPagingPresentationAdapter {
     func didRequestRefresh() {
         pageState = .initial
         loadContent()

@@ -51,8 +51,8 @@ class ArticlesSnapshotTests: XCTestCase {
         let storyboard = UIStoryboard(name: "ArticlesViewController", bundle: bundle)
         guard let controller = (storyboard.instantiateInitialViewController { coder in
             ArticlesViewController(coder: coder,
-                                   pagingDelegate: stub,
-                                   refreshDelegate: stub)
+                                   onRefresh: stub.didRequestRefresh,
+                                   onPageRequest: stub.didRequestPage)
         }) else {
             fatalError()
         }
@@ -144,7 +144,7 @@ private extension ArticlesViewController {
 }
 
 // Nothing to do
-private final class ArticlesStub: ArticlesPagingViewControllerDelegate, ArticlesViewControllerDelegate {
+private final class ArticlesStub {
     func didRequestPage() {}
     func didRequestRefresh() {}
 }
