@@ -72,6 +72,7 @@ public final class ArticlesViewController: UIViewController {
 extension ArticlesViewController {
     func setupBindings() {
         errorView.retryPublisher.sink { [weak self] in
+            self?.hideError()
             self?.refreshDelegate.didRequestRefresh()
         }.store(in: &cancellables)
     }
