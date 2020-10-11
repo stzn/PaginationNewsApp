@@ -19,4 +19,12 @@ public final class ArticlesPresenter {
                                  bundle: Bundle(for: Self.self),
                                  comment: "title of Articles View")
     }
+
+    public static var searchTitle: String {
+        return NSLocalizedString("SEARCH_VIEW_TITLE",
+                                 tableName: tableName,
+                                 bundle: Bundle(for: Self.self),
+                                 comment: "title of Search Articles View")
+    }
+
 }

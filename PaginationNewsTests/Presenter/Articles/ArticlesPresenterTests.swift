@@ -13,6 +13,10 @@ class ArticlesPresenterTests: XCTestCase {
         XCTAssertEqual(ArticlesPresenter.title, localized("VIEW_TITLE"))
     }
 
+    func test_search_title_isLocalized() {
+        XCTAssertEqual(ArticlesPresenter.searchTitle, localized("SEARCH_VIEW_TITLE"))
+    }
+
     func test_map_createsViewModel() {
         let articles = [uniqueArticle]
         let viewModel = ArticlesPresenter.map(articles, pageNumber: 1)
