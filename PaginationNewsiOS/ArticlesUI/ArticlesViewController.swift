@@ -42,7 +42,6 @@ public final class ArticlesViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Articles"
         setupCollectionView()
         setupBindings()
         refresh()
