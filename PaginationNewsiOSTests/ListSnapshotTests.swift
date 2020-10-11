@@ -35,12 +35,12 @@ class ListSnapshotTests: XCTestCase {
 
     // MARK: - Helpers
 
-    private func makeSUT() -> ArticlesViewController {
+    private func makeSUT() -> ListViewController {
         let stub = ArticlesStub()
-        let bundle = Bundle(for: ArticlesViewController.self)
+        let bundle = Bundle(for: ListViewController.self)
         let storyboard = UIStoryboard(name: "ArticlesViewController", bundle: bundle)
         guard let controller = (storyboard.instantiateInitialViewController { coder in
-            ArticlesViewController(coder: coder,
+            ListViewController(coder: coder,
                                    onRefresh: stub.didRequestRefresh,
                                    onPageRequest: stub.didRequestPage)
         }) else {
@@ -103,7 +103,7 @@ class ListSnapshotTests: XCTestCase {
     }
 }
 
-private extension ArticlesViewController {
+private extension ListViewController {
     func display(_ stubs: [ArticleStub]) {
         let cells: [ArticleCellController] = stubs.map { stub in
             let cellController = ArticleCellController(
