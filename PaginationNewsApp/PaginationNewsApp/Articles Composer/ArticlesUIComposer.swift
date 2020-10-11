@@ -17,10 +17,10 @@ final class ArticlesUIComposer {
         articlesLoader: @escaping (Int) -> AnyPublisher<([Article], Int), Error>,
         imageLoader: @escaping (URL) -> AnyPublisher<Data, Error>,
         perPageCount: Int = APIConstants.articlesPerPageCount
-    ) -> ArticlesViewController {
+    ) -> ListViewController {
         let presentationAdapter = ArticlesPagingPresentationAdapter<ArticlesViewAdapter>(loader: articlesLoader,
                                                                                          perPageCount: perPageCount)
-        let viewController = makeArticlesViewController(onRefresh: presentationAdapter.didRequestRefresh,
+        let viewController = makeListViewController(onRefresh: presentationAdapter.didRequestRefresh,
                                                         onPageRequest: presentationAdapter.didRequestPage,
                                                         title: ArticlesPresenter.title)
         presentationAdapter.presenter = Presenter(
@@ -31,14 +31,14 @@ final class ArticlesUIComposer {
         return viewController
     }
 
-    private static func makeArticlesViewController(
+    private static func makeListViewController(
         onRefresh: @escaping () -> Void,
         onPageRequest: @escaping () -> Void,
-        title: String) -> ArticlesViewController {
-        let bundle = Bundle(for: ArticlesViewController.self)
+        title: String) -> ListViewController {
+        let bundle = Bundle(for: ListViewController.self)
         let storyboard = UIStoryboard(name: "ArticlesViewController", bundle: bundle)
         guard let articlesController = (storyboard.instantiateInitialViewController { coder in
-            ArticlesViewController(coder: coder, onRefresh: onRefresh, onPageRequest: onPageRequest)
+            ListViewController(coder: coder, onRefresh: onRefresh, onPageRequest: onPageRequest)
         }) else {
             fatalError()
         }

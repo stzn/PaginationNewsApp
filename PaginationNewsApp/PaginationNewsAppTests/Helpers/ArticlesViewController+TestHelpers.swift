@@ -1,5 +1,5 @@
 //
-//  ArticlesViewController+TestHelpers.swift
+//  ListViewController+TestHelpers.swift
 //  PaginationNewsAppTests
 //
 //
@@ -7,7 +7,7 @@
 import UIKit
 @testable import PaginationNewsiOS
 
-extension ArticlesViewController {
+extension ListViewController {
     func simulateUserInitiatedArticlesReload() {
         refreshControl.simulatePullToRefresh()
     }

@@ -11,11 +11,11 @@ import PaginationNews
 import PaginationNewsiOS
 
 final class ArticlesViewAdapter: ContentView {
-    private weak var controller: ArticlesViewController?
+    private weak var controller: ListViewController?
     private let imageLoader: (URL) -> AnyPublisher<Data, Error>
     private typealias PresentationAdapter = ImageDataPresentationAdapter<WeakReference<ArticleCellController>>
 
-    init(controller: ArticlesViewController, imageLoader: @escaping (URL) -> AnyPublisher<Data, Error>) {
+    init(controller: ListViewController, imageLoader: @escaping (URL) -> AnyPublisher<Data, Error>) {
         self.controller = controller
         self.imageLoader = imageLoader
     }
