@@ -210,7 +210,7 @@
 		D63F138A2519CE6A0083267B /* PaginationNewsiOS */ = {
 			isa = PBXGroup;
 			children = (
-				D67076D72532E74B00088765 /* Shared */,
+				D67076D72532E74B00088765 /* SharedUI */,
 				D69D25FC250DCB9D000605F8 /* ArticlesUI */,
 				D63F138B2519CE6A0083267B /* PaginationNewsiOS.h */,
 				D63F138C2519CE6A0083267B /* Info.plist */,
@@ -248,13 +248,13 @@
 			path = Articles;
 			sourceTree = "<group>";
 		};
-		D67076D72532E74B00088765 /* Shared */ = {
+		D67076D72532E74B00088765 /* SharedUI */ = {
 			isa = PBXGroup;
 			children = (
 				D67076DE2532E7CF00088765 /* Controllers */,
 				D69D2603250DCF74000605F8 /* Views */,
 			);
-			path = Shared;
+			path = SharedUI;
 			sourceTree = "<group>";
 		};
 		D67076D82532E75A00088765 /* Controllers */ = {
