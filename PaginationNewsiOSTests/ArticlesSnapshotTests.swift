@@ -64,10 +64,6 @@ class ArticlesSnapshotTests: XCTestCase {
         return controller
     }
 
-    private func emptyArticles() -> [ArticleCellController] {
-        return []
-    }
-
     private func articlesWithContent() -> [ArticleStub] {
         let now = Date()
         let calendar = Calendar(identifier: .gregorian)
@@ -110,23 +106,6 @@ class ArticlesSnapshotTests: XCTestCase {
 
     private var anyURL: URL {
         URL(string: "https://any-url.com")!
-    }
-}
-
-private extension Date {
-    func adding(minutes: Int, calendar: Calendar = Calendar(identifier: .gregorian)) -> Date {
-        return calendar.date(byAdding: .minute, value: minutes, to: self)!
-    }
-
-    func adding(days: Int, calendar: Calendar = Calendar(identifier: .gregorian)) -> Date {
-        return calendar.date(byAdding: .day, value: days, to: self)!
-    }
-}
-
-private extension UIView {
-    func enforceLayoutCycle() {
-        layoutIfNeeded()
-        RunLoop.current.run(until: Date())
     }
 }
 
