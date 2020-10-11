@@ -7,10 +7,6 @@
 
 import Foundation
 
-public protocol ArticlesView {
-    func display(_ viewModels: ArticlesViewModel)
-}
-
 public final class ArticlesPresenter {
     public static func map(_ articles: [Article], pageNumber: Int) -> ArticlesViewModel {
         .init(articles: articles, pageNumber: pageNumber)
