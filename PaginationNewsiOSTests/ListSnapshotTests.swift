@@ -36,15 +36,8 @@ class ListSnapshotTests: XCTestCase {
     // MARK: - Helpers
 
     private func makeSUT() -> ListViewController {
-        let bundle = Bundle(for: ListViewController.self)
-        let storyboard = UIStoryboard(name: "ArticlesViewController", bundle: bundle)
-        guard let controller = (storyboard.instantiateInitialViewController { coder in
-            ListViewController(coder: coder,
-                               onRefresh: { },
-                               onPageRequest: { })
-        }) else {
-            fatalError()
-        }
+        let controller = ListViewController(onRefresh: {},
+                                            onPageRequest: {})
         controller.title = "List"
 
         controller.loadViewIfNeeded()

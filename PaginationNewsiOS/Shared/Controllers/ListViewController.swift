@@ -36,8 +36,15 @@ public final class ListViewController: UIViewController {
         super.init(coder: coder)
     }
 
+    public init(onRefresh: @escaping () -> Void,
+                 onPageRequest: @escaping () -> Void) {
+        self.onRefresh = onRefresh
+        self.onPageRequest = onPageRequest
+        super.init(nibName: nil, bundle: nil)
+    }
+
     required init?(coder: NSCoder) {
-        fatalError()
+        fatalError("init(coder:) has not been implemented")
     }
 
     public override func viewDidLoad() {
