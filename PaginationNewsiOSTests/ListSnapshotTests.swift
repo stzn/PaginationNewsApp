@@ -45,7 +45,7 @@ class ListSnapshotTests: XCTestCase {
         }) else {
             fatalError()
         }
-        controller.title = ArticlesPresenter.title
+        controller.title = "List"
 
         controller.loadViewIfNeeded()
         controller.collectionView.showsVerticalScrollIndicator = false
