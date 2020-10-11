@@ -9,16 +9,6 @@ import XCTest
 @testable import PaginationNewsiOS
 
 class ArticlesSnapshotTests: XCTestCase {
-    func test_emptyArticles() {
-        let sut = makeSUT()
-
-        sut.set(emptyArticles())
-
-        let navigationController = UINavigationController(rootViewController: sut)
-        assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .light)), named: "EMPTY_ARTICLES_light")
-        assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .dark)), named: "EMPTY_ARTICLES_dark")
-    }
-
     func test_articlesWithContent() {
         let sut = makeSUT()
 
@@ -28,19 +18,6 @@ class ArticlesSnapshotTests: XCTestCase {
         let navigationController = UINavigationController(rootViewController: sut)
         assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .light)), named: "ARTICLES_light")
         assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .dark)), named: "ARTICLES_dark")
-    }
-
-    func test_articlesWithErrorMessage() {
-        let sut = makeSUT()
-
-        sut.display(.error(message: "This is a\nmulti-line\nerror message", retryButtonTitle: "Retry"))
-
-        assert(
-            snapshot: sut.snapshot(for: .iPhone8(style: .light)),
-            named: "ARTICLES_WITH_ERROR_MESSAGE_light")
-        assert(
-            snapshot: sut.snapshot(for: .iPhone8(style: .dark)),
-            named: "ARTICLES_WITH_ERROR_MESSAGE_dark")
     }
 
     // MARK: - Helpers
