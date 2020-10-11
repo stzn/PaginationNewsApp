@@ -161,9 +161,8 @@
 		D62A7D21250E12180053AE8B /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				D67265B3250DF68C00555089 /* ArticlesPresenterTests.swift */,
-				D67265C8250E091900555089 /* ArticlePresenterTests.swift */,
-				D6EDE6D0250F7D6500832C80 /* PresenterTests.swift */,
+				D64F47C82532E1AB0085FD19 /* Articles */,
+				D64F47C72532E1A20085FD19 /* Shared */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -221,6 +220,23 @@
 				D63F13982519CE6A0083267B /* Info.plist */,
 			);
 			path = PaginationNewsiOSTests;
+			sourceTree = "<group>";
+		};
+		D64F47C72532E1A20085FD19 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				D6EDE6D0250F7D6500832C80 /* PresenterTests.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		D64F47C82532E1AB0085FD19 /* Articles */ = {
+			isa = PBXGroup;
+			children = (
+				D67265B3250DF68C00555089 /* ArticlesPresenterTests.swift */,
+				D67265C8250E091900555089 /* ArticlePresenterTests.swift */,
+			);
+			path = Articles;
 			sourceTree = "<group>";
 		};
 		D67265B0250DF0E200555089 /* ViewModel */ = {
