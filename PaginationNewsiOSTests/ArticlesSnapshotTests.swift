@@ -88,12 +88,12 @@ class ArticlesSnapshotTests: XCTestCase {
 
 private extension ListViewController {
     func display(_ stubs: [ArticleStub]) {
-        let cells: [ArticleCellController] = stubs.map { stub in
+        let cells: [CellController] = stubs.map { stub in
             let cellController = ArticleCellController(
                 viewModel: stub.viewModel,
                 delegate: stub)
             stub.controller = cellController
-            return cellController
+            return CellController(id: UUID(), dataSource: cellController, delegate: cellController, dataSourcePrefetching: cellController)
         }
         set(cells)
     }

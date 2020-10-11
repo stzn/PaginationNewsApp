@@ -13,7 +13,7 @@ public protocol ArticleCellControllerDelegate {
     func didCancelImageRequest()
 }
 
-public final class ArticleCellController: Hashable, ContentView {
+public final class ArticleCellController: NSObject {
     static let errorImage = UIImage(named: "noImage",
                                     in: Bundle(for: ArticleCellController.self),
                                     with: nil)!
@@ -34,16 +34,37 @@ public final class ArticleCellController: Hashable, ContentView {
         lhs.viewModel.id == rhs.viewModel.id
     }
 
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(viewModel.id)
-    }
-
     public init(viewModel: ArticleViewModel, delegate: ArticleCellControllerDelegate) {
         self.viewModel = viewModel
         self.delegate = delegate
     }
 
-    func view(_ cell: ArticleCell, at indexPath: IndexPath) {
+    private func releaseCellForReuse() {
+        cell = nil
+    }
+
+    private func cancel() {
+        releaseCellForReuse()
+        delegate.didCancelImageRequest()
+    }
+}
+
+extension ArticleCellController: UICollectionViewDataSource {
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        1
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cellRegistration = UICollectionView.CellRegistration<ArticleCell, ArticleCellController> { [weak self] (cell, indexPath, controller) in
+            self?.view(cell, at: indexPath)
+        }
+        cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
+                                                            for: indexPath,
+                                                            item: self)
+        return cell!
+    }
+
+    private func view(_ cell: ArticleCell, at indexPath: IndexPath) {
         cell.titleLabel.text = viewModel.title
         cell.authorLabel.text = viewModel.displayAuthor
         cell.linkLabel.attributedText = viewModel.link
@@ -53,22 +74,31 @@ public final class ArticleCellController: Hashable, ContentView {
 
         self.cell = cell
     }
+}
 
-    func preload() {
+extension ArticleCellController: UICollectionViewDelegate {
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         delegate.didRequestImage()
     }
 
-    func cancelLoad() {
-        releaseCellForReuse()
-        delegate.didCancelImageRequest()
+    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cancel()
+    }
+}
+
+extension ArticleCellController: UICollectionViewDataSourcePrefetching {
+    public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        delegate.didRequestImage()
     }
 
+    public func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        cancel()
+    }
+}
+
+extension ArticleCellController: ContentView {
     public func display(_ viewModel: ViewModel) {
         cell?.articleImageView.setImageAnimated(viewModel)
-    }
-
-    private func releaseCellForReuse() {
-        cell = nil
     }
 }
 

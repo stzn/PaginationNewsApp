@@ -21,16 +21,17 @@ final class ArticlesViewAdapter: ContentView {
     }
 
     func display(_ viewModel: ArticlesViewModel) {
+        let controllers = viewModel.articles.map(map)
         if viewModel.pageNumber == 1 {
-            controller?.set(viewModel.articles.map(map))
+            controller?.set(controllers)
         } else {
-            controller?.append(viewModel.articles.map(map))
+            controller?.append(controllers)
         }
     }
 
     private struct NoImageError: Error {}
 
-    private func map(_ model: Article) -> ArticleCellController {
+    private func map(_ model: Article) -> CellController {
         let adapter = PresentationAdapter { model.urlToImage != nil ?
                     self.imageLoader(model.urlToImage!)
                     : Fail(error: NoImageError()).eraseToAnyPublisher()
@@ -44,7 +45,7 @@ final class ArticlesViewAdapter: ContentView {
             errorView: WeakReference(view),
             mapper: UIImage.tryMap)
 
-        return view
+        return CellController(id: UUID(), dataSource: view, delegate: view, dataSourcePrefetching: view)
     }
 }
 

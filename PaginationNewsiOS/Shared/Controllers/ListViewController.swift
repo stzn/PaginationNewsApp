@@ -11,7 +11,7 @@ import PaginationNews
 
 public final class ListViewController: UIViewController {
     typealias Section = Int
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, ArticleCellController>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, CellController>
 
     let collectionView: UICollectionView = {
         UICollectionView(frame: .zero,
@@ -47,14 +47,14 @@ public final class ListViewController: UIViewController {
         refresh()
     }
 
-    public func set(_ cellControllers: [ArticleCellController]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, ArticleCellController>()
+    public func set(_ cellControllers: [CellController]) {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, CellController>()
         snapshot.appendSections([0])
         snapshot.appendItems(cellControllers)
         dataSource.apply(snapshot, animatingDifferences: false)
     }
 
-    public func append(_ cellControllers: [ArticleCellController]) {
+    public func append(_ cellControllers: [CellController]) {
         var snapshot = dataSource.snapshot()
         snapshot.appendItems(cellControllers, toSection: 0)
         dataSource.apply(snapshot, animatingDifferences: true)
@@ -87,14 +87,8 @@ extension ListViewController {
     }
 
     private func setupDataSoruce() {
-        let cellRegistration = UICollectionView.CellRegistration<ArticleCell, ArticleCellController> { (cell, indexPath, controller) in
-            controller.view(cell, at: indexPath)
-        }
-
         dataSource = .init(collectionView: collectionView) { (collectionView, indexPath, controller) in
-            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
-                                                                for: indexPath,
-                                                                item: controller)
+            controller.dataSource.collectionView(collectionView, cellForItemAt: indexPath)
         }
     }
 
@@ -158,14 +152,14 @@ extension ListViewController: LoadingView, ErrorView {
 
 extension ListViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cellController(forItemAt: indexPath)?.preload()
+        cellController(forItemAt: indexPath)?.delegate.collectionView?(collectionView, willDisplay: cell, forItemAt: indexPath)
     }
 
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        cellController(forItemAt: indexPath)?.cancelLoad()
+        cellController(forItemAt: indexPath)?.delegate.collectionView?(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
     }
 
-    func cellController(forItemAt indexPath: IndexPath) -> ArticleCellController? {
+    func cellController(forItemAt indexPath: IndexPath) -> CellController? {
         let controller = dataSource.itemIdentifier(for: indexPath)
         return controller
     }
@@ -186,13 +180,13 @@ extension ListViewController: UICollectionViewDelegate {
 extension ListViewController: UICollectionViewDataSourcePrefetching {
     public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         indexPaths.forEach {
-            cellController(forItemAt: $0)?.preload()
+            cellController(forItemAt: $0)?.dataSourcePrefetching.collectionView(collectionView, prefetchItemsAt: [$0])
         }
     }
 
     public func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
         indexPaths.forEach {
-            cellController(forItemAt: $0)?.cancelLoad()
+            cellController(forItemAt: $0)?.dataSourcePrefetching.collectionView?(collectionView, cancelPrefetchingForItemsAt: [$0])
         }
     }
 }
