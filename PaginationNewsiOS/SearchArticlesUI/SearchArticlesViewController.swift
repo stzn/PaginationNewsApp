@@ -8,7 +8,7 @@
 import UIKit
 
 public final class SearchArticlesViewController: UIViewController {
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet public private(set) weak var searchBar: UISearchBar!
 
     public let listViewController: ListViewController
     public let didInput: (String) -> Void

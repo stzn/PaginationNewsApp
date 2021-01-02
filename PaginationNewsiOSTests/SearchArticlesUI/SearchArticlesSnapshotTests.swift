@@ -21,6 +21,19 @@ class SearchArticlesSnapshotTests: XCTestCase {
         assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .dark)), named: "SEARCH_ARTICLES_dark")
     }
 
+    func test_articlesWithContentAndSearchText() {
+        let sut = makeSUT()
+
+        sut.display(articlesWithContent())
+        
+        sut.setSearchText("test")
+        sut.view.enforceLayoutCycle()
+
+        let navigationController = UINavigationController(rootViewController: sut)
+        assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .light)), named: "SEARCH_ARTICLES_WITH_INPUT_light")
+        assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .dark)), named: "SEARCH_ARTICLES_WITH_INPUT_dark")
+    }
+
     // MARK: - Helpers
 
     private func makeSUT() -> SearchArticlesViewController {

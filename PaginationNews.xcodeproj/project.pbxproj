@@ -44,6 +44,9 @@
 		D67076F02532EBCD00088765 /* Date+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67076EF2532EBCD00088765 /* Date+TestHelpers.swift */; };
 		D67076F62532EE0800088765 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67076F52532EE0800088765 /* ListViewController.swift */; };
 		D67077002532F1B900088765 /* CellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67076FF2532F1B900088765 /* CellController.swift */; };
+		D670A74A25A04592009957C1 /* SearchArticlesViewController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670A74925A04592009957C1 /* SearchArticlesViewController+TestHelpers.swift */; };
+		D670A75125A05581009957C1 /* SEARCH_ARTICLES_WITH_INPUT_light.png in Resources */ = {isa = PBXBuildFile; fileRef = D670A74F25A05581009957C1 /* SEARCH_ARTICLES_WITH_INPUT_light.png */; };
+		D670A75225A05581009957C1 /* SEARCH_ARTICLES_WITH_INPUT_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = D670A75025A05581009957C1 /* SEARCH_ARTICLES_WITH_INPUT_dark.png */; };
 		D6742A29252075E800F2CDE9 /* UIViewController+Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6742A28252075E800F2CDE9 /* UIViewController+Snapshot.swift */; };
 		D68191C8252840860095CEC2 /* ARTICLES_light.png in Resources */ = {isa = PBXBuildFile; fileRef = D68191C2252840860095CEC2 /* ARTICLES_light.png */; };
 		D68191CB252840860095CEC2 /* ARTICLES_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = D68191C5252840860095CEC2 /* ARTICLES_dark.png */; };
@@ -107,6 +110,9 @@
 		D67076EF2532EBCD00088765 /* Date+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+TestHelpers.swift"; sourceTree = "<group>"; };
 		D67076F52532EE0800088765 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		D67076FF2532F1B900088765 /* CellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellController.swift; sourceTree = "<group>"; };
+		D670A74925A04592009957C1 /* SearchArticlesViewController+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchArticlesViewController+TestHelpers.swift"; sourceTree = "<group>"; };
+		D670A74F25A05581009957C1 /* SEARCH_ARTICLES_WITH_INPUT_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SEARCH_ARTICLES_WITH_INPUT_light.png; sourceTree = "<group>"; };
+		D670A75025A05581009957C1 /* SEARCH_ARTICLES_WITH_INPUT_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SEARCH_ARTICLES_WITH_INPUT_dark.png; sourceTree = "<group>"; };
 		D67265AC250DEF2F00555089 /* LoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewModel.swift; sourceTree = "<group>"; };
 		D67265AE250DF00600555089 /* ErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModel.swift; sourceTree = "<group>"; };
 		D67265B3250DF68C00555089 /* ArticlesPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesPresenterTests.swift; sourceTree = "<group>"; };
@@ -179,6 +185,8 @@
 		D626DEE325330C5700D9242C /* snapshots */ = {
 			isa = PBXGroup;
 			children = (
+				D670A75025A05581009957C1 /* SEARCH_ARTICLES_WITH_INPUT_dark.png */,
+				D670A74F25A05581009957C1 /* SEARCH_ARTICLES_WITH_INPUT_light.png */,
 				D626DEE425330C5700D9242C /* SEARCH_ARTICLES_dark.png */,
 				D626DEE525330C5700D9242C /* SEARCH_ARTICLES_light.png */,
 			);
@@ -463,6 +471,7 @@
 			children = (
 				D626DEE325330C5700D9242C /* snapshots */,
 				D6CD0E852533098E0047F901 /* SearchArticlesSnapshotTests.swift */,
+				D670A74925A04592009957C1 /* SearchArticlesViewController+TestHelpers.swift */,
 			);
 			path = SearchArticlesUI;
 			sourceTree = "<group>";
@@ -650,6 +659,8 @@
 			files = (
 				D626DEE625330C5700D9242C /* SEARCH_ARTICLES_dark.png in Resources */,
 				D6CD0E572533087D0047F901 /* LIST_WITH_ERROR_MESSAGE_dark.png in Resources */,
+				D670A75125A05581009957C1 /* SEARCH_ARTICLES_WITH_INPUT_light.png in Resources */,
+				D670A75225A05581009957C1 /* SEARCH_ARTICLES_WITH_INPUT_dark.png in Resources */,
 				D6CD0E562533087D0047F901 /* EMPTY_LIST_light.png in Resources */,
 				D68191CB252840860095CEC2 /* ARTICLES_dark.png in Resources */,
 				D68191C8252840860095CEC2 /* ARTICLES_light.png in Resources */,
@@ -714,6 +725,7 @@
 			files = (
 				D6742A29252075E800F2CDE9 /* UIViewController+Snapshot.swift in Sources */,
 				D67076F02532EBCD00088765 /* Date+TestHelpers.swift in Sources */,
+				D670A74A25A04592009957C1 /* SearchArticlesViewController+TestHelpers.swift in Sources */,
 				D62B9DC525207982009FD06B /* XCTestCase+Snapshot.swift in Sources */,
 				D67076E02532E89C00088765 /* ListSnapshotTests.swift in Sources */,
 				D6CD0E862533098E0047F901 /* SearchArticlesSnapshotTests.swift in Sources */,
