@@ -50,6 +50,8 @@
 		D670A77325A0643F009957C1 /* TopHeadlineEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670A77225A0643F009957C1 /* TopHeadlineEndpoint.swift */; };
 		D670A77A25A06544009957C1 /* TopHeadlineEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670A77925A06544009957C1 /* TopHeadlineEndpointTests.swift */; };
 		D670A78425A06913009957C1 /* ISO3166-1Alpha-2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670A78325A06913009957C1 /* ISO3166-1Alpha-2.swift */; };
+		D670A78A25A06B85009957C1 /* SearchArticlesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670A78925A06B85009957C1 /* SearchArticlesEndpoint.swift */; };
+		D670A79025A06B96009957C1 /* SearchArticlesEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670A78F25A06B96009957C1 /* SearchArticlesEndpointTests.swift */; };
 		D6742A29252075E800F2CDE9 /* UIViewController+Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6742A28252075E800F2CDE9 /* UIViewController+Snapshot.swift */; };
 		D68191C8252840860095CEC2 /* ARTICLES_light.png in Resources */ = {isa = PBXBuildFile; fileRef = D68191C2252840860095CEC2 /* ARTICLES_light.png */; };
 		D68191CB252840860095CEC2 /* ARTICLES_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = D68191C5252840860095CEC2 /* ARTICLES_dark.png */; };
@@ -119,6 +121,8 @@
 		D670A77225A0643F009957C1 /* TopHeadlineEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeadlineEndpoint.swift; sourceTree = "<group>"; };
 		D670A77925A06544009957C1 /* TopHeadlineEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeadlineEndpointTests.swift; sourceTree = "<group>"; };
 		D670A78325A06913009957C1 /* ISO3166-1Alpha-2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ISO3166-1Alpha-2.swift"; sourceTree = "<group>"; };
+		D670A78925A06B85009957C1 /* SearchArticlesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArticlesEndpoint.swift; sourceTree = "<group>"; };
+		D670A78F25A06B96009957C1 /* SearchArticlesEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArticlesEndpointTests.swift; sourceTree = "<group>"; };
 		D67265AC250DEF2F00555089 /* LoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewModel.swift; sourceTree = "<group>"; };
 		D67265AE250DF00600555089 /* ErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModel.swift; sourceTree = "<group>"; };
 		D67265B3250DF68C00555089 /* ArticlesPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesPresenterTests.swift; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 				D62A7D27250E1E700053AE8B /* ArticlesMapper.swift */,
 				D62A7D2B250E22470053AE8B /* ArticleImageDataMapper.swift */,
 				D670A77225A0643F009957C1 /* TopHeadlineEndpoint.swift */,
+				D670A78925A06B85009957C1 /* SearchArticlesEndpoint.swift */,
 			);
 			path = "Articles API";
 			sourceTree = "<group>";
@@ -323,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				D670A77925A06544009957C1 /* TopHeadlineEndpointTests.swift */,
+				D670A78F25A06B96009957C1 /* SearchArticlesEndpointTests.swift */,
 			);
 			path = "Articles API";
 			sourceTree = "<group>";
@@ -699,6 +705,7 @@
 				D63F143E2519D2DD0083267B /* ArticlesViewModel.swift in Sources */,
 				D670A78425A06913009957C1 /* ISO3166-1Alpha-2.swift in Sources */,
 				D63F142E2519D2C60083267B /* Article.swift in Sources */,
+				D670A78A25A06B85009957C1 /* SearchArticlesEndpoint.swift in Sources */,
 				D670A77325A0643F009957C1 /* TopHeadlineEndpoint.swift in Sources */,
 				D63F146A2519D4B50083267B /* Presenter.swift in Sources */,
 				D63F14602519D4AF0083267B /* LoadingViewModel.swift in Sources */,
@@ -717,6 +724,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D670A77A25A06544009957C1 /* TopHeadlineEndpointTests.swift in Sources */,
+				D670A79025A06B96009957C1 /* SearchArticlesEndpointTests.swift in Sources */,
 				D63F13B52519CF4E0083267B /* ArticlesPresenterTests.swift in Sources */,
 				D63F13BA2519CF530083267B /* ArticlePresenterTests.swift in Sources */,
 				D63F13C52519CF6B0083267B /* SharedTestHelpers.swift in Sources */,
