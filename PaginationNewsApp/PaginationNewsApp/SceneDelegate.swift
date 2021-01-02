@@ -42,17 +42,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func makeRemoteArticlesLoader(page: Int) -> AnyPublisher<([Article], Int), Error> {
-        let remoteURL = URL(string: APIConstants.baseURL)!.appendingPathComponent("top-headlines")
-        var compoents = URLComponents(url: remoteURL, resolvingAgainstBaseURL: false)!
-        compoents.queryItems = [
-            URLQueryItem(name: "country", value: "jp"),
-            URLQueryItem(name: "page", value: String(page)),
-            URLQueryItem(name: "pageSize", value: String(APIConstants.articlesPerPageCount)),
-            URLQueryItem(name: "apiKey", value: APIConstants.apiKey),
-        ]
-
+        let remoteURL = TopHeadlineEndpoint.get(page: page).url()
         return httpClient
-            .send(request: .init(url: compoents.url!))
+            .send(request: .init(url: remoteURL))
             .tryMap(ArticlesMapper.map)
             .eraseToAnyPublisher()
     }
