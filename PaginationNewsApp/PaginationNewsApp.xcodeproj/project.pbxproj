@@ -40,6 +40,7 @@
 		D670A7D225A073D6009957C1 /* SearchArticlesUIIntegrationTests+LoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670A7D125A073D6009957C1 /* SearchArticlesUIIntegrationTests+LoaderSpy.swift */; };
 		D670A7D525A073FA009957C1 /* SearchArticlesUIIntegrationTests+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670A7D425A073FA009957C1 /* SearchArticlesUIIntegrationTests+Localization.swift */; };
 		D670A7D825A07E48009957C1 /* SearchArticlesViewController+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670A7D725A07E48009957C1 /* SearchArticlesViewController+TestHelpers.swift */; };
+		D670A7EA25A15DF7009957C1 /* SearchArticlesViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D670A7E925A15DF7009957C1 /* SearchArticlesViewAdapter.swift */; };
 		D6742A08251FD9E800F2CDE9 /* UIImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6742A07251FD9E800F2CDE9 /* UIImage+TestHelpers.swift */; };
 /* End PBXBuildFile section */
 
@@ -106,6 +107,7 @@
 		D670A7D125A073D6009957C1 /* SearchArticlesUIIntegrationTests+LoaderSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchArticlesUIIntegrationTests+LoaderSpy.swift"; sourceTree = "<group>"; };
 		D670A7D425A073FA009957C1 /* SearchArticlesUIIntegrationTests+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchArticlesUIIntegrationTests+Localization.swift"; sourceTree = "<group>"; };
 		D670A7D725A07E48009957C1 /* SearchArticlesViewController+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchArticlesViewController+TestHelpers.swift"; sourceTree = "<group>"; };
+		D670A7E925A15DF7009957C1 /* SearchArticlesViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArticlesViewAdapter.swift; sourceTree = "<group>"; };
 		D6742A07251FD9E800F2CDE9 /* UIImage+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+TestHelpers.swift"; sourceTree = "<group>"; };
 		D6AB6D612519EB9800727F28 /* PaginationNews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PaginationNews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6AB6D632519EB9800727F28 /* PaginationNewsiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PaginationNewsiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -258,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				D670A7C525A07176009957C1 /* SearchArticlesPagingPresentationAdapter.swift */,
+				D670A7E925A15DF7009957C1 /* SearchArticlesViewAdapter.swift */,
 			);
 			path = "SearchArticles Adapter";
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D63F145D2519D4390083267B /* ArticlesUIComposer.swift in Sources */,
+				D670A7EA25A15DF7009957C1 /* SearchArticlesViewAdapter.swift in Sources */,
 				D670A7BD25A06F4A009957C1 /* SearchArticlesUIComposer.swift in Sources */,
 				D63F13D12519CFB20083267B /* AppDelegate.swift in Sources */,
 				D63F13D02519CFB20083267B /* SceneDelegate.swift in Sources */,

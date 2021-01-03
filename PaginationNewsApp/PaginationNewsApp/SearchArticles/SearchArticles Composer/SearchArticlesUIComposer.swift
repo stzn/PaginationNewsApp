@@ -18,7 +18,7 @@ final class SearchArticlesUIComposer {
         imageLoader: @escaping (URL) -> AnyPublisher<Data, Error>,
         perPageCount: Int = APIConstants.articlesPerPageCount
     ) -> SearchArticlesViewController {
-        let presentationAdapter = SearchArticlesPagingPresentationAdapter<ArticlesViewAdapter>(
+        let presentationAdapter = SearchArticlesPagingPresentationAdapter<SearchArticlesViewAdapter>(
             loader: articlesLoader,
             perPageCount: perPageCount
         )
@@ -26,12 +26,6 @@ final class SearchArticlesUIComposer {
         let storyboard = UIStoryboard(name: String(describing: SearchArticlesViewController.self), bundle: bundle)
         let listViewController = ListViewController(onRefresh: { presentationAdapter.didRequestRefresh("") },
                                                     onPageRequest: presentationAdapter.didRequestPage)
-
-        presentationAdapter.presenter = Presenter(
-            contentView: ArticlesViewAdapter(controller: listViewController, imageLoader: imageLoader),
-            loadingView: WeakReference(listViewController),
-            errorView: WeakReference(listViewController),
-            mapper: ArticlesPresenter.map)
 
         guard let controller = (storyboard.instantiateInitialViewController { coder in
             SearchArticlesViewController(
@@ -42,8 +36,14 @@ final class SearchArticlesUIComposer {
         }) else {
             fatalError()
         }
-        controller.title = ArticlesPresenter.searchTitle
+        controller.title = SearchArticlesPresenter.title
 
+        presentationAdapter.presenter = Presenter(
+            contentView: SearchArticlesViewAdapter(controller: controller, imageLoader: imageLoader),
+            loadingView: WeakReference(listViewController),
+            errorView: WeakReference(listViewController),
+            mapper: SearchArticlesPresenter.map)
+        
         return controller
     }
 }

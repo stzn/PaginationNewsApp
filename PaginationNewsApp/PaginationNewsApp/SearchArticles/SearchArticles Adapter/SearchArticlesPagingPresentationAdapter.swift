@@ -26,7 +26,7 @@ private struct PageState {
 final class SearchArticlesPagingPresentationAdapter<View: ContentView> {
     private let loader: (String, Int) -> AnyPublisher<([Article], Int) , Error>
     private var cancellable: Cancellable?
-    var presenter: Presenter<([Article], Int), View>?
+    var presenter: Presenter<([Article], String, Int), View>?
     private var pageState: PageState = .initial
     private let perPageCount: Int
 
@@ -63,7 +63,7 @@ final class SearchArticlesPagingPresentationAdapter<View: ContentView> {
                         self.pageState.isLast = true
                     }
                     self.pageState.pageNumber = nextPage
-                    self.presenter?.didFinishLoading((articles, nextPage))
+                    self.presenter?.didFinishLoading((articles, self.pageState.keyword, nextPage))
                 })
     }
 }

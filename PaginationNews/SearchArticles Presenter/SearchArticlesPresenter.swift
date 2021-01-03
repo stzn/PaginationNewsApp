@@ -19,5 +19,19 @@ public final class SearchArticlesPresenter {
                                  comment: "title of Search Articles View")
     }
 
+    public static var noKeywordMessage: String {
+        return NSLocalizedString("NO_KEYWORD_MESSAGE",
+                                 tableName: tableName,
+                                 bundle: Bundle(for: Self.self),
+                                 comment: "message for no keyword")
+    }
+
+    public static var noMatchedDataMessage: String {
+        return NSLocalizedString("NO_MATCHED_DATA",
+                                 tableName: tableName,
+                                 bundle: Bundle(for: Self.self),
+                                 comment: "message for no data")
+    }
+
     private static let tableName = "SearchArticles"
 }

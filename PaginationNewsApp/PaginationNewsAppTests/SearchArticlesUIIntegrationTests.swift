@@ -16,7 +16,7 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
 
         sut.loadViewIfNeeded()
 
-        XCTAssertEqual(sut.title, localized("SEARCH_VIEW_TITLE"))
+        XCTAssertEqual(sut.title, localized("VIEW_TITLE"))
     }
 
     func test_loadArticlesActions_doesNotDeliverWithoutKeyword() {
