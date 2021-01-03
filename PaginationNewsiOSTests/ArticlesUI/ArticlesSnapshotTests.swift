@@ -6,7 +6,7 @@
 
 import XCTest
 @testable import PaginationNews
-@testable import PaginationNewsiOS
+import PaginationNewsiOS
 
 class ArticlesSnapshotTests: XCTestCase {
     func test_articlesWithContent() {
@@ -22,22 +22,22 @@ class ArticlesSnapshotTests: XCTestCase {
 
     // MARK: - Helpers
 
-    private func makeSUT() -> ListViewController {
+    private func makeSUT() -> ArticlesViewController {
         let stub = ArticlesStub()
+        let listViewController = ListViewController(onRefresh: stub.didRequestRefresh, onPageRequest: stub.didRequestPage)
         let bundle = Bundle(for: ListViewController.self)
         let storyboard = UIStoryboard(name: "ArticlesViewController", bundle: bundle)
         guard let controller = (storyboard.instantiateInitialViewController { coder in
-            ListViewController(coder: coder,
-                                   onRefresh: stub.didRequestRefresh,
-                                   onPageRequest: stub.didRequestPage)
+            ArticlesViewController(coder: coder,
+                                   listViewController: listViewController)
         }) else {
             fatalError()
         }
         controller.title = ArticlesPresenter.title
 
         controller.loadViewIfNeeded()
-        controller.collectionView.showsVerticalScrollIndicator = false
-        controller.collectionView.showsHorizontalScrollIndicator = false
+        listViewController.loadViewIfNeeded()
+
         return controller
     }
 
@@ -86,7 +86,7 @@ class ArticlesSnapshotTests: XCTestCase {
     }
 }
 
-private extension ListViewController {
+private extension ArticlesViewController {
     func display(_ stubs: [ArticleStub]) {
         let cells: [CellController] = stubs.map { stub in
             let cellController = ArticleCellController(
@@ -95,7 +95,7 @@ private extension ListViewController {
             stub.controller = cellController
             return CellController(id: UUID(), dataSource: cellController, delegate: cellController, dataSourcePrefetching: cellController)
         }
-        set(cells)
+        listViewController.set(cells)
     }
 }
 

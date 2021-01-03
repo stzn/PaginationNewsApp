@@ -37,6 +37,7 @@
 		D63F14982519D7180083267B /* ArticlesViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D69D2608250DD013000605F8 /* ArticlesViewController.storyboard */; };
 		D63F149D2519D7990083267B /* ErrorUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69D2606250DCFA2000605F8 /* ErrorUIView.swift */; };
 		D63F14A22519D79C0083267B /* LoadingUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69D2604250DCF8A000605F8 /* LoadingUIView.swift */; };
+		D65791AC25A1B80900B2C5C6 /* ArticlesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65791AB25A1B80900B2C5C6 /* ArticlesViewController.swift */; };
 		D67076E02532E89C00088765 /* ListSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67076DF2532E89C00088765 /* ListSnapshotTests.swift */; };
 		D67076EA2532EB8400088765 /* UIView+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67076E92532EB8400088765 /* UIView+TestHelpers.swift */; };
 		D67076F02532EBCD00088765 /* Date+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67076EF2532EBCD00088765 /* Date+TestHelpers.swift */; };
@@ -118,6 +119,7 @@
 		D63F13982519CE6A0083267B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D63F13AF2519CF370083267B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D63F14162519D22D0083267B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D65791AB25A1B80900B2C5C6 /* ArticlesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesViewController.swift; sourceTree = "<group>"; };
 		D67076DF2532E89C00088765 /* ListSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSnapshotTests.swift; sourceTree = "<group>"; };
 		D67076E92532EB8400088765 /* UIView+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+TestHelpers.swift"; sourceTree = "<group>"; };
 		D67076EF2532EBCD00088765 /* Date+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+TestHelpers.swift"; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 			children = (
 				D69D2608250DD013000605F8 /* ArticlesViewController.storyboard */,
 				D69D260A250DD2E6000605F8 /* ArticleCell.swift */,
+				D65791AB25A1B80900B2C5C6 /* ArticlesViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -795,6 +798,7 @@
 				D63F148E2519D70E0083267B /* ArticleCell.swift in Sources */,
 				D67076F62532EE0800088765 /* ListViewController.swift in Sources */,
 				D63F14892519D70A0083267B /* ArticleCellController.swift in Sources */,
+				D65791AC25A1B80900B2C5C6 /* ArticlesViewController.swift in Sources */,
 				D67077002532F1B900088765 /* CellController.swift in Sources */,
 				D670A7ED25A16138009957C1 /* EmptyUIView.swift in Sources */,
 				D63F149D2519D7990083267B /* ErrorUIView.swift in Sources */,
