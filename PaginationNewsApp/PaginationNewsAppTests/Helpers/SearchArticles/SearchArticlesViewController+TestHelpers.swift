@@ -18,13 +18,11 @@ extension SearchArticlesViewController {
         simulateInputSearchText(keyword)
     }
 
-    func simulateUserInitiatedArticlesReloadWithSearchKeyword(_ keyword: String = "any") {
-        simulateInputSearchText(keyword)
+    func simulateUserInitiatedArticlesReload() {
         list.simulateUserInitiatedArticlesReload()
     }
 
-    func simulateRetryOnErrorWithSearchKeyword(_ keyword: String = "any") {
-        simulateInputSearchText(keyword)
+    func simulateRetryOnError() {
         list.simulateRetryOnError()
     }
 }

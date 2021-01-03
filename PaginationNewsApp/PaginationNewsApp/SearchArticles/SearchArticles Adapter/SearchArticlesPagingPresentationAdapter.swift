@@ -38,10 +38,15 @@ final class SearchArticlesPagingPresentationAdapter<View: ContentView> {
 
     func loadContent() {
         guard !pageState.isLast, !pageState.isLoading,
-              let nextPage = pageState.nextPage,
-              !pageState.keyword.isEmpty else {
+              let nextPage = pageState.nextPage else {
             return
         }
+
+        guard !pageState.keyword.isEmpty else {
+            self.presenter?.didFinishLoading(([], pageState.keyword, 1))
+            return
+        }
+
         presenter?.didStartLoading()
 
         cancellable = loader(pageState.keyword, nextPage)

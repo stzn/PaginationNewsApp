@@ -55,7 +55,7 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         loader.completeArticlesLoading(at: 0)
         XCTAssertFalse(sut.list.isShowingLoadingIndicator, "Expected no loading indicator once loading completes successfully")
 
-        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
+        sut.simulateUserInitiatedArticlesReload()
         XCTAssertTrue(sut.list.isShowingLoadingIndicator, "Expected loading indicator once user initiates a reload")
 
         loader.completeArticlesLoadingWithError(at: 1)
@@ -75,7 +75,7 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         loader.completeArticlesLoading(with: [article0], at: 0)
         assertThat(sut.list, isRendering: [article0])
 
-        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
+        sut.simulateUserInitiatedArticlesReload()
         loader.completeArticlesLoading(with: [article0, article1, article2, article3], at: 1)
         assertThat(sut.list, isRendering: [article0, article1, article2, article3])
     }
@@ -89,7 +89,7 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         loader.completeArticlesLoading(with: [article0, article1], at: 0)
         assertThat(sut.list, isRendering: [article0, article1])
 
-        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
+        sut.simulateUserInitiatedArticlesReload()
         loader.completeArticlesLoading(with: [], at: 1)
         assertThat(sut.list, isRendering: [])
     }
@@ -102,7 +102,7 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         loader.completeArticlesLoading(with: [article0], at: 0)
         assertThat(sut.list, isRendering: [article0])
 
-        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
+        sut.simulateUserInitiatedArticlesReload()
         loader.completeArticlesLoadingWithError(at: 1)
         assertThat(sut.list, isRendering: [article0])
     }
@@ -116,7 +116,7 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         assertThat(sut.list, isRendering: [])
         XCTAssertNotNil(sut.list.errorView.errorLabel.text)
 
-        sut.simulateRetryOnErrorWithSearchKeyword()
+        sut.simulateRetryOnError()
         loader.completeArticlesLoading(with: [article0], at: 1)
         assertThat(sut.list, isRendering: [article0])
         XCTAssertNil(sut.list.errorView.errorLabel.text)
@@ -140,7 +140,7 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         loader.completeArticlesLoadingWithError(at: 0)
         XCTAssertEqual(sut.list.errorMessage, sharedLocalized("VIEW_CONNECTION_ERROR"))
 
-        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
+        sut.simulateUserInitiatedArticlesReload()
         XCTAssertEqual(sut.list.errorMessage, nil)
     }
 
@@ -366,7 +366,7 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         XCTAssertEqual(loader.loadArticlesCallCount, 2)
         assertThat(sut.list, isRendering: [article0, article1])
 
-        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
+        sut.simulateUserInitiatedArticlesReload()
         loader.completeArticlesLoading(with: [article2], at: 2)
         XCTAssertEqual(loader.loadArticlesCallCount, 3)
         assertThat(sut.list, isRendering: [article2])

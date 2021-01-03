@@ -18,20 +18,24 @@ final class SearchArticlesUIComposer {
         imageLoader: @escaping (URL) -> AnyPublisher<Data, Error>,
         perPageCount: Int = APIConstants.articlesPerPageCount
     ) -> SearchArticlesViewController {
+        var keyword: String = ""
         let presentationAdapter = SearchArticlesPagingPresentationAdapter<SearchArticlesViewAdapter>(
             loader: articlesLoader,
             perPageCount: perPageCount
         )
         let bundle = Bundle(for: SearchArticlesViewController.self)
         let storyboard = UIStoryboard(name: String(describing: SearchArticlesViewController.self), bundle: bundle)
-        let listViewController = ListViewController(onRefresh: { presentationAdapter.didRequestRefresh("") },
+        let listViewController = ListViewController(onRefresh: { presentationAdapter.didRequestRefresh(keyword) },
                                                     onPageRequest: presentationAdapter.didRequestPage)
 
         guard let controller = (storyboard.instantiateInitialViewController { coder in
             SearchArticlesViewController(
                 coder: coder,
                 listViewController: listViewController,
-                didInput: presentationAdapter.didRequestRefresh
+                didInput: { input in
+                    keyword = input
+                    presentationAdapter.didRequestRefresh(input)
+                }
             )
         }) else {
             fatalError()
