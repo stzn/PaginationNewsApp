@@ -18,7 +18,7 @@ extension SearchArticlesUIIntegrationTests {
         typealias ArticlesLoaderResult = Swift.Result<([Article], Int), Error>
         typealias ArticlesLoaderPublisher = AnyPublisher<([Article], Int), Error>
 
-        func loadPublisher(_ page: Int, _ keyword: String) -> ArticlesLoaderPublisher {
+        func loadPublisher(_ keyword: String, _ page: Int) -> ArticlesLoaderPublisher {
             Deferred {
                 Future { self.load(keyword: keyword, completion: $0) }
             }
