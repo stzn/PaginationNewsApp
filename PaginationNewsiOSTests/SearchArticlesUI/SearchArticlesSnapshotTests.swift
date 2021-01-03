@@ -13,7 +13,9 @@ class SearchArticlesSnapshotTests: XCTestCase {
     func test_articlesWithContent() {
         let sut = makeSUT()
 
-        sut.display(articlesWithContent())
+        let controllers = sut.cellControllers(articlesWithContent())
+        sut.setSearchText("test")
+        sut.display(controllers, keyword: "test", pageNumber: 1)
         sut.view.enforceLayoutCycle()
 
         let navigationController = UINavigationController(rootViewController: sut)
@@ -21,17 +23,28 @@ class SearchArticlesSnapshotTests: XCTestCase {
         assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .dark)), named: "SEARCH_ARTICLES_dark")
     }
 
-    func test_articlesWithContentAndSearchText() {
+    func test_articlesNoKeyword() {
         let sut = makeSUT()
 
-        sut.display(articlesWithContent())
-        
-        sut.setSearchText("test")
+        sut.display([], keyword: "", pageNumber: 1)
+
         sut.view.enforceLayoutCycle()
 
         let navigationController = UINavigationController(rootViewController: sut)
-        assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .light)), named: "SEARCH_ARTICLES_WITH_INPUT_light")
-        assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .dark)), named: "SEARCH_ARTICLES_WITH_INPUT_dark")
+        assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .light)), named: "SEARCH_ARTICLES_NO_KEYWORD_light")
+        assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .dark)), named: "SEARCH_ARTICLES_NO_KEYWORD_dark")
+    }
+
+    func test_articlesNoMatchedData() {
+        let sut = makeSUT()
+
+        sut.setSearchText("test")
+        sut.display([], keyword: "test", pageNumber: 1)
+        sut.view.enforceLayoutCycle()
+
+        let navigationController = UINavigationController(rootViewController: sut)
+        assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .light)), named: "SEARCH_ARTICLES_NO_MATCHED_light")
+        assert(snapshot: navigationController.snapshot(for: .iPhone8(style: .dark)), named: "SEARCH_ARTICLES_NO_MATCHED_dark")
     }
 
     // MARK: - Helpers
@@ -103,15 +116,14 @@ class SearchArticlesSnapshotTests: XCTestCase {
 }
 
 private extension SearchArticlesViewController {
-    func display(_ stubs: [ArticleStub]) {
-        let cells: [CellController] = stubs.map { stub in
+    func cellControllers(_ stubs: [ArticleStub]) -> [CellController] {
+        stubs.map { stub in
             let cellController = ArticleCellController(
                 viewModel: stub.viewModel,
                 delegate: stub)
             stub.controller = cellController
             return CellController(id: UUID(), dataSource: cellController, delegate: cellController, dataSourcePrefetching: cellController)
         }
-        listViewController.set(cells)
     }
 }
 
