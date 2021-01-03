@@ -7,7 +7,7 @@
 
 import XCTest
 @testable import PaginationNews
-@testable import PaginationNewsiOS
+import PaginationNewsiOS
 
 class SearchArticlesSnapshotTests: XCTestCase {
     func test_articlesWithContent() {
@@ -65,8 +65,6 @@ class SearchArticlesSnapshotTests: XCTestCase {
 
         controller.loadViewIfNeeded()
         listViewController.loadViewIfNeeded()
-        listViewController.collectionView.showsVerticalScrollIndicator = false
-        listViewController.collectionView.showsHorizontalScrollIndicator = false
         return controller
     }
 

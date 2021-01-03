@@ -5,7 +5,7 @@
 //
 
 import XCTest
-@testable import PaginationNews
+import PaginationNews
 
 class PresenterTests: XCTestCase {
     func test_localizedStrings_haveKeysAndValuesForAllSupportedLocalizations() {
