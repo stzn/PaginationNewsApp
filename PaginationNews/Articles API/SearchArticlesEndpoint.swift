@@ -9,16 +9,14 @@ import Foundation
 
 public enum SearchArticlesEndpoint {
     case get(keyword: String, page: Int,
-             pageSize: Int = APIConstants.articlesPerPageCount,
-             country: ISO3166_1Alpha_2 = .jp)
+             pageSize: Int = APIConstants.articlesPerPageCount)
     public func url(baseURL: URL = URL(string: APIConstants.baseURL)!) -> URL {
         switch self {
-        case let .get(keyword, page, pageSize, country):
+        case let .get(keyword, page, pageSize):
             let remoteURL = baseURL.appendingPathComponent("everything")
             var compoents = URLComponents(url: remoteURL, resolvingAgainstBaseURL: false)!
             compoents.queryItems = [
                 URLQueryItem(name: "q", value: keyword),
-                URLQueryItem(name: "country", value: country.rawValue),
                 URLQueryItem(name: "page", value: String(page)),
                 URLQueryItem(name: "pageSize", value: String(pageSize)),
                 URLQueryItem(name: "apiKey", value: APIConstants.apiKey),

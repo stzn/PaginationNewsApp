@@ -14,7 +14,7 @@ final class SearchArticlesUIComposer {
     private init() {}
 
     static func articlesComposedWith(
-        articlesLoader: @escaping (Int, String) -> AnyPublisher<([Article], Int), Error>,
+        articlesLoader: @escaping (String, Int) -> AnyPublisher<([Article], Int), Error>,
         imageLoader: @escaping (URL) -> AnyPublisher<Data, Error>,
         perPageCount: Int = APIConstants.articlesPerPageCount
     ) -> SearchArticlesViewController {

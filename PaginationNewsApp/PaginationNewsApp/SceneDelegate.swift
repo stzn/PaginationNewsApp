@@ -30,15 +30,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func configureWindow() {
-        let articlesViewController = ArticlesUIComposer.articlesComposedWith(
-            articlesLoader: self.makeRemoteArticlesLoader(page:),
-            imageLoader: self.makeRemoteImageLoader(url:))
-
         let navigationController = UINavigationController(
-            rootViewController: articlesViewController)
+            rootViewController: searchArticlesViewController)
 
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+    }
+
+    private var articlesViewController: UIViewController {
+        ArticlesUIComposer.articlesComposedWith(
+            articlesLoader: self.makeRemoteArticlesLoader(page:),
+            imageLoader: self.makeRemoteImageLoader(url:))
     }
 
     private func makeRemoteArticlesLoader(page: Int) -> AnyPublisher<([Article], Int), Error> {
@@ -54,6 +56,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             httpClient
             .send(request: .init(url: url))
             .tryMap(ArticleImageDataMapper.map)
+            .eraseToAnyPublisher()
+    }
+
+    private var searchArticlesViewController: UIViewController {
+        SearchArticlesUIComposer.articlesComposedWith(
+            articlesLoader: self.makeRemoteSearchArticlesLoader(keyword:page:),
+            imageLoader: self.makeRemoteImageLoader(url:))
+    }
+
+    private func makeRemoteSearchArticlesLoader(keyword: String, page: Int) -> AnyPublisher<([Article], Int), Error> {
+        let remoteURL = SearchArticlesEndpoint.get(keyword: keyword, page: page).url()
+        return httpClient
+            .send(request: .init(url: remoteURL))
+            .tryMap(ArticlesMapper.map)
             .eraseToAnyPublisher()
     }
 }

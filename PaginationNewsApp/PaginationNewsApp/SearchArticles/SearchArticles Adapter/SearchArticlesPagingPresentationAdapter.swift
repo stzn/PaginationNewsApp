@@ -24,13 +24,13 @@ private struct PageState {
 }
 
 final class SearchArticlesPagingPresentationAdapter<View: ContentView> {
-    private let loader: (Int, String) -> AnyPublisher<([Article], Int) , Error>
+    private let loader: (String, Int) -> AnyPublisher<([Article], Int) , Error>
     private var cancellable: Cancellable?
     var presenter: Presenter<([Article], Int), View>?
     private var pageState: PageState = .initial
     private let perPageCount: Int
 
-    init(loader: @escaping (Int, String) -> AnyPublisher<([Article], Int), Error>,
+    init(loader: @escaping (String, Int) -> AnyPublisher<([Article], Int), Error>,
          perPageCount: Int) {
         self.loader = loader
         self.perPageCount = perPageCount
@@ -44,7 +44,7 @@ final class SearchArticlesPagingPresentationAdapter<View: ContentView> {
         }
         presenter?.didStartLoading()
 
-        cancellable = loader(nextPage, pageState.keyword)
+        cancellable = loader(pageState.keyword, nextPage)
             .dispatchOnMainQueue()
             .sink(
                 receiveCompletion: { [weak self] completion in
