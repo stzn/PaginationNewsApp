@@ -48,7 +48,7 @@ class SearchArticlesSnapshotTests: XCTestCase {
         }) else {
             fatalError()
         }
-        controller.title = ArticlesPresenter.searchTitle
+        controller.title = SearchArticlesPresenter.title
 
         controller.loadViewIfNeeded()
         listViewController.loadViewIfNeeded()

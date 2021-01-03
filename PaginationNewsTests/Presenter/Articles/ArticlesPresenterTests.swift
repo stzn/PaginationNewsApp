@@ -6,15 +6,11 @@
 //
 
 import XCTest
-@testable import PaginationNews
+import PaginationNews
 
 class ArticlesPresenterTests: XCTestCase {
     func test_title_isLocalized() {
         XCTAssertEqual(ArticlesPresenter.title, localized("VIEW_TITLE"))
-    }
-
-    func test_search_title_isLocalized() {
-        XCTAssertEqual(ArticlesPresenter.searchTitle, localized("SEARCH_VIEW_TITLE"))
     }
 
     func test_map_createsViewModel() {
