@@ -8,6 +8,13 @@ import XCTest
 @testable import PaginationNews
 
 class PresenterTests: XCTestCase {
+    func test_localizedStrings_haveKeysAndValuesForAllSupportedLocalizations() {
+        let table = "Shared"
+        let bundle = Bundle(for: Presenter<Any, AnyView>.self)
+
+        assertLocalizedKeyAndValuesExist(in: bundle, table)
+    }
+
     func test_init_doesNotSendMessagesToView() {
         let (_, view) = makeSUT()
 
