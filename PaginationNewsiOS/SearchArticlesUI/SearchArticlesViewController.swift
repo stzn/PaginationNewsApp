@@ -16,6 +16,8 @@ public final class SearchArticlesViewController: UIViewController {
                  listViewController: ListViewController,
                  didInput: @escaping (String) -> Void) {
         self.listViewController = listViewController
+        self.listViewController.collectionView.showsVerticalScrollIndicator = false
+        self.listViewController.collectionView.showsHorizontalScrollIndicator = false
         self.didInput = didInput
         super.init(coder: coder)
     }
@@ -46,7 +48,7 @@ public final class SearchArticlesViewController: UIViewController {
 }
 
 extension SearchArticlesViewController: UISearchBarDelegate {
-    public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        didInput(searchBar.text ?? "")
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        didInput(searchText)
     }
 }

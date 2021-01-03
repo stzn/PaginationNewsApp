@@ -16,37 +16,50 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
 
         sut.loadViewIfNeeded()
 
-        XCTAssertEqual(sut.title, localized("VIEW_TITLE"))
+        XCTAssertEqual(sut.title, localized("SEARCH_VIEW_TITLE"))
     }
 
-    func test_loadArticlesActions_requestArticlesFromLoader() {
+    func test_loadArticlesActions_doesNotDeliverWithoutKeyword() {
         let (sut, loader) = makeSUT()
         XCTAssertEqual(loader.loadArticlesCallCount, 0, "Expected no loading requests before view is loaded")
 
         sut.loadViewIfNeeded()
-        XCTAssertEqual(loader.loadArticlesCallCount, 1, "Expected a loading request once view is loaded")
+        XCTAssertEqual(loader.loadArticlesCallCount, 0, "Expected no loading requests once view is loaded")
 
-        sut.simulateUserInitiatedArticlesReload()
-        XCTAssertEqual(loader.loadArticlesCallCount, 2, "Expected another loading request once user initiates a reload")
+        sut.list.simulateUserInitiatedArticlesReload()
+        XCTAssertEqual(loader.loadArticlesCallCount, 0, "Expected no loading requests once user initiates a reload")
+    }
 
-        sut.simulateUserInitiatedArticlesReload()
-        XCTAssertEqual(loader.loadArticlesCallCount, 3, "Expected yet another loading request once user initiates another reload")
+    func test_loadArticlesActions_requestArticlesFromLoaderWithKeyword() {
+        let expected = "test"
+        let (sut, loader) = makeSUT()
+        XCTAssertEqual(loader.loadArticlesCallCount, 0, "Expected no loading requests before view is loaded")
+
+        sut.loadViewIfNeeded()
+        XCTAssertEqual(loader.loadArticlesCallCount, 0, "Expected no loading requests once view is loaded")
+
+        sut.simulateInputSearchText(expected)
+        XCTAssertEqual(loader.loadArticlesCallCount, 1, "Expected a loading request when search text is not empty")
+        XCTAssertEqual(loader.keyword(index: 0), expected, "Expected: \(expected) but got: \(loader.keyword(index: 0))")
+
+        sut.simulateInputSearchText("")
+        XCTAssertEqual(loader.loadArticlesCallCount, 1, "Expected no more loading requests when search text is empty")
     }
 
     func test_loadingArticlesIndicator_isVisibleWhileLoadingArticles() {
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
-        XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected loading indicator once view is loaded")
+        sut.loadViewIfNeededWithSearchText()
+        XCTAssertTrue(sut.list.isShowingLoadingIndicator, "Expected loading indicator once view is loaded")
 
         loader.completeArticlesLoading(at: 0)
-        XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once loading completes successfully")
+        XCTAssertFalse(sut.list.isShowingLoadingIndicator, "Expected no loading indicator once loading completes successfully")
 
-        sut.simulateUserInitiatedArticlesReload()
-        XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected loading indicator once user initiates a reload")
+        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
+        XCTAssertTrue(sut.list.isShowingLoadingIndicator, "Expected loading indicator once user initiates a reload")
 
         loader.completeArticlesLoadingWithError(at: 1)
-        XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once user initiated loading completes with error")
+        XCTAssertFalse(sut.list.isShowingLoadingIndicator, "Expected no loading indicator once user initiated loading completes with error")
     }
 
     func test_loadArticlesCompletion_rendersSuccessfullyLoadedArticles() {
@@ -56,15 +69,15 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         let article3 = uniqueArticle
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
-        assertThat(sut, isRendering: [])
+        sut.loadViewIfNeededWithSearchText()
+        assertThat(sut.list, isRendering: [])
 
         loader.completeArticlesLoading(with: [article0], at: 0)
-        assertThat(sut, isRendering: [article0])
+        assertThat(sut.list, isRendering: [article0])
 
-        sut.simulateUserInitiatedArticlesReload()
+        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
         loader.completeArticlesLoading(with: [article0, article1, article2, article3], at: 1)
-        assertThat(sut, isRendering: [article0, article1, article2, article3])
+        assertThat(sut.list, isRendering: [article0, article1, article2, article3])
     }
 
     func test_loadArticleCompletion_rendersSuccessfullyLoadedEmptyArticleAfterNonEmptyArticle() {
@@ -72,63 +85,63 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         let article1 = uniqueArticle
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [article0, article1], at: 0)
-        assertThat(sut, isRendering: [article0, article1])
+        assertThat(sut.list, isRendering: [article0, article1])
 
-        sut.simulateUserInitiatedArticlesReload()
+        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
         loader.completeArticlesLoading(with: [], at: 1)
-        assertThat(sut, isRendering: [])
+        assertThat(sut.list, isRendering: [])
     }
 
     func test_loadArticleCompletion_doesNotAlterCurrentRenderingStateOnError() {
         let article0 = uniqueArticle
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [article0], at: 0)
-        assertThat(sut, isRendering: [article0])
+        assertThat(sut.list, isRendering: [article0])
 
-        sut.simulateUserInitiatedArticlesReload()
+        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
         loader.completeArticlesLoadingWithError(at: 1)
-        assertThat(sut, isRendering: [article0])
+        assertThat(sut.list, isRendering: [article0])
     }
 
     func test_retryButtonTapOnErrorView_rendersLoadedArticles() {
         let article0 = uniqueArticle
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoadingWithError(at: 0)
-        assertThat(sut, isRendering: [])
-        XCTAssertNotNil(sut.errorView.errorLabel.text)
+        assertThat(sut.list, isRendering: [])
+        XCTAssertNotNil(sut.list.errorView.errorLabel.text)
 
-        sut.simulateRetryOnError()
+        sut.simulateRetryOnErrorWithSearchKeyword()
         loader.completeArticlesLoading(with: [article0], at: 1)
-        assertThat(sut, isRendering: [article0])
-        XCTAssertNil(sut.errorView.errorLabel.text)
+        assertThat(sut.list, isRendering: [article0])
+        XCTAssertNil(sut.list.errorView.errorLabel.text)
     }
 
     func test_loadArticleCompletion_showsErrorView() {
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoadingWithError(at: 0)
-        assertThat(sut, isRendering: [])
-        XCTAssertNotNil(sut.errorView.errorLabel.text)
+        assertThat(sut.list, isRendering: [])
+        XCTAssertNotNil(sut.list.errorView.errorLabel.text)
     }
 
     func test_loadArticleCompletion_rendersErrorMessageOnErrorUntilNextReload() {
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
-        XCTAssertEqual(sut.errorMessage, nil)
+        sut.loadViewIfNeededWithSearchText()
+        XCTAssertEqual(sut.list.errorMessage, nil)
 
         loader.completeArticlesLoadingWithError(at: 0)
-        XCTAssertEqual(sut.errorMessage, sharedLocalized("VIEW_CONNECTION_ERROR"))
+        XCTAssertEqual(sut.list.errorMessage, sharedLocalized("VIEW_CONNECTION_ERROR"))
 
-        sut.simulateUserInitiatedArticlesReload()
-        XCTAssertEqual(sut.errorMessage, nil)
+        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
+        XCTAssertEqual(sut.list.errorMessage, nil)
     }
 
     func test_articleImageView_loadsImageURLWhenVisible() {
@@ -136,15 +149,15 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         let article1 = uniqueArticle
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [article0, article1])
 
         XCTAssertEqual(loader.loadedImageURLs, [], "Expected no article URL requests until views become visible")
 
-        sut.simulateArticleViewVisible(at: 0)
+        sut.list.simulateArticleViewVisible(at: 0)
         XCTAssertEqual(loader.loadedImageURLs, [article0.urlToImage], "Expected first article URL request once first view becomes visible")
 
-        sut.simulateArticleViewVisible(at: 1)
+        sut.list.simulateArticleViewVisible(at: 1)
         XCTAssertEqual(loader.loadedImageURLs, [article0.urlToImage, article1.urlToImage], "Expected second article URL request once second view also becomes visible")
     }
 
@@ -153,25 +166,25 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         let article1 = uniqueArticle
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [article0, article1])
         XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no cancelled image URL requests until image is not visible")
 
-        sut.simulateArticleViewNotVisible(at: 0)
+        sut.list.simulateArticleViewNotVisible(at: 0)
         XCTAssertEqual(loader.cancelledImageURLs, [article0.urlToImage], "Expected one cancelled image URL request once first image is not visible anymore")
 
-        sut.simulateArticleViewNotVisible(at: 1)
+        sut.list.simulateArticleViewNotVisible(at: 1)
         XCTAssertEqual(loader.cancelledImageURLs, [article0.urlToImage, article1.urlToImage], "Expected two cancelled image URL requests once second image is also not visible anymore")
     }
 
     func test_articleViewLoadingIndicator_isVisibleWhileLoadingImage() {
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [uniqueArticle, uniqueArticle])
 
-        let view0 = sut.simulateArticleViewVisible(at: 0)
-        let view1 = sut.simulateArticleViewVisible(at: 1)
+        let view0 = sut.list.simulateArticleViewVisible(at: 0)
+        let view1 = sut.list.simulateArticleViewVisible(at: 1)
         XCTAssertEqual(view0?.isShowingImageLoadingIndicator, true, "Expected loading indicator for first view while loading first image")
         XCTAssertEqual(view1?.isShowingImageLoadingIndicator, true, "Expected loading indicator for second view while loading second image")
 
@@ -187,11 +200,11 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
     func test_articleView_rendersImageLoadedFromURL() {
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [uniqueArticle, uniqueArticle])
 
-        let view0 = sut.simulateArticleViewVisible(at: 0)
-        let view1 = sut.simulateArticleViewVisible(at: 1)
+        let view0 = sut.list.simulateArticleViewVisible(at: 0)
+        let view1 = sut.list.simulateArticleViewVisible(at: 1)
         XCTAssertEqual(view0?.renderedImage, .none, "Expected no image for first view while loading first image")
         XCTAssertEqual(view1?.renderedImage, .none, "Expected no image for second view while loading second image")
 
@@ -209,11 +222,11 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
     func test_articleViewImageForError_isVisibleOnImageURLLoadError() {
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [uniqueArticle, uniqueArticle])
 
-        let view0 = sut.simulateArticleViewVisible(at: 0)
-        let view1 = sut.simulateArticleViewVisible(at: 1)
+        let view0 = sut.list.simulateArticleViewVisible(at: 0)
+        let view1 = sut.list.simulateArticleViewVisible(at: 1)
         XCTAssertNil(view0?.renderedImage, "Expected no image for first view while loading first image")
         XCTAssertNil(view1?.renderedImage, "Expected no image for second view while loading second image")
 
@@ -230,10 +243,10 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
     func test_articleViewImageForError_isVisibleOnInvalidImageData() {
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [uniqueArticle, uniqueArticle])
 
-        let view = sut.simulateArticleViewVisible(at: 0)
+        let view = sut.list.simulateArticleViewVisible(at: 0)
         XCTAssertNil(view?.renderedImage, "Expected no image for first view while loading first image")
 
         let invalidImageData = Data("invalid image data".utf8)
@@ -246,14 +259,14 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         let article1 = uniqueArticle
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [article0, article1])
         XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until image is near visible")
 
-        sut.simulateArticleViewNearVisible(at: 0)
+        sut.list.simulateArticleViewNearVisible(at: 0)
         XCTAssertEqual(loader.loadedImageURLs, [article0.urlToImage], "Expected first image URL request once first image is near visible")
 
-        sut.simulateArticleViewNearVisible(at: 1)
+        sut.list.simulateArticleViewNearVisible(at: 1)
         XCTAssertEqual(loader.loadedImageURLs, [article0.urlToImage, article1.urlToImage], "Expected second image URL request once second image is near visible")
     }
 
@@ -262,20 +275,20 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         let article1 = uniqueArticle
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [article0, article1])
         XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no cancelled image URL requests until image is not near visible")
 
-        sut.simulateArticleViewNotNearVisible(at: 0)
+        sut.list.simulateArticleViewNotNearVisible(at: 0)
         XCTAssertEqual(loader.cancelledImageURLs, [article0.urlToImage], "Expected first cancelled image URL request once first image is not near visible anymore")
 
-        sut.simulateArticleViewNotNearVisible(at: 1)
+        sut.list.simulateArticleViewNotNearVisible(at: 1)
         XCTAssertEqual(loader.cancelledImageURLs, [article0.urlToImage, article1.urlToImage], "Expected second cancelled image URL request once second image is not near visible anymore")
     }
 
     func test_loadArticlesCompletion_dispatchesFromBackgroundToMainThread() {
         let (sut, loader) = makeSUT()
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
 
         let exp = expectation(description: "Wait for background queue")
         DispatchQueue.global().async {
@@ -288,9 +301,9 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
     func test_loadImageDataCompletion_dispatchesFromBackgroundToMainThread() {
         let (sut, loader) = makeSUT()
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [uniqueArticle])
-        _ = sut.simulateArticleViewVisible(at: 0)
+        _ = sut.list.simulateArticleViewVisible(at: 0)
 
         let exp = expectation(description: "Wait for background queue")
         DispatchQueue.global().async {
@@ -303,22 +316,22 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
     func test_userScrollToBottom_requestsNextPage() {
         let (sut, loader) = makeSUT(perPageCount: 1)
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         XCTAssertEqual(loader.loadArticlesCallCount, 1)
         loader.completeArticlesLoading(with: [uniqueArticle], totalResults: 20)
 
-        sut.simulateUserScrollToBottom()
+        sut.list.simulateUserScrollToBottom()
         XCTAssertEqual(loader.loadArticlesCallCount, 2)
     }
 
     func test_userScrollToBottom_doesNotRequestNextPageOnLastPage() {
         let (sut, loader) = makeSUT(perPageCount: 20)
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         XCTAssertEqual(loader.loadArticlesCallCount, 1)
         loader.completeArticlesLoading(with: [uniqueArticle], totalResults: 20)
 
-        sut.simulateUserScrollToBottom()
+        sut.list.simulateUserScrollToBottom()
         XCTAssertEqual(loader.loadArticlesCallCount, 1)
     }
 
@@ -327,14 +340,14 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         let article1 = uniqueArticle
         let (sut, loader) = makeSUT(perPageCount: 1)
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
         loader.completeArticlesLoading(with: [article0], at: 0)
-        assertThat(sut, isRendering: [article0])
+        assertThat(sut.list, isRendering: [article0])
 
-        sut.simulateUserScrollToBottom()
+        sut.list.simulateUserScrollToBottom()
         loader.completeArticlesLoading(with: [article1], at: 1)
         XCTAssertEqual(loader.loadArticlesCallCount, 2)
-        assertThat(sut, isRendering: [article0, article1])
+        assertThat(sut.list, isRendering: [article0, article1])
     }
 
     func test_userRefreshAction_afterPagingRequest_rendersOnlyTheFirstPage() {
@@ -343,28 +356,28 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
         let article2 = uniqueArticle
         let (sut, loader) = makeSUT(perPageCount: 1)
 
-        sut.loadViewIfNeeded()
+        sut.loadViewIfNeededWithSearchText()
 
         loader.completeArticlesLoading(with: [article0], at: 0)
-        assertThat(sut, isRendering: [article0])
+        assertThat(sut.list, isRendering: [article0])
 
-        sut.simulateUserScrollToBottom()
+        sut.list.simulateUserScrollToBottom()
         loader.completeArticlesLoading(with: [article1], at: 1)
         XCTAssertEqual(loader.loadArticlesCallCount, 2)
-        assertThat(sut, isRendering: [article0, article1])
+        assertThat(sut.list, isRendering: [article0, article1])
 
-        sut.simulateUserInitiatedArticlesReload()
+        sut.simulateUserInitiatedArticlesReloadWithSearchKeyword()
         loader.completeArticlesLoading(with: [article2], at: 2)
         XCTAssertEqual(loader.loadArticlesCallCount, 3)
-        assertThat(sut, isRendering: [article2])
+        assertThat(sut.list, isRendering: [article2])
     }
 
     // MARK: - Helpers
 
     private func makeSUT(perPageCount: Int = APIConstants.articlesPerPageCount,
-                         file: StaticString = #filePath, line: UInt = #line) -> (sut: ListViewController, loader: LoaderSpy) {
+                         file: StaticString = #filePath, line: UInt = #line) -> (sut: SearchArticlesViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = ArticlesUIComposer.articlesComposedWith(
+        let sut = SearchArticlesUIComposer.articlesComposedWith(
             articlesLoader: loader.loadPublisher,
             imageLoader: loader.loadImageDataPublisher,
             perPageCount: perPageCount)
@@ -387,4 +400,8 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
     }
 
     private let imageForError = ArticleCellController.errorImage
+}
+
+extension SearchArticlesViewController {
+    var list: ListViewController { listViewController }
 }
