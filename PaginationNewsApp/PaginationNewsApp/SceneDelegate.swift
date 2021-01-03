@@ -30,17 +30,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func configureWindow() {
-        let navigationController = UINavigationController(
-            rootViewController: searchArticlesViewController)
-
-        window?.rootViewController = navigationController
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
 
+    private var tabBarController: UITabBarController {
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [
+            UINavigationController(rootViewController: articlesViewController),
+            UINavigationController(rootViewController: searchArticlesViewController),
+        ]
+        return tabBarController
+    }
+
     private var articlesViewController: UIViewController {
-        ArticlesUIComposer.articlesComposedWith(
+        let viewController = ArticlesUIComposer.articlesComposedWith(
             articlesLoader: self.makeRemoteArticlesLoader(page:),
             imageLoader: self.makeRemoteImageLoader(url:))
+        viewController.tabBarItem = UITabBarItem(title: "top headlines", image: UIImage(systemName: "clock.fill"), tag: 0)
+        return viewController
     }
 
     private func makeRemoteArticlesLoader(page: Int) -> AnyPublisher<([Article], Int), Error> {
@@ -60,9 +68,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private var searchArticlesViewController: UIViewController {
-        SearchArticlesUIComposer.articlesComposedWith(
+        let viewController = SearchArticlesUIComposer.articlesComposedWith(
             articlesLoader: self.makeRemoteSearchArticlesLoader(keyword:page:),
             imageLoader: self.makeRemoteImageLoader(url:))
+        viewController.tabBarItem = UITabBarItem(title: "search", image: UIImage(systemName: "magnifyingglass"), tag: 1)
+        return viewController
     }
 
     private func makeRemoteSearchArticlesLoader(keyword: String, page: Int) -> AnyPublisher<([Article], Int), Error> {
