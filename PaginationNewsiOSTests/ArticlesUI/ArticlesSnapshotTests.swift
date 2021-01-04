@@ -29,6 +29,7 @@ class ArticlesSnapshotTests: XCTestCase {
         let storyboard = UIStoryboard(name: "ArticlesViewController", bundle: bundle)
         guard let controller = (storyboard.instantiateInitialViewController { coder in
             ArticlesViewController(coder: coder,
+                                   categoryController: TopHeadlineCategoryViewController(onSelect: { _ in }),
                                    listViewController: listViewController)
         }) else {
             fatalError()

@@ -9,8 +9,11 @@ import UIKit
 
 public final class ArticlesViewController: UIViewController {
     public let listViewController: ListViewController
+    private let categoryViewController: TopHeadlineCategoryViewController
     public init?(coder: NSCoder,
+                 categoryController: TopHeadlineCategoryViewController,
                  listViewController: ListViewController) {
+        self.categoryViewController = categoryController
         self.listViewController = listViewController
         self.listViewController.collectionView.showsVerticalScrollIndicator = false
         self.listViewController.collectionView.showsHorizontalScrollIndicator = false
@@ -23,7 +26,16 @@ public final class ArticlesViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        addCategoryViewControllerAsChild()
         addListViewControllerAsChild()
+    }
+
+    private func addCategoryViewControllerAsChild() {
+        addChild(categoryViewController)
+        view.addSubview(categoryViewController.view)
+        categoryViewController.didMove(toParent: self)
+
+        self.navigationItem.rightBarButtonItem = categoryViewController.button
     }
 
     private func addListViewControllerAsChild() {
