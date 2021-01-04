@@ -7,66 +7,43 @@
 import UIKit
 @testable import PaginationNewsiOS
 
-extension ListViewController {
+extension ArticlesViewController {
     func simulateUserInitiatedArticlesReload() {
         refreshControl.simulatePullToRefresh()
     }
 
     @discardableResult
     func simulateArticleViewVisible(at index: Int) -> ArticleCell? {
-        let view = articleView(at: index) as? ArticleCell
-
-        let delegate = collectionView.delegate
-        let index = IndexPath(item: index, section: articlesSection)
-        delegate?.collectionView?(collectionView, willDisplay: view!, forItemAt: index)
-
-        return view
+        listViewController.simulateArticleViewVisible(at: index)
     }
 
     @discardableResult
     func simulateArticleViewNotVisible(at row: Int) -> ArticleCell? {
-        let view = simulateArticleViewVisible(at: row)
-
-        let delegate = collectionView.delegate
-        let index = IndexPath(row: row, section: articlesSection)
-        delegate?.collectionView?(collectionView, didEndDisplaying: view!, forItemAt: index)
-
-        return view
+        listViewController.simulateArticleViewNotVisible(at: row)
     }
 
     func simulateArticleViewNearVisible(at row: Int) {
-        let ds = collectionView.prefetchDataSource
-        let index = IndexPath(row: row, section: articlesSection)
-        ds?.collectionView(collectionView, prefetchItemsAt: [index])
+        listViewController.simulateArticleViewNearVisible(at: row)
     }
 
     func simulateArticleViewNotNearVisible(at row: Int) {
-        simulateArticleViewNearVisible(at: row)
-
-        let ds = collectionView.prefetchDataSource
-        let index = IndexPath(row: row, section: articlesSection)
-        ds?.collectionView?(collectionView, cancelPrefetchingForItemsAt: [index])
+        listViewController.simulateArticleViewNotNearVisible(at: row)
     }
 
     func simulateUserScrollToBottom() {
-        let scrollView = DraggingScrollView()
-        scrollView.contentOffset.y = 1000
-        let delegate = collectionView.delegate
-        delegate?.scrollViewDidScroll?(scrollView)
+        listViewController.simulateUserScrollToBottom()
     }
 
     func simulateArticleViewDidSelectRow(at row: Int) {
-        let delegate = collectionView.delegate
-        let index = IndexPath(row: row, section: articlesSection)
-        delegate?.collectionView?(collectionView, didSelectItemAt: index)
+        listViewController.simulateArticleViewDidSelectRow(at: row)
     }
 
     func simulateRetryOnError() {
-        errorView.retryButton.simulateTap()
+        listViewController.simulateRetryOnError()
     }
 
     func renderedArticleImageData(at index: Int) -> Data? {
-        return simulateArticleViewVisible(at: index)?.renderedImage
+        listViewController.renderedArticleImageData(at: index)
     }
 
     var errorMessage: String? {
@@ -78,26 +55,18 @@ extension ListViewController {
     }
 
     func numberOfRenderedArticleViews() -> Int {
-        return collectionView.numberOfSections == 0 ?
-            0 : collectionView.numberOfItems(inSection: articlesSection)
+        listViewController.numberOfRenderedArticleViews()
     }
 
     func articleView(at row: Int) -> UICollectionViewCell? {
-        guard numberOfRenderedArticleViews() > row else {
-            return nil
-        }
-        let ds = collectionView.dataSource
-        let index = IndexPath(row: row, section: articlesSection)
-        return ds?.collectionView(collectionView, cellForItemAt: index)
+        listViewController.articleView(at: row)
     }
 
-    private var articlesSection: Int {
-        return 0
+    private var refreshControl: UIRefreshControl {
+        listViewController.refreshControl
     }
-}
 
-private class DraggingScrollView: UIScrollView {
-    override var isDragging: Bool {
-        true
+    var errorView: ErrorUIView {
+        listViewController.errorView
     }
 }

@@ -10,7 +10,7 @@ import PaginationNewsiOS
 
 extension ArticlesUIIntegrationTests {
 
-    func assertThat(_ sut: ListViewController, isRendering feed: [Article], file: StaticString = #filePath, line: UInt = #line) {
+    func assertThat(_ sut: ArticlesViewController, isRendering feed: [Article], file: StaticString = #filePath, line: UInt = #line) {
         sut.view.enforceLayoutCycle()
 
         guard sut.numberOfRenderedArticleViews() == feed.count else {
@@ -24,7 +24,7 @@ extension ArticlesUIIntegrationTests {
         executeRunLoopToCleanUpReferences()
     }
 
-    func assertThat(_ sut: ListViewController, hasViewConfiguredFor article: Article,
+    func assertThat(_ sut: ArticlesViewController, hasViewConfiguredFor article: Article,
                     at index: Int, file: StaticString = #filePath, line: UInt = #line) {
         let view = sut.articleView(at: index)
 

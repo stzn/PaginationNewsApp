@@ -362,7 +362,7 @@ class ArticlesUIIntegrationTests: XCTestCase {
     // MARK: - Helpers
 
     private func makeSUT(perPageCount: Int = APIConstants.articlesPerPageCount,
-                         file: StaticString = #filePath, line: UInt = #line) -> (sut: ListViewController, loader: LoaderSpy) {
+                         file: StaticString = #filePath, line: UInt = #line) -> (sut: ArticlesViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
         let sut = ArticlesUIComposer.articlesComposedWith(
             articlesLoader: loader.loadPublisher,
