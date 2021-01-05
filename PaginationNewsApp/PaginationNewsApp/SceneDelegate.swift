@@ -52,7 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func makeRemoteArticlesLoader(category: TopHeadlineCategory, page: Int) -> AnyPublisher<([Article], Int), Error> {
-        let remoteURL = TopHeadlineEndpoint.get(page: page).url()
+        let remoteURL = TopHeadlineEndpoint.get(page: page, category: category).url()
         return httpClient
             .send(request: .init(url: remoteURL))
             .tryMap(ArticlesMapper.map)
