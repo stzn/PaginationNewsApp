@@ -359,14 +359,48 @@ class ArticlesUIIntegrationTests: XCTestCase {
         assertThat(sut, isRendering: [article2])
     }
 
+    func test_loadArticlesActions_requestArticlesFromLoaderWithDefaultCategory() {
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        XCTAssertEqual(loader.category(at: 0), .all, "Expected \(TopHeadlineCategory.all.rawValue), but got \(loader.category(at: 0).rawValue)")
+
+        sut.simulateUserInitiatedArticlesReload()
+        XCTAssertEqual(loader.category(at: 1), .all, "Expected \(TopHeadlineCategory.all.rawValue), but got \(loader.category(at: 1).rawValue)")
+
+        sut.simulateUserScrollToBottom()
+        XCTAssertEqual(loader.category(at: 2), .all, "Expected \(TopHeadlineCategory.all.rawValue), but got \(loader.category(at: 2).rawValue)")
+    }
+
+    func test_loadArticlesActions_requestArticlesFromLoaderWithCategory() {
+        let initialCategory: TopHeadlineCategory = .business
+        let (sut, loader) = makeSUT(category: initialCategory)
+
+        sut.loadViewIfNeeded()
+        XCTAssertEqual(loader.category(at: 0), initialCategory, "Expected \(initialCategory.rawValue), but got \(loader.category(at: 0).rawValue)")
+
+        sut.simulateUserInitiatedArticlesReload()
+        XCTAssertEqual(loader.category(at: 1), initialCategory, "Expected \(initialCategory.rawValue), but got \(loader.category(at: 1).rawValue)")
+
+        let selectingCategory: TopHeadlineCategory = .entertainment
+        sut.simulateSelcetCategory(selectingCategory)
+        XCTAssertEqual(loader.category(at: 2), selectingCategory, "Expected \(selectingCategory.rawValue), but got \(loader.category(at: 2).rawValue)")
+
+        sut.simulateUserScrollToBottom()
+        XCTAssertEqual(loader.category(at: 3), selectingCategory, "Expected \(selectingCategory.rawValue), but got \(loader.category(at: 3).rawValue)")
+    }
+
     // MARK: - Helpers
 
-    private func makeSUT(perPageCount: Int = APIConstants.articlesPerPageCount,
-                         file: StaticString = #filePath, line: UInt = #line) -> (sut: ArticlesViewController, loader: LoaderSpy) {
+    private func makeSUT(
+        category: TopHeadlineCategory = .all,
+        perPageCount: Int = APIConstants.articlesPerPageCount,
+        file: StaticString = #filePath, line: UInt = #line) -> (sut: ArticlesViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
         let sut = ArticlesUIComposer.articlesComposedWith(
             articlesLoader: loader.loadPublisher,
             imageLoader: loader.loadImageDataPublisher,
+            category: category,
             perPageCount: perPageCount)
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)

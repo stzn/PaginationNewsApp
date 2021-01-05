@@ -45,13 +45,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     private var articlesViewController: UIViewController {
         let viewController = ArticlesUIComposer.articlesComposedWith(
-            articlesLoader: self.makeRemoteArticlesLoader(page:),
+            articlesLoader: self.makeRemoteArticlesLoader(category:page:),
             imageLoader: self.makeRemoteImageLoader(url:))
         viewController.tabBarItem = UITabBarItem(title: "top headlines", image: UIImage(systemName: "clock.fill"), tag: 0)
         return viewController
     }
 
-    private func makeRemoteArticlesLoader(page: Int) -> AnyPublisher<([Article], Int), Error> {
+    private func makeRemoteArticlesLoader(category: TopHeadlineCategory, page: Int) -> AnyPublisher<([Article], Int), Error> {
         let remoteURL = TopHeadlineEndpoint.get(page: page).url()
         return httpClient
             .send(request: .init(url: remoteURL))

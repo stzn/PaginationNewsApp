@@ -17,30 +17,34 @@ extension ArticlesUIIntegrationTests {
         typealias ArticlesLoaderResult = Swift.Result<([Article], Int), Error>
         typealias ArticlesLoaderPublisher = AnyPublisher<([Article], Int), Error>
 
-        func loadPublisher(_ page: Int) -> ArticlesLoaderPublisher {
+        func loadPublisher(_ category: TopHeadlineCategory, _ page: Int) -> ArticlesLoaderPublisher {
             Deferred {
-                Future(self.load)
+                Future { completion in self.load(category: category, completion: completion) }
             }
             .eraseToAnyPublisher()
         }
 
-        private var articlesRequests: [(ArticlesLoaderResult) -> Void] = []
+        private var articlesRequests: [(category: TopHeadlineCategory, completion: (ArticlesLoaderResult) -> Void)] = []
 
         var loadArticlesCallCount: Int {
             return articlesRequests.count
         }
 
-        func load(completion: @escaping (ArticlesLoaderResult) -> Void) {
-            articlesRequests.append(completion)
+        func category(at index: Int) -> TopHeadlineCategory {
+            articlesRequests[index].category
+        }
+
+        func load(category: TopHeadlineCategory, completion: @escaping (ArticlesLoaderResult) -> Void) {
+            articlesRequests.append((category, completion))
         }
 
         func completeArticlesLoading(with articles: [Article] = [], totalResults: Int = 20, at index: Int = 0) {
-            articlesRequests[index](.success((articles, totalResults)))
+            articlesRequests[index].completion(.success((articles, totalResults)))
         }
 
         func completeArticlesLoadingWithError(at index: Int = 0) {
             let error = NSError(domain: "an error", code: 0)
-            articlesRequests[index](.failure(error))
+            articlesRequests[index].completion(.failure(error))
         }
 
         // MARK: - ArticlesImageDataLoader

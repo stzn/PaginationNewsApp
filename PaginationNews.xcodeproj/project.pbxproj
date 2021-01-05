@@ -39,7 +39,7 @@
 		D63F14A22519D79C0083267B /* LoadingUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69D2604250DCF8A000605F8 /* LoadingUIView.swift */; };
 		D65791AC25A1B80900B2C5C6 /* ArticlesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65791AB25A1B80900B2C5C6 /* ArticlesViewController.swift */; };
 		D65791B225A1BE4A00B2C5C6 /* TopHeadlineCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65791B125A1BE4A00B2C5C6 /* TopHeadlineCategoryViewController.swift */; };
-		D65791C925A3164C00B2C5C6 /* TopHeadlineCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65791C825A3164C00B2C5C6 /* TopHeadlineCategory.swift */; };
+		D65791CE25A31DF200B2C5C6 /* TopHeadlineCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65791C825A3164C00B2C5C6 /* TopHeadlineCategory.swift */; };
 		D67076E02532E89C00088765 /* ListSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67076DF2532E89C00088765 /* ListSnapshotTests.swift */; };
 		D67076EA2532EB8400088765 /* UIView+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67076E92532EB8400088765 /* UIView+TestHelpers.swift */; };
 		D67076F02532EBCD00088765 /* Date+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67076EF2532EBCD00088765 /* Date+TestHelpers.swift */; };
@@ -339,7 +339,6 @@
 				D69D260A250DD2E6000605F8 /* ArticleCell.swift */,
 				D65791AB25A1B80900B2C5C6 /* ArticlesViewController.swift */,
 				D65791B125A1BE4A00B2C5C6 /* TopHeadlineCategoryViewController.swift */,
-				D65791C825A3164C00B2C5C6 /* TopHeadlineCategory.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -463,6 +462,7 @@
 		D69D25F5250DBDAA000605F8 /* Articles Feature */ = {
 			isa = PBXGroup;
 			children = (
+				D65791C825A3164C00B2C5C6 /* TopHeadlineCategory.swift */,
 				D69D25F6250DC176000605F8 /* Article.swift */,
 			);
 			path = "Articles Feature";
@@ -762,6 +762,7 @@
 			files = (
 				D63F14652519D4B20083267B /* ErrorViewModel.swift in Sources */,
 				D63F14382519D2D70083267B /* ArticlePresenter.swift in Sources */,
+				D65791CE25A31DF200B2C5C6 /* TopHeadlineCategory.swift in Sources */,
 				D63F143E2519D2DD0083267B /* ArticlesViewModel.swift in Sources */,
 				D670A7FB25A1672A009957C1 /* SearchArticlesPresenter.swift in Sources */,
 				D670A78425A06913009957C1 /* ISO3166-1Alpha-2.swift in Sources */,
@@ -805,7 +806,6 @@
 				D67076F62532EE0800088765 /* ListViewController.swift in Sources */,
 				D63F14892519D70A0083267B /* ArticleCellController.swift in Sources */,
 				D65791B225A1BE4A00B2C5C6 /* TopHeadlineCategoryViewController.swift in Sources */,
-				D65791C925A3164C00B2C5C6 /* TopHeadlineCategory.swift in Sources */,
 				D65791AC25A1B80900B2C5C6 /* ArticlesViewController.swift in Sources */,
 				D67077002532F1B900088765 /* CellController.swift in Sources */,
 				D670A7ED25A16138009957C1 /* EmptyUIView.swift in Sources */,

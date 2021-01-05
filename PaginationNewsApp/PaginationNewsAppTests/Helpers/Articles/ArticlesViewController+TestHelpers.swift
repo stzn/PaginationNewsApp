@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import PaginationNews
 @testable import PaginationNewsiOS
 
 extension ArticlesViewController {
@@ -68,5 +69,11 @@ extension ArticlesViewController {
 
     var errorView: ErrorUIView {
         listViewController.errorView
+    }
+
+    // It's difficule to use UIAlertController.
+    // So, call closure directly.
+    func simulateSelcetCategory(_ category: TopHeadlineCategory) {
+        categoryViewController.onSelect(category)
     }
 }

@@ -9,7 +9,7 @@ import UIKit
 
 public final class ArticlesViewController: UIViewController {
     public let listViewController: ListViewController
-    private let categoryViewController: TopHeadlineCategoryViewController
+    let categoryViewController: TopHeadlineCategoryViewController
     public init?(coder: NSCoder,
                  categoryController: TopHeadlineCategoryViewController,
                  listViewController: ListViewController) {

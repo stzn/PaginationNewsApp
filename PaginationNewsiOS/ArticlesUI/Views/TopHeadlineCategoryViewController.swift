@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PaginationNews
 
 public final class TopHeadlineCategoryViewController: UIViewController {
     private(set) lazy var button: UIBarButtonItem = {
@@ -13,7 +14,7 @@ public final class TopHeadlineCategoryViewController: UIViewController {
         return UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(showCategories))
     }()
 
-    private let onSelect: (TopHeadlineCategory) -> Void
+    let onSelect: (TopHeadlineCategory) -> Void
 
     public init(onSelect: @escaping (TopHeadlineCategory) -> Void) {
         self.onSelect = onSelect

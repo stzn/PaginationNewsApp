@@ -13,22 +13,23 @@ private struct PageState {
     var isLoading: Bool
     var isLast: Bool
     var pageNumber: Int
+    var category: TopHeadlineCategory
 
     var nextPage: Int? {
         isLast ? nil : pageNumber + 1
     }
 
-    static var initial: Self = .init(isLoading: false, isLast: false, pageNumber: 0)
+    static var initial: Self = .init(isLoading: false, isLast: false, pageNumber: 0, category: .all)
 }
 
 final class ArticlesPagingPresentationAdapter<View: ContentView> {
-    private let loader: (Int) -> AnyPublisher<([Article], Int) , Error>
+    private let loader: (TopHeadlineCategory, Int) -> AnyPublisher<([Article], Int) , Error>
     private var cancellable: Cancellable?
     var presenter: Presenter<([Article], Int), View>?
     private var pageState: PageState = .initial
     private let perPageCount: Int
 
-    init(loader: @escaping (Int) -> AnyPublisher<([Article], Int), Error>,
+    init(loader: @escaping (TopHeadlineCategory, Int) -> AnyPublisher<([Article], Int), Error>,
          perPageCount: Int) {
         self.loader = loader
         self.perPageCount = perPageCount
@@ -41,7 +42,7 @@ final class ArticlesPagingPresentationAdapter<View: ContentView> {
         }
         presenter?.didStartLoading()
 
-        cancellable = loader(nextPage)
+        cancellable = loader(pageState.category, nextPage)
             .dispatchOnMainQueue()
             .sink(
                 receiveCompletion: { [weak self] completion in
@@ -72,8 +73,9 @@ extension ArticlesPagingPresentationAdapter {
 }
 
 extension ArticlesPagingPresentationAdapter {
-    func didRequestRefresh() {
+    func didRequestRefresh(_ category: TopHeadlineCategory) {
         pageState = .initial
+        pageState.category = category
         loadContent()
     }
 }
