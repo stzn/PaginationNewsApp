@@ -16,11 +16,13 @@ class CacheArticlesUseCaseTests: XCTestCase {
 	}
 
 	func test_save_requestsCacheDeletion() throws {
-		let (sut, store) = makeSUT()
+		let timestamp = Date()
+		let (sut, store) = makeSUT(currentDate: { timestamp })
+		let expected = [uniqueArticle]
 
-		try sut.save([uniqueArticle])
+		try sut.save(expected)
 
-		XCTAssertEqual(store.receivedMessages, [.delete, .save])
+		XCTAssertEqual(store.receivedMessages, [.delete, .save(expected, timestamp)])
 	}
 
 	func test_save_doesNotRequestCacheInsertionOnDeletionError() throws {
@@ -30,6 +32,16 @@ class CacheArticlesUseCaseTests: XCTestCase {
 		XCTAssertThrowsError(try sut.save([uniqueArticle]))
 
 		XCTAssertEqual(store.receivedMessages, [.delete])
+	}
+
+	func test_save_requestsNewCacheInsertionWithTimestampOnSuccessfulDeletion() throws {
+		let timestamp = Date()
+		let expected = [uniqueArticle]
+		let (sut, store) = makeSUT(currentDate: { timestamp })
+
+		try sut.save(expected)
+
+		XCTAssertEqual(store.receivedMessages, [.delete, .save(expected, timestamp)])
 	}
 
 	// MARK: - Helpers

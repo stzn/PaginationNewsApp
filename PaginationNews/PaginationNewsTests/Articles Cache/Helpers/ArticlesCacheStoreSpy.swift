@@ -9,10 +9,10 @@ import Foundation
 import PaginationNews
 
 final class ArticlesCacheStoreSpy: ArticlesCacheStore {
-	enum Message {
+	enum Message: Equatable {
 		case retrieve
 		case delete
-		case save
+		case save([Article], Date)
 	}
 
 	var receivedMessages: [Message] = []
@@ -37,8 +37,8 @@ final class ArticlesCacheStoreSpy: ArticlesCacheStore {
 		}
 	}
 
-	func save(_ articles: [Article]) throws {
-		receivedMessages.append(.save)
+	func save(_ articles: [Article], _ timestamp: Date) throws {
+		receivedMessages.append(.save(articles, timestamp))
 		if let error = saveError {
 			throw error
 		}
