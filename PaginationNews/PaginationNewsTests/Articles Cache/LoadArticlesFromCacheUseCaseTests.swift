@@ -13,16 +13,36 @@ final class LocalArticlesManager {
 	init(store: ArticlesCacheStoreSpy) {
 		self.store = store
 	}
+
+	func load() throws -> [Article] {
+		return store.retrieve()
+	}
 }
 
 final class ArticlesCacheStoreSpy {
-	var receivedMessages: [String] = []
+	enum Message {
+		case retrieve
+	}
+
+	var receivedMessages: [Message] = []
+
+	func retrieve() -> [Article] {
+		receivedMessages.append(.retrieve)
+		return []
+	}
 }
 
 class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 	func test_init_doesNotReceiveMessageUponCreation() {
 		let (_, store) = makeSUT()
 		XCTAssertEqual(store.receivedMessages, [])
+	}
+
+	func test_load_requestsCacheRetrieval() throws {
+		let (sut, store) = makeSUT()
+		_ = try sut.load()
+
+		XCTAssertEqual(store.receivedMessages, [.retrieve])
 	}
 
 	// MARK: - Helpers
