@@ -8,38 +8,6 @@
 import XCTest
 import PaginationNews
 
-final class LocalArticlesManager {
-	enum Error: Swift.Error {
-		case noCache
-	}
-
-	private let store: ArticlesCacheStore
-	private let currentDate: () -> Date
-	private let maxCacheDays: Int = 1
-
-	init(store: ArticlesCacheStore,
-	     currentDate: @escaping () -> Date) {
-		self.store = store
-		self.currentDate = currentDate
-	}
-
-	func load() throws -> [Article] {
-		guard let cached = try store.retrieve() else {
-			throw Error.noCache
-		}
-		guard cached.timestamp >= currentDate().adding(days: -maxCacheDays) else {
-			return []
-		}
-		return cached.articles
-	}
-}
-
-typealias CachedArticles = (articles: [Article], timestamp: Date)
-
-protocol ArticlesCacheStore {
-	func retrieve() throws -> CachedArticles?
-}
-
 final class ArticlesCacheStoreSpy: ArticlesCacheStore {
 	enum Message {
 		case retrieve
