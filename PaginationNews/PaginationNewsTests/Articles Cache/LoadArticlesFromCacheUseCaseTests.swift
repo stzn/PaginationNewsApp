@@ -27,7 +27,7 @@ final class LocalArticlesManager {
 		guard let cached = try store.retrieve() else {
 			throw Error.noCache
 		}
-		guard cached.timestamp.adding(days: -maxCacheDays) < currentDate() else {
+		guard cached.timestamp >= currentDate().adding(days: -maxCacheDays) else {
 			return []
 		}
 		return cached.articles
@@ -96,7 +96,7 @@ class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 		let fixedCurrentDate = Date()
 		let nonExpiredTimestamp = fixedCurrentDate.minusCacheMaxAge().adding(seconds: 1)
 
-		let (sut, store) = makeSUT()
+		let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
 
 		store.expectedCachedArticles = (expectedArticles, nonExpiredTimestamp)
 
