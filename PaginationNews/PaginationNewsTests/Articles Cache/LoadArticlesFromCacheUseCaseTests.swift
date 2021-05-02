@@ -9,18 +9,35 @@ import XCTest
 import PaginationNews
 
 final class LocalArticlesManager {
+	enum Error: Swift.Error {
+		case noCache
+	}
+
 	private let store: ArticlesCacheStore
-	init(store: ArticlesCacheStore) {
+	private let currentDate: () -> Date
+	private let maxCacheDays: Int = 1
+
+	init(store: ArticlesCacheStore,
+	     currentDate: @escaping () -> Date) {
 		self.store = store
+		self.currentDate = currentDate
 	}
 
 	func load() throws -> [Article] {
-		return try store.retrieve()
+		guard let cached = try store.retrieve() else {
+			throw Error.noCache
+		}
+		guard cached.timestamp.adding(days: -maxCacheDays) < currentDate() else {
+			return []
+		}
+		return cached.articles
 	}
 }
 
+typealias CachedArticles = (articles: [Article], timestamp: Date)
+
 protocol ArticlesCacheStore {
-	func retrieve() throws -> [Article]
+	func retrieve() throws -> CachedArticles?
 }
 
 final class ArticlesCacheStoreSpy: ArticlesCacheStore {
@@ -29,16 +46,16 @@ final class ArticlesCacheStoreSpy: ArticlesCacheStore {
 	}
 
 	var receivedMessages: [Message] = []
-	var expectedArticles: [Article] = []
+	var expectedCachedArticles: CachedArticles?
 
-	func retrieve() -> [Article] {
+	func retrieve() throws -> CachedArticles? {
 		receivedMessages.append(.retrieve)
-		return expectedArticles
+		return expectedCachedArticles
 	}
 }
 
 final class ArticlesCacheAlwaysFailStoreSpy: ArticlesCacheStore {
-	func retrieve() throws -> [Article] {
+	func retrieve() throws -> CachedArticles? {
 		throw NSError(domain: "sample.shiz.ArticlesCacheStoreSpy", code: -1, userInfo: nil)
 	}
 }
@@ -53,7 +70,7 @@ class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 	func test_load_requestsCacheRetrieval() throws {
 		let (sut, store) = makeSUT()
 
-		_ = try sut.load()
+		XCTAssertThrowsError(try sut.load())
 
 		XCTAssertEqual(store.receivedMessages, [.retrieve])
 	}
@@ -66,7 +83,7 @@ class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 
 	func test_load_deliversNoArticlesOnEmptyCache() throws {
 		let (sut, store) = makeSUT()
-		store.expectedArticles = []
+		store.expectedCachedArticles = ([], Date())
 
 		let received = try sut.load()
 
@@ -74,23 +91,53 @@ class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 		XCTAssertEqual(received, [])
 	}
 
+	func test_load_deliversCachedArticlesOnNonExpiredCache() throws {
+		let expectedArticles = [uniqueArticle]
+		let fixedCurrentDate = Date()
+		let nonExpiredTimestamp = fixedCurrentDate.minusCacheMaxAge().adding(seconds: 1)
+
+		let (sut, store) = makeSUT()
+
+		store.expectedCachedArticles = (expectedArticles, nonExpiredTimestamp)
+
+		let received = try sut.load()
+
+		XCTAssertEqual(store.receivedMessages, [.retrieve])
+		XCTAssertEqual(received, expectedArticles)
+	}
+
 	// MARK: - Helpers
 
-	private func makeSUT(file: StaticString = #filePath, line: UInt = #line
+	private func makeSUT(
+		currentDate: @escaping () -> Date = { Date() },
+		file: StaticString = #filePath,
+		line: UInt = #line
 	) -> (sut: LocalArticlesManager, store: ArticlesCacheStoreSpy) {
 		let store = ArticlesCacheStoreSpy()
-		let sut = LocalArticlesManager(store: store)
+		let sut = LocalArticlesManager(store: store, currentDate: currentDate)
 		trackForMemoryLeaks(sut, file: file, line: line)
 		trackForMemoryLeaks(store, file: file, line: line)
 		return (sut, store)
 	}
 
-	private func makeFailSUT(file: StaticString = #filePath, line: UInt = #line
+	private func makeFailSUT(
+		file: StaticString = #filePath,
+		line: UInt = #line
 	) -> LocalArticlesManager {
 		let store = ArticlesCacheAlwaysFailStoreSpy()
-		let sut = LocalArticlesManager(store: store)
+		let sut = LocalArticlesManager(store: store, currentDate: { Date() })
 		trackForMemoryLeaks(sut)
 		trackForMemoryLeaks(store)
 		return sut
+	}
+}
+
+private extension Date {
+	func minusCacheMaxAge() -> Date {
+		return adding(days: -cacheMaxAgeInDays)
+	}
+
+	var cacheMaxAgeInDays: Int {
+		return 1
 	}
 }

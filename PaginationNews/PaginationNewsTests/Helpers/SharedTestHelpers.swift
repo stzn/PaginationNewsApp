@@ -31,6 +31,10 @@ struct AnyView: ContentView {
 }
 
 extension Date {
+	func adding(seconds: Int, calendar: Calendar = Calendar(identifier: .gregorian)) -> Date {
+		return calendar.date(byAdding: .second, value: seconds, to: self)!
+	}
+
 	func adding(minutes: Int, calendar: Calendar = Calendar(identifier: .gregorian)) -> Date {
 		return calendar.date(byAdding: .minute, value: minutes, to: self)!
 	}
