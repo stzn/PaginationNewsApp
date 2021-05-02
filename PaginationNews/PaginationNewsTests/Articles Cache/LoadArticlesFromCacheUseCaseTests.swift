@@ -35,11 +35,13 @@ final class ArticlesCacheStoreSpy {
 class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 	func test_init_doesNotReceiveMessageUponCreation() {
 		let (_, store) = makeSUT()
+
 		XCTAssertEqual(store.receivedMessages, [])
 	}
 
 	func test_load_requestsCacheRetrieval() throws {
 		let (sut, store) = makeSUT()
+
 		_ = try sut.load()
 
 		XCTAssertEqual(store.receivedMessages, [.retrieve])
