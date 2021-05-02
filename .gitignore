@@ -36,3 +36,7 @@ playground.xcworkspace
 
 ## Keynote
 *.key
+
+### BuildTools ###
+BuildTools/.build 
+BuildTools/.swiftpm
