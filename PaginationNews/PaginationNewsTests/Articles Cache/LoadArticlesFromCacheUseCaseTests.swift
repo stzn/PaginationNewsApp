@@ -106,6 +106,21 @@ class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 		XCTAssertEqual(received, expectedArticles)
 	}
 
+	func test_load_deliversEmptyOnExpiredCache() throws {
+		let expectedArticles = [uniqueArticle]
+		let fixedCurrentDate = Date()
+		let expiredTimestamp = fixedCurrentDate.minusCacheMaxAge().adding(seconds: -1)
+
+		let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
+
+		store.expectedCachedArticles = (expectedArticles, expiredTimestamp)
+
+		let received = try sut.load()
+
+		XCTAssertEqual(store.receivedMessages, [.retrieve])
+		XCTAssertEqual(received, [])
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(
