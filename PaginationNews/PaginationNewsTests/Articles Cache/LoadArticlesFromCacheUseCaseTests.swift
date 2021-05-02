@@ -9,17 +9,21 @@ import XCTest
 import PaginationNews
 
 final class LocalArticlesManager {
-	private let store: ArticlesCacheStoreSpy
-	init(store: ArticlesCacheStoreSpy) {
+	private let store: ArticlesCacheStore
+	init(store: ArticlesCacheStore) {
 		self.store = store
 	}
 
 	func load() throws -> [Article] {
-		return store.retrieve()
+		return try store.retrieve()
 	}
 }
 
-final class ArticlesCacheStoreSpy {
+protocol ArticlesCacheStore {
+	func retrieve() throws -> [Article]
+}
+
+final class ArticlesCacheStoreSpy: ArticlesCacheStore {
 	enum Message {
 		case retrieve
 	}
@@ -29,6 +33,12 @@ final class ArticlesCacheStoreSpy {
 	func retrieve() -> [Article] {
 		receivedMessages.append(.retrieve)
 		return []
+	}
+}
+
+final class ArticlesCacheAlwaysFailStoreSpy: ArticlesCacheStore {
+	func retrieve() throws -> [Article] {
+		throw NSError(domain: "sample.shiz.ArticlesCacheStoreSpy", code: -1, userInfo: nil)
 	}
 }
 
@@ -47,6 +57,12 @@ class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 		XCTAssertEqual(store.receivedMessages, [.retrieve])
 	}
 
+	func test_load_throwsErrorOnRetrievalError() throws {
+		let sut = makeFailSUT()
+
+		XCTAssertThrowsError(try sut.load())
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(file: StaticString = #filePath, line: UInt = #line
@@ -56,5 +72,14 @@ class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 		trackForMemoryLeaks(sut, file: file, line: line)
 		trackForMemoryLeaks(store, file: file, line: line)
 		return (sut, store)
+	}
+
+	private func makeFailSUT(file: StaticString = #filePath, line: UInt = #line
+	) -> LocalArticlesManager {
+		let store = ArticlesCacheAlwaysFailStoreSpy()
+		let sut = LocalArticlesManager(store: store)
+		trackForMemoryLeaks(sut)
+		trackForMemoryLeaks(store)
+		return sut
 	}
 }
