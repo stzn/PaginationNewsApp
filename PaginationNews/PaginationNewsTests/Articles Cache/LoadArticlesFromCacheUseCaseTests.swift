@@ -8,26 +8,6 @@
 import XCTest
 import PaginationNews
 
-final class ArticlesCacheStoreSpy: ArticlesCacheStore {
-	enum Message {
-		case retrieve
-	}
-
-	var receivedMessages: [Message] = []
-	var expectedCachedArticles: CachedArticles?
-
-	func retrieve() throws -> CachedArticles? {
-		receivedMessages.append(.retrieve)
-		return expectedCachedArticles
-	}
-}
-
-final class ArticlesCacheAlwaysFailStoreSpy: ArticlesCacheStore {
-	func retrieve() throws -> CachedArticles? {
-		throw NSError(domain: "sample.shiz.ArticlesCacheStoreSpy", code: -1, userInfo: nil)
-	}
-}
-
 class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 	func test_init_doesNotReceiveMessageUponCreation() {
 		let (_, store) = makeSUT()
