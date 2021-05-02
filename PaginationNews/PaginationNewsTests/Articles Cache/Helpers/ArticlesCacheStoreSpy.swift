@@ -11,6 +11,7 @@ import PaginationNews
 final class ArticlesCacheStoreSpy: ArticlesCacheStore {
 	enum Message {
 		case retrieve
+		case delete
 	}
 
 	var receivedMessages: [Message] = []
@@ -20,10 +21,18 @@ final class ArticlesCacheStoreSpy: ArticlesCacheStore {
 		receivedMessages.append(.retrieve)
 		return expectedCachedArticles
 	}
+
+	func delete() throws {
+		receivedMessages.append(.delete)
+	}
 }
 
 final class ArticlesCacheAlwaysFailStoreSpy: ArticlesCacheStore {
 	func retrieve() throws -> CachedArticles? {
-		throw NSError(domain: "sample.shiz.ArticlesCacheStoreSpy", code: -1, userInfo: nil)
+		throw NSError(domain: "sample.shiz.ArticlesCacheAlwaysFailStoreSpy", code: -1, userInfo: nil)
+	}
+
+	func delete() throws {
+		throw NSError(domain: "sample.shiz.ArticlesCacheAlwaysFailStoreSpy", code: -1, userInfo: nil)
 	}
 }

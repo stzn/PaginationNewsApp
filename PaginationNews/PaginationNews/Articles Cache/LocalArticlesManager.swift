@@ -31,4 +31,8 @@ public final class LocalArticlesManager {
 		}
 		return cached.articles
 	}
+
+	public func save(_ articles: [Article]) throws {
+		try store.delete()
+	}
 }

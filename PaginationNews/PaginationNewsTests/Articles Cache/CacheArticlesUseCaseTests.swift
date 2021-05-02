@@ -15,6 +15,14 @@ class CacheArticlesUseCaseTests: XCTestCase {
 		XCTAssertEqual(store.receivedMessages, [])
 	}
 
+	func test_save_requestsCacheDeletion() throws {
+		let (sut, store) = makeSUT()
+
+		try sut.save([uniqueArticle])
+
+		XCTAssertEqual(store.receivedMessages, [.delete])
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(
