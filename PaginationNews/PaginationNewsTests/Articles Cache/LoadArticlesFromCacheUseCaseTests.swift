@@ -9,30 +9,30 @@ import XCTest
 import PaginationNews
 
 final class LocalArticlesManager {
-    private let store: ArticlesCacheStoreSpy
-    init(store: ArticlesCacheStoreSpy) {
-        self.store = store
-    }
+	private let store: ArticlesCacheStoreSpy
+	init(store: ArticlesCacheStoreSpy) {
+		self.store = store
+	}
 }
 
 final class ArticlesCacheStoreSpy {
-    var receivedMessages: [String] = []
+	var receivedMessages: [String] = []
 }
 
 class LoadArticlesFromCacheUseCaseTests: XCTestCase {
-    func test_init_doesNotMessageStoreUponCreation() {
-        let (_, store) = makeSUT()
-        XCTAssertEqual(store.receivedMessages, [])
-    }
+	func test_init_doesNotReceiveMessageUponCreation() {
+		let (_, store) = makeSUT()
+		XCTAssertEqual(store.receivedMessages, [])
+	}
 
-    // MARK: - Helpers
+	// MARK: - Helpers
 
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line
-    ) -> (sut: LocalArticlesManager, store: ArticlesCacheStoreSpy) {
-        let store = ArticlesCacheStoreSpy()
-        let sut = LocalArticlesManager(store: store)
-        trackForMemoryLeaks(sut, file: file, line: line)
-        trackForMemoryLeaks(store, file: file, line: line)
-        return (sut, store)
-    }
+	private func makeSUT(file: StaticString = #filePath, line: UInt = #line
+	) -> (sut: LocalArticlesManager, store: ArticlesCacheStoreSpy) {
+		let store = ArticlesCacheStoreSpy()
+		let sut = LocalArticlesManager(store: store)
+		trackForMemoryLeaks(sut, file: file, line: line)
+		trackForMemoryLeaks(store, file: file, line: line)
+		return (sut, store)
+	}
 }
