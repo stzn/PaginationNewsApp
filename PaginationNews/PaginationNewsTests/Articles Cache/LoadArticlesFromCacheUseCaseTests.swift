@@ -29,10 +29,11 @@ final class ArticlesCacheStoreSpy: ArticlesCacheStore {
 	}
 
 	var receivedMessages: [Message] = []
+	var expectedArticles: [Article] = []
 
 	func retrieve() -> [Article] {
 		receivedMessages.append(.retrieve)
-		return []
+		return expectedArticles
 	}
 }
 
@@ -61,6 +62,16 @@ class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 		let sut = makeFailSUT()
 
 		XCTAssertThrowsError(try sut.load())
+	}
+
+	func test_load_deliversNoArticlesOnEmptyCache() throws {
+		let (sut, store) = makeSUT()
+		store.expectedArticles = []
+
+		let received = try sut.load()
+
+		XCTAssertEqual(store.receivedMessages, [.retrieve])
+		XCTAssertEqual(received, [])
 	}
 
 	// MARK: - Helpers
