@@ -15,16 +15,6 @@ class CacheArticlesUseCaseTests: XCTestCase {
 		XCTAssertEqual(store.receivedMessages, [])
 	}
 
-	func test_save_requestsCacheDeletion() throws {
-		let timestamp = Date()
-		let (sut, store) = makeSUT(currentDate: { timestamp })
-		let expected = [uniqueArticle]
-
-		try sut.save(expected)
-
-		XCTAssertEqual(store.receivedMessages, [.delete, .save(expected, timestamp)])
-	}
-
 	func test_save_doesNotRequestCacheInsertionOnDeletionError() throws {
 		let (sut, store) = makeSUT()
 		store.deleteError = anyNSError
