@@ -12,27 +12,35 @@ final class ArticlesCacheStoreSpy: ArticlesCacheStore {
 	enum Message {
 		case retrieve
 		case delete
+		case save
 	}
 
 	var receivedMessages: [Message] = []
 	var expectedCachedArticles: CachedArticles?
 
+	var retrieveError: Error?
+	var deleteError: Error?
+	var saveError: Error?
+
 	func retrieve() throws -> CachedArticles? {
 		receivedMessages.append(.retrieve)
+		if let error = retrieveError {
+			throw error
+		}
 		return expectedCachedArticles
 	}
 
 	func delete() throws {
 		receivedMessages.append(.delete)
-	}
-}
-
-final class ArticlesCacheAlwaysFailStoreSpy: ArticlesCacheStore {
-	func retrieve() throws -> CachedArticles? {
-		throw NSError(domain: "sample.shiz.ArticlesCacheAlwaysFailStoreSpy", code: -1, userInfo: nil)
+		if let error = deleteError {
+			throw error
+		}
 	}
 
-	func delete() throws {
-		throw NSError(domain: "sample.shiz.ArticlesCacheAlwaysFailStoreSpy", code: -1, userInfo: nil)
+	func save(_ articles: [Article]) throws {
+		receivedMessages.append(.save)
+		if let error = saveError {
+			throw error
+		}
 	}
 }

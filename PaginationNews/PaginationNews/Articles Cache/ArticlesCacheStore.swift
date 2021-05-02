@@ -9,5 +9,6 @@ public typealias CachedArticles = (articles: [Article], timestamp: Date)
 
 public protocol ArticlesCacheStore {
 	func retrieve() throws -> CachedArticles?
+	func save(_ articles: [Article]) throws
 	func delete() throws
 }

@@ -24,7 +24,8 @@ class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 	}
 
 	func test_load_throwsErrorOnRetrievalError() throws {
-		let sut = makeFailSUT()
+		let (sut, store) = makeSUT()
+		store.retrieveError = anyNSError
 
 		XCTAssertThrowsError(try sut.load())
 	}
@@ -81,17 +82,6 @@ class LoadArticlesFromCacheUseCaseTests: XCTestCase {
 		trackForMemoryLeaks(sut, file: file, line: line)
 		trackForMemoryLeaks(store, file: file, line: line)
 		return (sut, store)
-	}
-
-	private func makeFailSUT(
-		file: StaticString = #filePath,
-		line: UInt = #line
-	) -> LocalArticlesManager {
-		let store = ArticlesCacheAlwaysFailStoreSpy()
-		let sut = LocalArticlesManager(store: store, currentDate: { Date() })
-		trackForMemoryLeaks(sut)
-		trackForMemoryLeaks(store)
-		return sut
 	}
 }
 

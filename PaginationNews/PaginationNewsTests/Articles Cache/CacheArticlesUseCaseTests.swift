@@ -20,6 +20,15 @@ class CacheArticlesUseCaseTests: XCTestCase {
 
 		try sut.save([uniqueArticle])
 
+		XCTAssertEqual(store.receivedMessages, [.delete, .save])
+	}
+
+	func test_save_doesNotRequestCacheInsertionOnDeletionError() throws {
+		let (sut, store) = makeSUT()
+		store.deleteError = anyNSError
+
+		XCTAssertThrowsError(try sut.save([uniqueArticle]))
+
 		XCTAssertEqual(store.receivedMessages, [.delete])
 	}
 

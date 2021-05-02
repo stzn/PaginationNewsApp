@@ -34,5 +34,6 @@ public final class LocalArticlesManager {
 
 	public func save(_ articles: [Article]) throws {
 		try store.delete()
+		try store.save(articles)
 	}
 }
