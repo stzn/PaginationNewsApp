@@ -51,6 +51,12 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 		try assertOverrideCachedValue(on: sut)
 	}
 
+	func test_delete_deliversNoErrorOnEmptyCache() {
+		let sut = makeSUT()
+
+		XCTAssertNoThrow(try sut.delete())
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CoreDataArticlesCacheStore {

@@ -73,5 +73,11 @@ extension CoreDataArticlesCacheStore {
 		}
 	}
 
-	func delete() throws {}
+	public func delete() throws {
+		try performSync { context in
+			Result {
+				try ManagedCache.deleteCache(in: context)
+			}
+		}
+	}
 }
