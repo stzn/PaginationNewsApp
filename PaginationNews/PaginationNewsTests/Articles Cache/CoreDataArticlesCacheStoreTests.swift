@@ -60,9 +60,13 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 	func test_delete_hasNoSideEffectsOnEmptyCache() throws {
 		let sut = makeSUT()
 
-		try sut.delete()
+		try assertDeleteOnEmptyCache(on: sut)
+	}
 
-		try assertEmptyCache(on: sut, retriveCount: .once)
+	func test_delete_deliversNoErrorOnNonEmptyCache() throws {
+		let sut = makeSUT()
+
+		try assertDeleteOnNonEmptyCache(on: sut)
 	}
 
 	// MARK: - Helpers
@@ -102,6 +106,23 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 		file: StaticString = #filePath, line: UInt = #line) throws {
 		try sut.save([uniqueArticle], Date())
 		try asserttNonEmptyCache(on: sut, retriveCount: .once)
+	}
+
+	private func assertDeleteOnEmptyCache(
+		on sut: CoreDataArticlesCacheStore,
+		file: StaticString = #filePath, line: UInt = #line) throws {
+		try sut.delete()
+
+		try assertEmptyCache(on: sut, retriveCount: .once)
+	}
+
+	private func assertDeleteOnNonEmptyCache(
+		on sut: CoreDataArticlesCacheStore,
+		file: StaticString = #filePath, line: UInt = #line) throws {
+		try sut.save([uniqueArticle], Date())
+		try sut.delete()
+
+		try assertEmptyCache(on: sut, retriveCount: .once)
 	}
 }
 
