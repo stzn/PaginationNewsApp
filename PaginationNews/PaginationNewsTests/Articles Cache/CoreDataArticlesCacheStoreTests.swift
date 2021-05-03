@@ -11,14 +11,18 @@ import PaginationNews
 class CoreDataArticlesCacheStoreTests: XCTestCase {
 	func test_retrieve_deliversEmptyOnEmptyCache() throws {
 		let sut = makeSUT()
+
 		let articles = try sut.retrieve()
+
 		XCTAssertNil(articles)
 	}
 
 	func test_retrieve_hasNoSideEffectsOnEmptyCache() throws {
 		let sut = makeSUT()
+
 		_ = try sut.retrieve()
 		let articles = try sut.retrieve()
+
 		XCTAssertNil(articles)
 	}
 
