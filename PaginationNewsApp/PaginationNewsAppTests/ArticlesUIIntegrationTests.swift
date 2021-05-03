@@ -304,7 +304,7 @@ class ArticlesUIIntegrationTests: XCTestCase {
 
 		sut.loadViewIfNeeded()
 		XCTAssertEqual(loader.loadArticlesCallCount, 1)
-		loader.completeArticlesLoading(with: [uniqueArticle], totalResults: 20)
+		loader.completeArticlesLoading(with: [uniqueArticle])
 
 		sut.simulateUserScrollToBottom()
 		XCTAssertEqual(loader.loadArticlesCallCount, 2)
@@ -315,7 +315,7 @@ class ArticlesUIIntegrationTests: XCTestCase {
 
 		sut.loadViewIfNeeded()
 		XCTAssertEqual(loader.loadArticlesCallCount, 1)
-		loader.completeArticlesLoading(with: [uniqueArticle], totalResults: 20)
+		loader.completeArticlesLoading(with: [])
 
 		sut.simulateUserScrollToBottom()
 		XCTAssertEqual(loader.loadArticlesCallCount, 1)

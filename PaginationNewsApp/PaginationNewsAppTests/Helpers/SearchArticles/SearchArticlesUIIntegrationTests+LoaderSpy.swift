@@ -13,8 +13,8 @@ extension SearchArticlesUIIntegrationTests {
 	class LoaderSpy {
 		// MARK: - ArticlesLoader
 
-		typealias ArticlesLoaderResult = Swift.Result<([Article], Int), Error>
-		typealias ArticlesLoaderPublisher = AnyPublisher<([Article], Int), Error>
+		typealias ArticlesLoaderResult = Swift.Result<[Article], Error>
+		typealias ArticlesLoaderPublisher = AnyPublisher<[Article], Error>
 
 		func loadPublisher(_ keyword: String, _ page: Int) -> ArticlesLoaderPublisher {
 			Deferred {
@@ -37,8 +37,8 @@ extension SearchArticlesUIIntegrationTests {
 			articlesRequests.append((keyword, completion))
 		}
 
-		func completeArticlesLoading(with articles: [Article] = [], totalResults: Int = 20, at index: Int = 0) {
-			articlesRequests[index].completion(.success((articles, totalResults)))
+		func completeArticlesLoading(with articles: [Article] = [], at index: Int = 0) {
+			articlesRequests[index].completion(.success(articles))
 		}
 
 		func completeArticlesLoadingWithError(at index: Int = 0) {

@@ -23,13 +23,13 @@ private struct PageState {
 }
 
 final class ArticlesPagingPresentationAdapter<View: ContentView> {
-	private let loader: (TopHeadlineCategory, Int) -> AnyPublisher<([Article], Int), Error>
+	private let loader: (TopHeadlineCategory, Int) -> AnyPublisher<[Article], Error>
 	private var cancellable: Cancellable?
 	var presenter: Presenter<([Article], Int), View>?
 	private var pageState: PageState = .initial
 	private let perPageCount: Int
 
-	init(loader: @escaping (TopHeadlineCategory, Int) -> AnyPublisher<([Article], Int), Error>,
+	init(loader: @escaping (TopHeadlineCategory, Int) -> AnyPublisher<[Article], Error>,
 	     perPageCount: Int) {
 		self.loader = loader
 		self.perPageCount = perPageCount
@@ -53,13 +53,11 @@ final class ArticlesPagingPresentationAdapter<View: ContentView> {
 						self?.pageState = .initial
 						self?.presenter?.didFinishLoading(with: error)
 					}
-				}, receiveValue: { [weak self] articles, totalResults in
+				}, receiveValue: { [weak self] articles in
 					guard let self = self else {
 						return
 					}
-					if totalResults <= self.perPageCount * nextPage {
-						self.pageState.isLast = true
-					}
+					self.pageState.isLast = articles.isEmpty
 					self.pageState.pageNumber = nextPage
 					self.presenter?.didFinishLoading((articles, nextPage))
 				})

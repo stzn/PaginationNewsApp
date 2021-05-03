@@ -50,10 +50,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		return viewController
 	}
 
-	private func makeRemoteArticlesLoader(category: TopHeadlineCategory, page: Int) -> AnyPublisher<([Article], Int), Error> {
+	private func makeRemoteArticlesLoader(category: TopHeadlineCategory, page: Int) -> AnyPublisher<[Article], Error> {
 		let remoteURL = TopHeadlineEndpoint.get(page: page, category: category).url()
-		return httpClient
-			.send(request: .init(url: remoteURL))
+		return
+			makeRemoteArticlesLoader(url: remoteURL)
+				.eraseToAnyPublisher()
+	}
+
+	private func makeRemoteArticlesLoader(url: URL) -> AnyPublisher<[Article], Error> {
+		httpClient
+			.send(request: .init(url: url))
 			.tryMap(ArticlesMapper.map)
 			.eraseToAnyPublisher()
 	}
@@ -74,7 +80,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		return viewController
 	}
 
-	private func makeRemoteSearchArticlesLoader(keyword: String, page: Int) -> AnyPublisher<([Article], Int), Error> {
+	private func makeRemoteSearchArticlesLoader(keyword: String, page: Int) -> AnyPublisher<[Article], Error> {
 		let remoteURL = SearchArticlesEndpoint.get(keyword: keyword, page: page).url()
 		return httpClient
 			.send(request: .init(url: remoteURL))

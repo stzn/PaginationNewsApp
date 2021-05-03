@@ -54,7 +54,7 @@ public final class ArticlesMapper {
 		case invalidData
 	}
 
-	public static func map(_ data: Data, from response: HTTPURLResponse) throws -> (articles: [Article], totalCount: Int) {
+	public static func map(_ data: Data, from response: HTTPURLResponse) throws -> [Article] {
 		let decoder = JSONDecoder()
 		decoder.keyDecodingStrategy = .convertFromSnakeCase
 		decoder.dateDecodingStrategy = .iso8601
@@ -68,7 +68,7 @@ public final class ArticlesMapper {
 				throw Error.invalidData
 			}
 
-			return (root.models, root.totalResults)
+			return root.models
 		} catch {
 			throw error
 		}
