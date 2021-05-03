@@ -15,6 +15,13 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 		XCTAssertNil(articles)
 	}
 
+	func test_retrieve_hasNoSideEffectsOnEmptyCache() throws {
+		let sut = makeSUT()
+		_ = try sut.retrieve()
+		let articles = try sut.retrieve()
+		XCTAssertNil(articles)
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CoreDataArticlesCacheStore {
