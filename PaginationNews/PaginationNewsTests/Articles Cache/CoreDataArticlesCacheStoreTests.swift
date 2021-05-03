@@ -57,6 +57,14 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 		XCTAssertNoThrow(try sut.delete())
 	}
 
+	func test_delete_hasNoSideEffectsOnEmptyCache() throws {
+		let sut = makeSUT()
+
+		try sut.delete()
+
+		try assertEmptyCache(on: sut, retriveCount: .once)
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CoreDataArticlesCacheStore {
