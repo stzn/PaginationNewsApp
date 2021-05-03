@@ -43,6 +43,12 @@
 		D64C40C1263E9F3C000D1CAD /* Date+Adding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64C40C0263E9F3C000D1CAD /* Date+Adding.swift */; };
 		D64C40C3263EA01D000D1CAD /* CacheArticlesUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64C40C2263EA01D000D1CAD /* CacheArticlesUseCaseTests.swift */; };
 		D64C40C6263EA1A8000D1CAD /* ArticlesCacheStoreSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64C40C5263EA1A8000D1CAD /* ArticlesCacheStoreSpy.swift */; };
+		D64C40CA263FA2A8000D1CAD /* ArticlesCacheStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D64C40C8263FA2A8000D1CAD /* ArticlesCacheStore.xcdatamodeld */; };
+		D64C40D0263FA48F000D1CAD /* ManagedArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64C40CC263FA48F000D1CAD /* ManagedArticle.swift */; };
+		D64C40D2263FA48F000D1CAD /* ManagedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64C40CE263FA48F000D1CAD /* ManagedCache.swift */; };
+		D64C40D4263FA5BE000D1CAD /* CoreDataArticlesCacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64C40D3263FA5BE000D1CAD /* CoreDataArticlesCacheStore.swift */; };
+		D64C40D6263FA603000D1CAD /* CoreDataArticlesCacheStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64C40D5263FA603000D1CAD /* CoreDataArticlesCacheStoreTests.swift */; };
+		D64C40D8263FA739000D1CAD /* CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64C40D7263FA739000D1CAD /* CoreDataHelpers.swift */; };
 		D65791AC25A1B80900B2C5C6 /* ArticlesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65791AB25A1B80900B2C5C6 /* ArticlesViewController.swift */; };
 		D65791B225A1BE4A00B2C5C6 /* TopHeadlineCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65791B125A1BE4A00B2C5C6 /* TopHeadlineCategoryViewController.swift */; };
 		D65791CE25A31DF200B2C5C6 /* TopHeadlineCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65791C825A3164C00B2C5C6 /* TopHeadlineCategory.swift */; };
@@ -133,6 +139,12 @@
 		D64C40C0263E9F3C000D1CAD /* Date+Adding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Adding.swift"; sourceTree = "<group>"; };
 		D64C40C2263EA01D000D1CAD /* CacheArticlesUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheArticlesUseCaseTests.swift; sourceTree = "<group>"; };
 		D64C40C5263EA1A8000D1CAD /* ArticlesCacheStoreSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesCacheStoreSpy.swift; sourceTree = "<group>"; };
+		D64C40C9263FA2A8000D1CAD /* ArticlesCacheStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ArticlesCacheStore.xcdatamodel; sourceTree = "<group>"; };
+		D64C40CC263FA48F000D1CAD /* ManagedArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedArticle.swift; sourceTree = "<group>"; };
+		D64C40CE263FA48F000D1CAD /* ManagedCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedCache.swift; sourceTree = "<group>"; };
+		D64C40D3263FA5BE000D1CAD /* CoreDataArticlesCacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataArticlesCacheStore.swift; sourceTree = "<group>"; };
+		D64C40D5263FA603000D1CAD /* CoreDataArticlesCacheStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataArticlesCacheStoreTests.swift; sourceTree = "<group>"; };
+		D64C40D7263FA739000D1CAD /* CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelpers.swift; sourceTree = "<group>"; };
 		D65791AB25A1B80900B2C5C6 /* ArticlesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesViewController.swift; sourceTree = "<group>"; };
 		D65791B125A1BE4A00B2C5C6 /* TopHeadlineCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeadlineCategoryViewController.swift; sourceTree = "<group>"; };
 		D65791C825A3164C00B2C5C6 /* TopHeadlineCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeadlineCategory.swift; sourceTree = "<group>"; };
@@ -318,6 +330,7 @@
 				D64C40C4263EA19B000D1CAD /* Helpers */,
 				D64C40B7263E7B1C000D1CAD /* LoadArticlesFromCacheUseCaseTests.swift */,
 				D64C40C2263EA01D000D1CAD /* CacheArticlesUseCaseTests.swift */,
+				D64C40D5263FA603000D1CAD /* CoreDataArticlesCacheStoreTests.swift */,
 			);
 			path = "Articles Cache";
 			sourceTree = "<group>";
@@ -325,6 +338,7 @@
 		D64C40B9263E9E84000D1CAD /* Articles Cache */ = {
 			isa = PBXGroup;
 			children = (
+				D64C40C7263FA25E000D1CAD /* CoreData */,
 				D64C40BF263E9F2B000D1CAD /* Helpers */,
 				D64C40BA263E9E94000D1CAD /* LocalArticlesManager.swift */,
 				D64C40BC263E9EDE000D1CAD /* ArticlesCacheStore.swift */,
@@ -346,6 +360,18 @@
 				D64C40C5263EA1A8000D1CAD /* ArticlesCacheStoreSpy.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D64C40C7263FA25E000D1CAD /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				D64C40CC263FA48F000D1CAD /* ManagedArticle.swift */,
+				D64C40CE263FA48F000D1CAD /* ManagedCache.swift */,
+				D64C40C8263FA2A8000D1CAD /* ArticlesCacheStore.xcdatamodeld */,
+				D64C40D3263FA5BE000D1CAD /* CoreDataArticlesCacheStore.swift */,
+				D64C40D7263FA739000D1CAD /* CoreDataHelpers.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		D64F47C72532E1A20085FD19 /* Shared */ = {
@@ -852,6 +878,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D63F14652519D4B20083267B /* ErrorViewModel.swift in Sources */,
+				D64C40CA263FA2A8000D1CAD /* ArticlesCacheStore.xcdatamodeld in Sources */,
+				D64C40D4263FA5BE000D1CAD /* CoreDataArticlesCacheStore.swift in Sources */,
 				D63F14382519D2D70083267B /* ArticlePresenter.swift in Sources */,
 				D65791CE25A31DF200B2C5C6 /* TopHeadlineCategory.swift in Sources */,
 				D63F143E2519D2DD0083267B /* ArticlesViewModel.swift in Sources */,
@@ -869,8 +897,11 @@
 				D670A7F325A166D4009957C1 /* SearchArticlesViewModel.swift in Sources */,
 				D63F146F2519D4BF0083267B /* HTTPClient.swift in Sources */,
 				D63F14492519D31C0083267B /* ArticlesMapper.swift in Sources */,
+				D64C40D2263FA48F000D1CAD /* ManagedCache.swift in Sources */,
+				D64C40D0263FA48F000D1CAD /* ManagedArticle.swift in Sources */,
 				D63F14742519D4C20083267B /* APIConstants.swift in Sources */,
 				D63F143F2519D2E00083267B /* ArticleViewModel.swift in Sources */,
+				D64C40D8263FA739000D1CAD /* CoreDataHelpers.swift in Sources */,
 				D63F14332519D2D30083267B /* ArticlesPresenter.swift in Sources */,
 				D63F14442519D3190083267B /* ArticleImageDataMapper.swift in Sources */,
 			);
@@ -885,6 +916,7 @@
 				D670A79025A06B96009957C1 /* SearchArticlesEndpointTests.swift in Sources */,
 				D63F13B52519CF4E0083267B /* ArticlesPresenterTests.swift in Sources */,
 				D670A81225A173CC009957C1 /* SharedLocalizationTestHelpers.swift in Sources */,
+				D64C40D6263FA603000D1CAD /* CoreDataArticlesCacheStoreTests.swift in Sources */,
 				D64C40B8263E7B1C000D1CAD /* LoadArticlesFromCacheUseCaseTests.swift in Sources */,
 				D64C40C6263EA1A8000D1CAD /* ArticlesCacheStoreSpy.swift in Sources */,
 				D64C40C3263EA01D000D1CAD /* CacheArticlesUseCaseTests.swift in Sources */,
@@ -1333,6 +1365,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D64C40C8263FA2A8000D1CAD /* ArticlesCacheStore.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D64C40C9263FA2A8000D1CAD /* ArticlesCacheStore.xcdatamodel */,
+			);
+			currentVersion = D64C40C9263FA2A8000D1CAD /* ArticlesCacheStore.xcdatamodel */;
+			path = ArticlesCacheStore.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D69D25B3250DBABF000605F8 /* Project object */;
 }
