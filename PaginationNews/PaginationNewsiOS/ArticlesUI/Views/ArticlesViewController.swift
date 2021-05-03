@@ -8,12 +8,11 @@
 import UIKit
 
 public final class ArticlesViewController: UIViewController {
+	public var categoryViewController: TopHeadlineCategoryViewController!
+
 	public let listViewController: ListViewController
-	let categoryViewController: TopHeadlineCategoryViewController
 	public init?(coder: NSCoder,
-	             categoryController: TopHeadlineCategoryViewController,
 	             listViewController: ListViewController) {
-		self.categoryViewController = categoryController
 		self.listViewController = listViewController
 		self.listViewController.collectionView.showsVerticalScrollIndicator = false
 		self.listViewController.collectionView.showsHorizontalScrollIndicator = false

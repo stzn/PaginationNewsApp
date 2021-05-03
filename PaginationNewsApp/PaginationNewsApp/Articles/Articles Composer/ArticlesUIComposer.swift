@@ -30,15 +30,17 @@ final class ArticlesUIComposer {
 		guard let articlesController = (storyboard.instantiateInitialViewController { coder in
 			ArticlesViewController(
 				coder: coder,
-				categoryController: TopHeadlineCategoryViewController { input in
-					category = input
-					presentationAdapter.didRequestRefresh(input)
-				},
 				listViewController: listViewController)
 		}) else {
 			fatalError()
 		}
-		articlesController.title = ArticlesPresenter.title
+
+		articlesController.categoryViewController = TopHeadlineCategoryViewController { [weak articlesController] input in
+			category = input
+			articlesController?.title = ArticlesPresenter.title + " - \(category.rawValue)"
+			presentationAdapter.didRequestRefresh(input)
+		}
+		articlesController.title = ArticlesPresenter.title + " - \(category.rawValue)"
 
 		presentationAdapter.presenter = Presenter(
 			contentView: ArticlesViewAdapter(controller: listViewController, imageLoader: imageLoader),
