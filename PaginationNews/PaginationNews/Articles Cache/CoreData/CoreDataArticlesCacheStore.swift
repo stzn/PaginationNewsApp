@@ -31,17 +31,47 @@ public final class CoreDataArticlesCacheStore {
 			throw StoreError.failedToLoadPersistentContainer(error)
 		}
 	}
+
+	func performSync<R>(_ action: (NSManagedObjectContext) -> Result<R, Error>) throws -> R {
+		let context = self.context
+		var result: Result<R, Error>!
+		context.performAndWait { result = action(context) }
+		return try result.get()
+	}
+
+	private func cleanUpReferencesToPersistentStores() {
+		context.performAndWait {
+			let coordinator = self.container.persistentStoreCoordinator
+			try? coordinator.persistentStores.forEach(coordinator.remove)
+		}
+	}
+
+	deinit {
+		cleanUpReferencesToPersistentStores()
+	}
 }
 
 extension CoreDataArticlesCacheStore {
 	public func retrieve() throws -> CachedArticles? {
-		let context = self.context
-		var cache: CachedArticles?
-		context.performAndWait {}
-		return cache
+		try performSync { context in
+			Result {
+				try ManagedCache.find(in: context).map {
+					CachedArticles($0.articles, $0.timestamp)
+				}
+			}
+		}
 	}
 
-	func save(_ articles: [Article], _ timestamp: Date) throws {}
+	public func save(_ articles: [Article], _ timestamp: Date) throws {
+		try performSync { context in
+			Result {
+				let managedCache = try ManagedCache.newUniqueInstance(in: context)
+				managedCache.timestamp = timestamp
+				managedCache.article = ManagedArticle.articles(from: articles, in: context)
+				try context.save()
+			}
+		}
+	}
 
 	func delete() throws {}
 }

@@ -22,6 +22,18 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 		XCTAssertNil(articles)
 	}
 
+	func test_retrieve_deliversFoundValuesOnNonEmptyCache() throws {
+		let articles = [uniqueArticle]
+		let timestamp = Date()
+		let sut = makeSUT()
+
+		try sut.save(articles, timestamp)
+		let cached = try sut.retrieve()
+
+		XCTAssertEqual(cached?.articles, articles)
+		XCTAssertEqual(cached?.timestamp, timestamp)
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CoreDataArticlesCacheStore {
