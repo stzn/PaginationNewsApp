@@ -71,7 +71,7 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 
 	// MARK: - Helpers
 
-	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CoreDataArticlesCacheStore {
+	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> ArticlesCacheStore {
 		let storeURL = URL(fileURLWithPath: "/dev/null")
 		let sut = try! CoreDataArticlesCacheStore(storeURL: storeURL)
 		trackForMemoryLeaks(sut, file: file, line: line)
@@ -79,7 +79,7 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 	}
 
 	private func assertEmptyCache(
-		on sut: CoreDataArticlesCacheStore,
+		on sut: ArticlesCacheStore,
 		retriveCount: RetrieveCount,
 		file: StaticString = #filePath, line: UInt = #line) throws {
 		let cached = try sut.retrieve(count: retriveCount)
@@ -88,7 +88,7 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 	}
 
 	private func asserttNonEmptyCache(
-		on sut: CoreDataArticlesCacheStore,
+		on sut: ArticlesCacheStore,
 		retriveCount: RetrieveCount,
 		file: StaticString = #filePath, line: UInt = #line) throws {
 		let articles = [uniqueArticle]
@@ -102,14 +102,14 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 	}
 
 	private func assertOverrideCachedValue(
-		on sut: CoreDataArticlesCacheStore,
+		on sut: ArticlesCacheStore,
 		file: StaticString = #filePath, line: UInt = #line) throws {
 		try sut.save([uniqueArticle], Date())
 		try asserttNonEmptyCache(on: sut, retriveCount: .once)
 	}
 
 	private func assertDeleteOnEmptyCache(
-		on sut: CoreDataArticlesCacheStore,
+		on sut: ArticlesCacheStore,
 		file: StaticString = #filePath, line: UInt = #line) throws {
 		try sut.delete()
 
@@ -117,7 +117,7 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 	}
 
 	private func assertDeleteOnNonEmptyCache(
-		on sut: CoreDataArticlesCacheStore,
+		on sut: ArticlesCacheStore,
 		file: StaticString = #filePath, line: UInt = #line) throws {
 		try sut.save([uniqueArticle], Date())
 		try sut.delete()
@@ -130,7 +130,7 @@ private enum RetrieveCount {
 	case once, twice
 }
 
-private extension CoreDataArticlesCacheStore {
+private extension ArticlesCacheStore {
 	func retrieve(count: RetrieveCount) throws -> CachedArticles? {
 		switch count {
 		case .once:
