@@ -33,6 +33,12 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 		try asserttNonEmptyCache(on: sut, retriveCount: .twice)
 	}
 
+	func test_insert_deliversNoErrorOnEmptyCache() {
+		let sut = makeSUT()
+
+		XCTAssertNoThrow(try sut.save([], Date()))
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CoreDataArticlesCacheStore {
