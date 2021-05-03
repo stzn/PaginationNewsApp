@@ -45,6 +45,12 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 		XCTAssertNoThrow(try sut.save([uniqueArticle], Date()))
 	}
 
+	func test_insert_overridesPreviouslyInsertedCacheValues() throws {
+		let sut = makeSUT()
+
+		try assertOverrideCachedValue(on: sut)
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> CoreDataArticlesCacheStore {
@@ -75,6 +81,13 @@ class CoreDataArticlesCacheStoreTests: XCTestCase {
 
 		XCTAssertEqual(cached?.articles, articles)
 		XCTAssertEqual(cached?.timestamp, timestamp)
+	}
+
+	private func assertOverrideCachedValue(
+		on sut: CoreDataArticlesCacheStore,
+		file: StaticString = #filePath, line: UInt = #line) throws {
+		try sut.save([uniqueArticle], Date())
+		try asserttNonEmptyCache(on: sut, retriveCount: .once)
 	}
 }
 
