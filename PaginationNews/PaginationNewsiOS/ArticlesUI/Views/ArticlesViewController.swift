@@ -51,17 +51,4 @@ public final class ArticlesViewController: UIViewController {
 			listViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 		])
 	}
-
-	public func display(_ controllers: [CellController], keyword: String, pageNumber: Int) {
-		switch (pageNumber, controllers.isEmpty, keyword.isEmpty) {
-		case (1, true, true):
-			listViewController.set(controllers)
-		case (1, true, false):
-			listViewController.set(controllers)
-		case (1, false, _):
-			listViewController.set(controllers)
-		case (_, true, _), (_, false, _):
-			listViewController.append(controllers)
-		}
-	}
 }
