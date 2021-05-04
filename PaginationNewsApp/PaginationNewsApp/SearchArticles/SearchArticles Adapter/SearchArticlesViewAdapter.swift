@@ -38,11 +38,7 @@ final class SearchArticlesViewAdapter: ContentView {
 			return
 		}
 		let controllers = viewModel.articles.map(map)
-		if viewModel.pageNumber == 1 {
-			controller.set(controllers)
-		} else {
-			controller.append(controllers)
-		}
+		controller.display(controllers)
 		if controllers.isEmpty {
 			let reason: EmptyReason = viewModel.keyword.isEmpty ? .noKeyword : .noData
 			controller.displayEmpty(reason.message)

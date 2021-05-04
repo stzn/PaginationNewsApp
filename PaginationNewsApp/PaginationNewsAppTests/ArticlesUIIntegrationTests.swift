@@ -331,7 +331,7 @@ class ArticlesUIIntegrationTests: XCTestCase {
 		assertThat(sut, isRendering: [article0])
 
 		sut.simulateUserScrollToBottom()
-		loader.completeArticlesLoading(with: [article1], at: 1)
+		loader.completeArticlesLoading(with: [article0, article1], at: 1)
 		XCTAssertEqual(loader.loadArticlesCallCount, 2)
 		assertThat(sut, isRendering: [article0, article1])
 	}
@@ -348,7 +348,7 @@ class ArticlesUIIntegrationTests: XCTestCase {
 		assertThat(sut, isRendering: [article0])
 
 		sut.simulateUserScrollToBottom()
-		loader.completeArticlesLoading(with: [article1], at: 1)
+		loader.completeArticlesLoading(with: [article0, article1], at: 1)
 		XCTAssertEqual(loader.loadArticlesCallCount, 2)
 		assertThat(sut, isRendering: [article0, article1])
 
@@ -363,9 +363,11 @@ class ArticlesUIIntegrationTests: XCTestCase {
 
 		sut.loadViewIfNeeded()
 		XCTAssertEqual(loader.category(at: 0), .all, "Expected \(TopHeadlineCategory.all.rawValue), but got \(loader.category(at: 0).rawValue)")
+		loader.completeArticlesLoading(with: [uniqueArticle], at: 0)
 
 		sut.simulateUserInitiatedArticlesReload()
 		XCTAssertEqual(loader.category(at: 1), .all, "Expected \(TopHeadlineCategory.all.rawValue), but got \(loader.category(at: 1).rawValue)")
+		loader.completeArticlesLoading(with: [uniqueArticle], at: 1)
 
 		sut.simulateUserScrollToBottom()
 		XCTAssertEqual(loader.category(at: 2), .all, "Expected \(TopHeadlineCategory.all.rawValue), but got \(loader.category(at: 2).rawValue)")
@@ -377,13 +379,16 @@ class ArticlesUIIntegrationTests: XCTestCase {
 
 		sut.loadViewIfNeeded()
 		XCTAssertEqual(loader.category(at: 0), initialCategory, "Expected \(initialCategory.rawValue), but got \(loader.category(at: 0).rawValue)")
+		loader.completeArticlesLoading(with: [uniqueArticle], at: 0)
 
 		sut.simulateUserInitiatedArticlesReload()
 		XCTAssertEqual(loader.category(at: 1), initialCategory, "Expected \(initialCategory.rawValue), but got \(loader.category(at: 1).rawValue)")
+		loader.completeArticlesLoading(with: [uniqueArticle], at: 1)
 
 		let selectingCategory: TopHeadlineCategory = .entertainment
 		sut.simulateSelcetCategory(selectingCategory)
 		XCTAssertEqual(loader.category(at: 2), selectingCategory, "Expected \(selectingCategory.rawValue), but got \(loader.category(at: 2).rawValue)")
+		loader.completeArticlesLoading(with: [uniqueArticle], at: 2)
 
 		sut.simulateUserScrollToBottom()
 		XCTAssertEqual(loader.category(at: 3), selectingCategory, "Expected \(selectingCategory.rawValue), but got \(loader.category(at: 3).rawValue)")

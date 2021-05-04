@@ -22,11 +22,7 @@ final class ArticlesViewAdapter: ContentView {
 
 	func display(_ viewModel: ArticlesViewModel) {
 		let controllers = viewModel.articles.map(map)
-		if viewModel.pageNumber == 1 {
-			controller?.set(controllers)
-		} else {
-			controller?.append(controllers)
-		}
+		controller?.set(controllers)
 	}
 
 	private struct NoImageError: Error {}

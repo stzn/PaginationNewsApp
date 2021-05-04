@@ -60,12 +60,6 @@ public final class ListViewController: UIViewController {
 		snapshot.appendItems(cellControllers)
 		dataSource.apply(snapshot, animatingDifferences: false)
 	}
-
-	public func append(_ cellControllers: [CellController]) {
-		var snapshot = dataSource.snapshot()
-		snapshot.appendItems(cellControllers, toSection: 0)
-		dataSource.apply(snapshot, animatingDifferences: true)
-	}
 }
 
 extension ListViewController {

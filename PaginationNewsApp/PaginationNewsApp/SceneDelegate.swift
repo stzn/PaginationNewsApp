@@ -6,6 +6,7 @@
 //
 
 import Combine
+import CoreData
 import UIKit
 import PaginationNews
 
@@ -14,6 +15,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	private lazy var httpClient: HTTPClient = {
 		URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
+	}()
+
+	private lazy var store: ArticlesCacheStore = {
+		try! CoreDataArticlesCacheStore(
+			storeURL: NSPersistentContainer
+				.defaultDirectoryURL()
+				.appendingPathComponent("articles-store.sqlite"))
+	}()
+
+	private lazy var localArticlesManager: LocalArticlesManager = {
+		LocalArticlesManager(store: store, currentDate: Date.init)
 	}()
 
 	convenience init(httpClient: HTTPClient) {
@@ -44,17 +56,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	private var articlesViewController: UIViewController {
 		let viewController = ArticlesUIComposer.articlesComposedWith(
-			articlesLoader: self.makeRemoteArticlesLoader(category:page:),
+			articlesLoader: self.makeRemoteArticlesLoaderWithFallback(category:page:),
 			imageLoader: self.makeRemoteImageLoader(url:))
 		viewController.tabBarItem = UITabBarItem(title: ArticlesPresenter.title, image: UIImage(systemName: "clock.fill"), tag: 0)
 		return viewController
 	}
 
-	private func makeRemoteArticlesLoader(category: TopHeadlineCategory, page: Int) -> AnyPublisher<[Article], Error> {
+	private func makeRemoteArticlesLoaderWithFallback(category: TopHeadlineCategory, page: Int) -> AnyPublisher<[Article], Error> {
 		let remoteURL = TopHeadlineEndpoint.get(category: category, page: page).url()
-		return
+		return page == 1 ?
 			makeRemoteArticlesLoader(url: remoteURL)
-				.eraseToAnyPublisher()
+			.fallback(to: localArticlesManager.loadPublisher)
+			.caching(to: { [localArticlesManager] in
+				try? localArticlesManager.save($0)
+			})
+			: localArticlesManager.loadPublisher()
+			.zip(makeRemoteArticlesLoader(url: remoteURL))
+			.map { $0 + $1 }
+			.caching(to: { [localArticlesManager] in
+				try? localArticlesManager.save($0)
+			})
 	}
 
 	private func makeRemoteArticlesLoader(url: URL) -> AnyPublisher<[Article], Error> {

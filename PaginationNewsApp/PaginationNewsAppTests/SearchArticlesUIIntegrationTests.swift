@@ -346,7 +346,7 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
 		sut.simulateUserScrollToBottom()
 		loader.completeArticlesLoading(with: [article1], at: 1)
 		XCTAssertEqual(loader.loadArticlesCallCount, 2)
-		assertThat(sut, isRendering: [article0, article1])
+		assertThat(sut, isRendering: [article1])
 	}
 
 	func test_userRefreshAction_afterPagingRequest_rendersOnlyTheFirstPage() {
@@ -363,7 +363,7 @@ class SearchArticlesUIIntegrationTests: XCTestCase {
 		sut.simulateUserScrollToBottom()
 		loader.completeArticlesLoading(with: [article1], at: 1)
 		XCTAssertEqual(loader.loadArticlesCallCount, 2)
-		assertThat(sut, isRendering: [article0, article1])
+		assertThat(sut, isRendering: [article1])
 
 		sut.simulateUserInitiatedArticlesReload()
 		loader.completeArticlesLoading(with: [article2], at: 2)

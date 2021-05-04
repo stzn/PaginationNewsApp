@@ -7,10 +7,36 @@
 
 import Combine
 import Foundation
+import PaginationNews
 
 extension Publisher {
 	func dispatchOnMainQueue() -> AnyPublisher<Output, Failure> {
 		receive(on: DispatchQueue.immediateWhenOnMainQueueScheduler).eraseToAnyPublisher()
+	}
+}
+
+extension Publisher {
+	func fallback(to fallbackPublisher: @escaping () -> AnyPublisher<Output, Failure>) -> AnyPublisher<Output, Failure> {
+		self.catch { _ in fallbackPublisher() }.eraseToAnyPublisher()
+	}
+}
+
+extension Publisher {
+	func caching(to cache: @escaping ([Article]) -> Void) -> AnyPublisher<Output, Failure> where Output == [Article] {
+		handleEvents(receiveOutput: cache).eraseToAnyPublisher()
+	}
+}
+
+public extension LocalArticlesManager {
+	typealias Publisher = AnyPublisher<[Article], Error>
+
+	func loadPublisher() -> Publisher {
+		Deferred {
+			Future { completion in
+				completion(Result { try self.load() })
+			}
+		}
+		.eraseToAnyPublisher()
 	}
 }
 

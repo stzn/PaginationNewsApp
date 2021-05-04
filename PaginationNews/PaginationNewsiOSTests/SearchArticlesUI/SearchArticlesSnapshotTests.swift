@@ -15,7 +15,7 @@ class SearchArticlesSnapshotTests: XCTestCase {
 
 		let controllers = sut.cellControllers(articlesWithContent())
 		sut.setSearchText("test")
-		sut.set(controllers)
+		sut.display(controllers)
 		sut.view.enforceLayoutCycle()
 
 		let navigationController = UINavigationController(rootViewController: sut)

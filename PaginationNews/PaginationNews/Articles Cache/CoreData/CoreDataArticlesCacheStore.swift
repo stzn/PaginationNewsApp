@@ -27,7 +27,7 @@ public final class CoreDataArticlesCacheStore {
 		do {
 			container = try NSPersistentContainer.load(name: CoreDataArticlesCacheStore.modelName, model: model, url: storeURL)
 			context = container.newBackgroundContext()
-            context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+			context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 		} catch {
 			throw StoreError.failedToLoadPersistentContainer(error)
 		}

@@ -47,14 +47,9 @@ public final class SearchArticlesViewController: UIViewController {
 		])
 	}
 
-	public func set(_ controllers: [CellController]) {
+	public func display(_ controllers: [CellController]) {
 		hideEmpty()
 		listViewController.set(controllers)
-	}
-
-	public func append(_ controllers: [CellController]) {
-		hideEmpty()
-		listViewController.append(controllers)
 	}
 
 	public func displayEmpty(_ message: String) {
