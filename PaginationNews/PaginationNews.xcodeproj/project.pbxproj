@@ -266,6 +266,7 @@
 		D62A7D21250E12180053AE8B /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				D6E5EBBD2640DD6100160456 /* Categories */,
 				D670A80025A16782009957C1 /* SearchArticles */,
 				D64F47C82532E1AB0085FD19 /* Articles */,
 				D64F47C72532E1A20085FD19 /* Shared */,
@@ -400,7 +401,6 @@
 			isa = PBXGroup;
 			children = (
 				D67265B3250DF68C00555089 /* ArticlesPresenterTests.swift */,
-				D6E5EBB02640CCB000160456 /* CategoriesPresenterTests.swift */,
 				D67265C8250E091900555089 /* ArticlePresenterTests.swift */,
 			);
 			path = Articles;
@@ -654,6 +654,14 @@
 				D6E5EBB42640CCEE00160456 /* Categories.strings */,
 			);
 			path = "Categories Presenter";
+			sourceTree = "<group>";
+		};
+		D6E5EBBD2640DD6100160456 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D6E5EBB02640CCB000160456 /* CategoriesPresenterTests.swift */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		D6EDE6CB250F1C6D00832C80 /* Presenter */ = {
