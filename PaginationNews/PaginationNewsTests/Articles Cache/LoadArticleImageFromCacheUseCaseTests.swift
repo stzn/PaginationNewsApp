@@ -15,6 +15,7 @@ private enum ReceivedMessage: Equatable {
 
 private final class ArticleImageCacheStoreSpy: ArticleImageDataCacheStore {
 	private(set) var receivedMessages: [ReceivedMessage] = []
+	private(set) var expectedCachedData: Data?
 	var retrieveError: Error?
 
 	func retrieve() throws -> Data? {
@@ -22,11 +23,12 @@ private final class ArticleImageCacheStoreSpy: ArticleImageDataCacheStore {
 			throw error
 		}
 		receivedMessages.append(.retrieve)
-		return nil
+		return expectedCachedData
 	}
 
 	func save(_ data: Data) throws {
 		receivedMessages.append(.save(data))
+		expectedCachedData = data
 	}
 }
 
@@ -50,6 +52,15 @@ class LoadArticleImageFromCacheUseCaseTests: XCTestCase {
 		store.retrieveError = anyNSError
 
 		XCTAssertThrowsError(try sut.load())
+	}
+
+	func test_load_deliversNoDataOnEmptyCache() throws {
+		let (sut, store) = makeSUT()
+
+		let received = try sut.load()
+
+		XCTAssertEqual(store.receivedMessages, [.retrieve])
+		XCTAssertEqual(received, nil)
 	}
 
 	// MARK: - Helpers
