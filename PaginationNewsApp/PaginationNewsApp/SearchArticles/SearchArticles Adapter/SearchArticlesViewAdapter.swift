@@ -10,6 +10,18 @@ import UIKit
 import PaginationNews
 import PaginationNewsiOS
 
+private enum EmptyReason {
+	case noKeyword
+	case noData
+
+	var message: String {
+		switch self {
+		case .noKeyword: return SearchArticlesPresenter.noKeywordMessage
+		case .noData: return SearchArticlesPresenter.noMatchedDataMessage
+		}
+	}
+}
+
 final class SearchArticlesViewAdapter: ContentView {
 	private weak var controller: SearchArticlesViewController?
 	private let imageLoader: (URL) -> AnyPublisher<Data, Error>
@@ -18,7 +30,7 @@ final class SearchArticlesViewAdapter: ContentView {
 	init(controller: SearchArticlesViewController, imageLoader: @escaping (URL) -> AnyPublisher<Data, Error>) {
 		self.controller = controller
 		self.imageLoader = imageLoader
-		controller.display([], keyword: "", pageNumber: 1)
+		controller.displayEmpty(EmptyReason.noKeyword.message)
 	}
 
 	func display(_ viewModel: SearchArticlesViewModel) {
@@ -26,7 +38,15 @@ final class SearchArticlesViewAdapter: ContentView {
 			return
 		}
 		let controllers = viewModel.articles.map(map)
-		controller.display(controllers, keyword: viewModel.keyword, pageNumber: viewModel.pageNumber)
+		if viewModel.pageNumber == 1 {
+			controller.set(controllers)
+		} else {
+			controller.append(controllers)
+		}
+		if controllers.isEmpty {
+			let reason: EmptyReason = viewModel.keyword.isEmpty ? .noKeyword : .noData
+			controller.displayEmpty(reason.message)
+		}
 	}
 
 	private struct NoImageError: Error {}

@@ -8,18 +8,6 @@
 import UIKit
 import PaginationNews
 
-private enum EmptyReason {
-	case noKeyword
-	case noData
-
-	var message: String {
-		switch self {
-		case .noKeyword: return SearchArticlesPresenter.noKeywordMessage
-		case .noData: return SearchArticlesPresenter.noMatchedDataMessage
-		}
-	}
-}
-
 public final class SearchArticlesViewController: UIViewController {
 	@IBOutlet public private(set) weak var searchBar: UISearchBar!
 	private(set) lazy var emptyView = EmptyUIView()
@@ -59,24 +47,21 @@ public final class SearchArticlesViewController: UIViewController {
 		])
 	}
 
-	public func display(_ controllers: [CellController], keyword: String, pageNumber: Int) {
-		switch (pageNumber, controllers.isEmpty, keyword.isEmpty) {
-		case (1, true, true):
-			showEmpty(reason: .noKeyword, on: self)
-			listViewController.set(controllers)
-		case (1, true, false):
-			showEmpty(reason: .noData, on: self)
-			listViewController.set(controllers)
-		case (1, false, _):
-			hideEmpty()
-			listViewController.set(controllers)
-		case (_, true, _), (_, false, _):
-			hideEmpty()
-			listViewController.append(controllers)
-		}
+	public func set(_ controllers: [CellController]) {
+		hideEmpty()
+		listViewController.set(controllers)
 	}
 
-	private func showEmpty(reason: EmptyReason, on viewController: SearchArticlesViewController) {
+	public func append(_ controllers: [CellController]) {
+		hideEmpty()
+		listViewController.append(controllers)
+	}
+
+	public func displayEmpty(_ message: String) {
+		showEmpty(message: message, on: self)
+	}
+
+	private func showEmpty(message: String, on viewController: SearchArticlesViewController) {
 		viewController.view.addSubview(emptyView)
 		emptyView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
@@ -85,7 +70,7 @@ public final class SearchArticlesViewController: UIViewController {
 			emptyView.leadingAnchor.constraint(equalTo: viewController.view.leadingAnchor),
 			emptyView.trailingAnchor.constraint(equalTo: viewController.view.trailingAnchor),
 		])
-		emptyView.setMessage(reason.message)
+		emptyView.setMessage(message)
 	}
 
 	private func hideEmpty() {

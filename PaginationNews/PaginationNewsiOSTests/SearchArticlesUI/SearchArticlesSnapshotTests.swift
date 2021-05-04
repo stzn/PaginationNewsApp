@@ -15,7 +15,7 @@ class SearchArticlesSnapshotTests: XCTestCase {
 
 		let controllers = sut.cellControllers(articlesWithContent())
 		sut.setSearchText("test")
-		sut.display(controllers, keyword: "test", pageNumber: 1)
+		sut.set(controllers)
 		sut.view.enforceLayoutCycle()
 
 		let navigationController = UINavigationController(rootViewController: sut)
@@ -26,7 +26,7 @@ class SearchArticlesSnapshotTests: XCTestCase {
 	func test_articlesNoKeyword() {
 		let sut = makeSUT()
 
-		sut.display([], keyword: "", pageNumber: 1)
+		sut.displayEmpty("Please input keyword in search bar")
 
 		sut.view.enforceLayoutCycle()
 
@@ -39,7 +39,8 @@ class SearchArticlesSnapshotTests: XCTestCase {
 		let sut = makeSUT()
 
 		sut.setSearchText("test")
-		sut.display([], keyword: "test", pageNumber: 1)
+		sut.displayEmpty("No matched data")
+
 		sut.view.enforceLayoutCycle()
 
 		let navigationController = UINavigationController(rootViewController: sut)
