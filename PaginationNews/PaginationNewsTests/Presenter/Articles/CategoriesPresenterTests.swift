@@ -15,4 +15,10 @@ class CategoriesPresenterTests: XCTestCase {
 
 		assertLocalizedKeyAndValuesExist(in: bundle, table)
 	}
+
+	func test_localizedStrings_haveAllCategories() {
+		TopHeadlineCategory.allCases.forEach { category in
+			XCTAssertFalse(CategoriesPresenter.displayedCategoryName(category).isEmpty)
+		}
+	}
 }
