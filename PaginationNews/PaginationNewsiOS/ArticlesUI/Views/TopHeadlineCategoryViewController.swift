@@ -26,13 +26,18 @@ public final class TopHeadlineCategoryViewController: UIViewController {
 	}
 
 	@objc private func showCategories(_ sender: UIBarButtonItem) {
-		let controller = UIAlertController(title: "Category", message: "", preferredStyle: .actionSheet)
+		let controller = UIAlertController(title: CategoriesPresenter.title, message: "", preferredStyle: .actionSheet)
+		let cancel = UIAlertAction(title: CategoriesPresenter.cancel, style: .destructive) { [weak controller] _ in
+			controller?.dismiss(animated: true)
+		}
+		controller.addAction(cancel)
 		for category in TopHeadlineCategory.allCases {
 			let option = UIAlertAction(title: CategoriesPresenter.displayedCategoryName(category), style: .default) { [weak self] _ in
 				self?.onSelect(category)
 			}
 			controller.addAction(option)
 		}
+
 		present(controller, animated: true)
 	}
 }
