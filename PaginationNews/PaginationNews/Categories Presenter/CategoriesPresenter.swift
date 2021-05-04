@@ -13,6 +13,7 @@ public final class CategoriesPresenter {
 		return NSLocalizedString(key,
 		                         tableName: "Categories",
 		                         bundle: Bundle(for: Self.self),
+		                         value: "not found",
 		                         comment: "title of category")
 	}
 }

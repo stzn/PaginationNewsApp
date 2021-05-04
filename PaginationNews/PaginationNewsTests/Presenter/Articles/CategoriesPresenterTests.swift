@@ -18,7 +18,7 @@ class CategoriesPresenterTests: XCTestCase {
 
 	func test_localizedStrings_haveAllCategories() {
 		TopHeadlineCategory.allCases.forEach { category in
-			XCTAssertFalse(CategoriesPresenter.displayedCategoryName(category).isEmpty)
+			XCTAssertNotEqual(CategoriesPresenter.displayedCategoryName(category), "not found", "\(category.rawValue)")
 		}
 	}
 }
