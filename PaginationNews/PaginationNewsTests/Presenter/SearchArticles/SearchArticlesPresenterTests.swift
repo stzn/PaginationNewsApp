@@ -15,13 +15,4 @@ class SearchArticlesPresenterTests: XCTestCase {
 
 		assertLocalizedKeyAndValuesExist(in: bundle, table)
 	}
-
-	func test_map_createsViewModel() {
-		let articles = [uniqueArticle]
-		let viewModel = SearchArticlesPresenter.map(articles, keyword: "keyword", pageNumber: 1)
-
-		XCTAssertEqual(viewModel.articles, articles)
-		XCTAssertEqual(viewModel.pageNumber, 1)
-		XCTAssertEqual(viewModel.keyword, "keyword")
-	}
 }

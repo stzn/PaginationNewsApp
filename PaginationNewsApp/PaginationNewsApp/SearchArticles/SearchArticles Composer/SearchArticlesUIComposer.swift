@@ -46,7 +46,7 @@ final class SearchArticlesUIComposer {
 			contentView: SearchArticlesViewAdapter(controller: controller, imageLoader: imageLoader),
 			loadingView: WeakReference(listViewController),
 			errorView: WeakReference(listViewController),
-			mapper: SearchArticlesPresenter.map)
+			mapper: { $0 })
 
 		return controller
 	}

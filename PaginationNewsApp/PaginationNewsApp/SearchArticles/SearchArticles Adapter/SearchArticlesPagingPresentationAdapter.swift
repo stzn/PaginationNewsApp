@@ -26,7 +26,7 @@ private struct PageState {
 final class SearchArticlesPagingPresentationAdapter<View: ContentView> {
 	private let loader: (String, Int) -> AnyPublisher<[Article], Error>
 	private var cancellable: Cancellable?
-	var presenter: Presenter<([Article], String, Int), View>?
+	var presenter: Presenter<SearchArticlesViewModel, View>?
 	private var pageState: PageState = .initial
 	private let perPageCount: Int
 
@@ -43,7 +43,9 @@ final class SearchArticlesPagingPresentationAdapter<View: ContentView> {
 		}
 
 		guard !pageState.keyword.isEmpty else {
-			self.presenter?.didFinishLoading(([], pageState.keyword, 1))
+			self.presenter?.didFinishLoading(
+				.init(keyword: pageState.keyword)
+			)
 			return
 		}
 
@@ -66,7 +68,9 @@ final class SearchArticlesPagingPresentationAdapter<View: ContentView> {
 					}
 					self.pageState.isLast = articles.isEmpty
 					self.pageState.pageNumber = nextPage
-					self.presenter?.didFinishLoading((articles, self.pageState.keyword, nextPage))
+					self.presenter?.didFinishLoading(
+						.init(articles: articles, keyword: self.pageState.keyword, pageNumber: nextPage)
+					)
 				})
 	}
 }
