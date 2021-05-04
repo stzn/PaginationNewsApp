@@ -283,6 +283,7 @@
 		D63F13672519CE190083267B /* PaginationNews */ = {
 			isa = PBXGroup;
 			children = (
+				D6E5EBB72640CDB900160456 /* Categories Presenter */,
 				D64C40B9263E9E84000D1CAD /* Articles Cache */,
 				D670A7F825A166FC009957C1 /* SearchArticles Presenter */,
 				D63F14162519D22D0083267B /* Info.plist */,
@@ -586,12 +587,10 @@
 		D69D260E250DDF8D000605F8 /* Articles Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				D6E5EBB52640CCF900160456 /* CategoriesPresenter.swift */,
 				D67265B0250DF0E200555089 /* ViewModel */,
 				D6DB7B3A250DE06C004A1D91 /* ArticlesPresenter.swift */,
 				D670A82025A17512009957C1 /* Articles.strings */,
 				D62A7D24250E13660053AE8B /* ArticlePresenter.swift */,
-				D6E5EBB42640CCEE00160456 /* Categories.strings */,
 			);
 			path = "Articles Presenter";
 			sourceTree = "<group>";
@@ -642,6 +641,15 @@
 				D670A74925A04592009957C1 /* SearchArticlesViewController+TestHelpers.swift */,
 			);
 			path = SearchArticlesUI;
+			sourceTree = "<group>";
+		};
+		D6E5EBB72640CDB900160456 /* Categories Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				D6E5EBB52640CCF900160456 /* CategoriesPresenter.swift */,
+				D6E5EBB42640CCEE00160456 /* Categories.strings */,
+			);
+			path = "Categories Presenter";
 			sourceTree = "<group>";
 		};
 		D6EDE6CB250F1C6D00832C80 /* Presenter */ = {
