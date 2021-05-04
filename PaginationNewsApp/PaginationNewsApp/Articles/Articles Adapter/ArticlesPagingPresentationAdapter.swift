@@ -40,6 +40,7 @@ final class ArticlesPagingPresentationAdapter<View: ContentView> {
 		      let nextPage = pageState.nextPage else {
 			return
 		}
+		pageState.isLoading = true
 		presenter?.didStartLoading()
 
 		cancellable = loader(pageState.category, nextPage)
@@ -57,6 +58,7 @@ final class ArticlesPagingPresentationAdapter<View: ContentView> {
 					guard let self = self else {
 						return
 					}
+					self.pageState.isLoading = false
 					self.pageState.isLast = articles.isEmpty
 					self.pageState.pageNumber = nextPage
 					self.presenter?.didFinishLoading(
