@@ -63,6 +63,17 @@ class LoadArticleImageFromCacheUseCaseTests: XCTestCase {
 		XCTAssertEqual(received, nil)
 	}
 
+	func test_load_deliversCachedData() throws {
+		let (sut, store) = makeSUT()
+		let expectedData = "expectedData".data(using: .utf8)!
+
+		try sut.save(expectedData)
+		let received = try sut.load()
+
+		XCTAssertEqual(store.receivedMessages, [.save(expectedData), .retrieve])
+		XCTAssertEqual(received, expectedData)
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(

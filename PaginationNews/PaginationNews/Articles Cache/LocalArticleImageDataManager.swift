@@ -16,4 +16,8 @@ public final class LocalArticleImageDataManager {
 	public func load() throws -> Data? {
 		try store.retrieve()
 	}
+
+	public func save(_ data: Data) throws {
+		try store.save(data)
+	}
 }
