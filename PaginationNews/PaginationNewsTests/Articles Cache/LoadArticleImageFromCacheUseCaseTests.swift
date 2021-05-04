@@ -8,13 +8,13 @@
 import XCTest
 import PaginationNews
 
-private enum ReceivedMessage: Equatable {
-	case save(Data)
-	case retrieve
-}
-
 private final class ArticleImageCacheStoreSpy: ArticleImageDataCacheStore {
-	private(set) var receivedMessages: [ReceivedMessage] = []
+	enum Message: Equatable {
+		case save(Data)
+		case retrieve
+	}
+
+	private(set) var receivedMessages: [Message] = []
 	private(set) var expectedCachedData: Data?
 	var retrieveError: Error?
 
