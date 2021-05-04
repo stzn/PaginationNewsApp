@@ -51,7 +51,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	private func makeRemoteArticlesLoader(category: TopHeadlineCategory, page: Int) -> AnyPublisher<[Article], Error> {
-		let remoteURL = TopHeadlineEndpoint.get(page: page, category: category).url()
+		let remoteURL = TopHeadlineEndpoint.get(category: category, page: page).url()
 		return
 			makeRemoteArticlesLoader(url: remoteURL)
 				.eraseToAnyPublisher()

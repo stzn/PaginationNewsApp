@@ -8,13 +8,13 @@
 import Foundation
 
 public enum TopHeadlineEndpoint {
-	case get(page: Int,
+	case get(category: TopHeadlineCategory,
+	         page: Int,
 	         pageSize: Int = APIConstants.articlesPerPageCount,
-	         country: ISO3166_1Alpha_2 = .jp,
-	         category: TopHeadlineCategory = .all)
+	         country: ISO3166_1Alpha_2 = .jp)
 	public func url(baseURL: URL = URL(string: APIConstants.baseURL)!) -> URL {
 		switch self {
-		case let .get(page, pageSize, country, category):
+		case let .get(category, page, pageSize, country):
 			let remoteURL = baseURL.appendingPathComponent("top-headlines")
 			var compoents = URLComponents(url: remoteURL, resolvingAgainstBaseURL: false)!
 			compoents.queryItems = [
