@@ -1,5 +1,5 @@
 //
-//  ArticlesCacheStore.swift
+//  ArticleImageDataCacheStore.swift
 //  PaginationNews
 //
 //  Created by Shinzan Takata on 2021/05/02.
