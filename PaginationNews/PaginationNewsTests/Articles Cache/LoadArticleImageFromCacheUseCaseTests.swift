@@ -51,6 +51,15 @@ class LoadArticleImageFromCacheUseCaseTests: XCTestCase {
 		XCTAssertEqual(received, expectedData)
 	}
 
+	func test_save_failsOnInsertionError() throws {
+		let expected = "expectedData".data(using: .utf8)!
+		let (sut, store) = makeSUT()
+		store.saveError = anyNSError
+
+		XCTAssertThrowsError(try sut.save(expected))
+		XCTAssertEqual(store.receivedMessages, [.save(expected)])
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(

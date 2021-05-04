@@ -17,6 +17,7 @@ final class ArticleImageCacheStoreSpy: ArticleImageDataCacheStore {
 	private(set) var receivedMessages: [Message] = []
 	private(set) var expectedCachedData: Data?
 	var retrieveError: Error?
+	var saveError: Error?
 
 	func retrieve() throws -> Data? {
 		receivedMessages.append(.retrieve)
@@ -28,6 +29,9 @@ final class ArticleImageCacheStoreSpy: ArticleImageDataCacheStore {
 
 	func save(_ data: Data) throws {
 		receivedMessages.append(.save(data))
+		if let error = saveError {
+			throw error
+		}
 		expectedCachedData = data
 	}
 }
