@@ -15,7 +15,7 @@ class ArticlesUIIntegrationTests: XCTestCase {
 
 		sut.loadViewIfNeeded()
 
-		XCTAssertEqual(sut.title, "\(localized("VIEW_TITLE")) - \(TopHeadlineCategory.all.rawValue)")
+		XCTAssertEqual(sut.title, "\(localized("VIEW_TITLE")) - \(CategoriesPresenter.displayedCategoryName(.all))")
 	}
 
 	func test_loadArticlesActions_requestArticlesFromLoader() {
