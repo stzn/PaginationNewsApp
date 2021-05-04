@@ -46,7 +46,7 @@ final class ArticlesUIComposer {
 			contentView: ArticlesViewAdapter(controller: listViewController, imageLoader: imageLoader),
 			loadingView: WeakReference(listViewController),
 			errorView: WeakReference(listViewController),
-			mapper: ArticlesPresenter.map
+			mapper: { $0 }
 		)
 		return articlesController
 	}

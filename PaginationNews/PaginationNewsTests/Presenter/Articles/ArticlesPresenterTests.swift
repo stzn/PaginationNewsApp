@@ -15,11 +15,4 @@ class ArticlesPresenterTests: XCTestCase {
 
 		assertLocalizedKeyAndValuesExist(in: bundle, table)
 	}
-
-	func test_map_createsViewModel() {
-		let articles = [uniqueArticle]
-		let viewModel = ArticlesPresenter.map(articles, pageNumber: 1)
-
-		XCTAssertEqual(viewModel.articles, articles)
-	}
 }
