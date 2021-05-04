@@ -14,7 +14,7 @@ private enum ReceivedMessage: Equatable {
 }
 
 private final class ArticleImageCacheStoreSpy: ArticleImageDataCacheStore {
-	var receivedMessages: [ReceivedMessage] = []
+	private(set) var receivedMessages: [ReceivedMessage] = []
 	var retrieveError: Error?
 
 	func retrieve() throws -> Data? {
