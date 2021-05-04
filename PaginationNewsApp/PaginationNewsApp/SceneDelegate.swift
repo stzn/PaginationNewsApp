@@ -46,7 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let viewController = ArticlesUIComposer.articlesComposedWith(
 			articlesLoader: self.makeRemoteArticlesLoader(category:page:),
 			imageLoader: self.makeRemoteImageLoader(url:))
-		viewController.tabBarItem = UITabBarItem(title: "top headlines", image: UIImage(systemName: "clock.fill"), tag: 0)
+		viewController.tabBarItem = UITabBarItem(title: ArticlesPresenter.title, image: UIImage(systemName: "clock.fill"), tag: 0)
 		return viewController
 	}
 
@@ -76,7 +76,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let viewController = SearchArticlesUIComposer.articlesComposedWith(
 			articlesLoader: self.makeRemoteSearchArticlesLoader(keyword:page:),
 			imageLoader: self.makeRemoteImageLoader(url:))
-		viewController.tabBarItem = UITabBarItem(title: "search", image: UIImage(systemName: "magnifyingglass"), tag: 1)
+		viewController.tabBarItem = UITabBarItem(title: SearchArticlesPresenter.title, image: UIImage(systemName: "magnifyingglass"), tag: 1)
 		return viewController
 	}
 
