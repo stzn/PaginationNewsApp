@@ -12,4 +12,8 @@ public final class LocalArticleImageDataManager {
 	public init(store: ArticleImageDataCacheStore) {
 		self.store = store
 	}
+
+	public func load() throws -> Data? {
+		try store.retrieve()
+	}
 }
