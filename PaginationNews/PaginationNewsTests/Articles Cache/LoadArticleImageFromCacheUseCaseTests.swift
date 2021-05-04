@@ -28,6 +28,7 @@ class LoadArticleImageFromCacheUseCaseTests: XCTestCase {
 		store.retrieveError = anyNSError
 
 		XCTAssertThrowsError(try sut.load())
+		XCTAssertEqual(store.receivedMessages, [.retrieve])
 	}
 
 	func test_load_deliversNoDataOnEmptyCache() throws {

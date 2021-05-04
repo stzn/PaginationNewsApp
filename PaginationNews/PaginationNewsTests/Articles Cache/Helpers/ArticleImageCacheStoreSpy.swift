@@ -19,10 +19,10 @@ final class ArticleImageCacheStoreSpy: ArticleImageDataCacheStore {
 	var retrieveError: Error?
 
 	func retrieve() throws -> Data? {
+		receivedMessages.append(.retrieve)
 		if let error = retrieveError {
 			throw error
 		}
-		receivedMessages.append(.retrieve)
 		return expectedCachedData
 	}
 
