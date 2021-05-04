@@ -208,6 +208,10 @@
 		D6E5EBB02640CCB000160456 /* CategoriesPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesPresenterTests.swift; sourceTree = "<group>"; };
 		D6E5EBB32640CCEE00160456 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Categories.strings; sourceTree = "<group>"; };
 		D6E5EBB52640CCF900160456 /* CategoriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesPresenter.swift; sourceTree = "<group>"; };
+		D6E5EBB82640D88000160456 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Categories.strings; sourceTree = "<group>"; };
+		D6E5EBB92640D88000160456 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/SearchArticles.strings; sourceTree = "<group>"; };
+		D6E5EBBA2640D88000160456 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Shared.strings; sourceTree = "<group>"; };
+		D6E5EBBB2640D88000160456 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Articles.strings; sourceTree = "<group>"; };
 		D6EDE6CC250F1F8800832C80 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		D6EDE6D0250F7D6500832C80 /* PresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -790,6 +794,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = D69D25B2250DBABF000605F8;
 			productRefGroup = D69D25BC250DBABF000605F8 /* Products */;
@@ -1009,6 +1014,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				D670A81825A1743E009957C1 /* en */,
+				D6E5EBB92640D88000160456 /* ja */,
 			);
 			name = SearchArticles.strings;
 			sourceTree = "<group>";
@@ -1017,6 +1023,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				D670A81F25A17512009957C1 /* en */,
+				D6E5EBBB2640D88000160456 /* ja */,
 			);
 			name = Articles.strings;
 			sourceTree = "<group>";
@@ -1025,6 +1032,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				D670A82625A1758C009957C1 /* en */,
+				D6E5EBBA2640D88000160456 /* ja */,
 			);
 			name = Shared.strings;
 			sourceTree = "<group>";
@@ -1033,6 +1041,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				D6E5EBB32640CCEE00160456 /* en */,
+				D6E5EBB82640D88000160456 /* ja */,
 			);
 			name = Categories.strings;
 			sourceTree = "<group>";
@@ -1236,6 +1245,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1297,6 +1307,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

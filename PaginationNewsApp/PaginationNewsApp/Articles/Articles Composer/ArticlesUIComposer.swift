@@ -37,10 +37,10 @@ final class ArticlesUIComposer {
 
 		articlesController.categoryViewController = TopHeadlineCategoryViewController { [weak articlesController] input in
 			category = input
-			articlesController?.title = ArticlesPresenter.title + " - \(category.rawValue)"
+			articlesController?.title = ArticlesPresenter.title + " - \(CategoriesPresenter.displayedCategoryName(category))"
 			presentationAdapter.didRequestRefresh(input)
 		}
-		articlesController.title = ArticlesPresenter.title + " - \(category.rawValue)"
+		articlesController.title = ArticlesPresenter.title + " - \(CategoriesPresenter.displayedCategoryName(category))"
 
 		presentationAdapter.presenter = Presenter(
 			contentView: ArticlesViewAdapter(controller: listViewController, imageLoader: imageLoader),

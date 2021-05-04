@@ -28,7 +28,7 @@ public final class TopHeadlineCategoryViewController: UIViewController {
 	@objc private func showCategories(_ sender: UIBarButtonItem) {
 		let controller = UIAlertController(title: "Category", message: "", preferredStyle: .actionSheet)
 		for category in TopHeadlineCategory.allCases {
-			let option = UIAlertAction(title: category.rawValue, style: .default) { [weak self] _ in
+			let option = UIAlertAction(title: CategoriesPresenter.displayedCategoryName(category), style: .default) { [weak self] _ in
 				self?.onSelect(category)
 			}
 			controller.addAction(option)
