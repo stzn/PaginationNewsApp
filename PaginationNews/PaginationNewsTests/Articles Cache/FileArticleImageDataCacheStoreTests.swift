@@ -15,6 +15,12 @@ class FileArticleImageDataCacheStoreTests: XCTestCase {
 		try assertEmptyCache(on: sut, retriveCount: .once)
 	}
 
+	func test_retrieve_hasNoSideEffectsOnEmptyCache() throws {
+		let sut = makeSUT()
+
+		try assertEmptyCache(on: sut, retriveCount: .twice)
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> FileArticleImageDataCacheStore {
