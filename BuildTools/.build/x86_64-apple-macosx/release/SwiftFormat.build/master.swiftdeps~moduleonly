@@ -1,0 +1,18 @@
+version: "Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
+options: "a5141b2ff46741ea83918a3395f619ee"
+build_time: [1619829479, 983253000]
+inputs:
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/Arguments.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/CommandLine.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/EnumAssociable.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/Examples.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/Formatter.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/FormattingHelpers.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/Globs.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/Inference.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/OptionDescriptor.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/Options.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/ParsingHelpers.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/Rules.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/SwiftFormat.swift": [9223372036, 854775807]
+  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/Sources/Tokenizer.swift": [9223372036, 854775807]

@@ -1,0 +1,77 @@
+{
+  "": {
+    "dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/SwiftFormat.d",
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/SwiftFormat.o",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/master.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Arguments.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Arguments.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Arguments~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Arguments.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/CommandLine.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/CommandLine.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/CommandLine~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/CommandLine.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/EnumAssociable.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/EnumAssociable.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/EnumAssociable~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/EnumAssociable.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Examples.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Examples.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Examples~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Examples.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Formatter.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Formatter.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Formatter~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Formatter.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/FormattingHelpers.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/FormattingHelpers.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/FormattingHelpers~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/FormattingHelpers.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Globs.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Globs.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Globs~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Globs.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Inference.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Inference.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Inference~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Inference.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/OptionDescriptor.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/OptionDescriptor.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/OptionDescriptor~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/OptionDescriptor.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Options.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Options.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Options~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Options.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/ParsingHelpers.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/ParsingHelpers.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/ParsingHelpers~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/ParsingHelpers.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Rules.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Rules.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Rules~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Rules.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/SwiftFormat.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/SwiftFormat.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/SwiftFormat~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/SwiftFormat.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Tokenizer.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Tokenizer.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Tokenizer~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/Tokenizer.swiftdeps"
+  }
+}

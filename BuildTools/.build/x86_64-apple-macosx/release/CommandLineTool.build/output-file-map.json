@@ -1,0 +1,12 @@
+{
+  "": {
+    "dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/CommandLineTool.build/CommandLineTool.d",
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/CommandLineTool.build/CommandLineTool.o",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/CommandLineTool.build/master.swiftdeps"
+  },
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/CommandLineTool/main.swift": {
+    "object": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/CommandLineTool.build/main.swift.o",
+    "swiftmodule": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/CommandLineTool.build/main~partial.swiftmodule",
+    "swift-dependencies": "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/CommandLineTool.build/main.swiftdeps"
+  }
+}

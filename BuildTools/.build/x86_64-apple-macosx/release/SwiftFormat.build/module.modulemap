@@ -1,0 +1,4 @@
+module SwiftFormat {
+    header "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/SwiftFormat.build/SwiftFormat-Swift.h"
+    requires objc
+}

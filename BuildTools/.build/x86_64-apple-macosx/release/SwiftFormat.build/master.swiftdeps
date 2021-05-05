@@ -1,0 +1,19 @@
+version: "Apple Swift version 5.5-dev (LLVM 159d0efd5633014, Swift d0d9bef703e549a)"
+options: "4f46c78008670d8844f1cb1a99ce6e2a21874d16e8a73f36a89bffb6a8dfe7ee"
+build_start_time: [1619934344, 907063007]
+build_end_time: [1619934413, 441587924]
+inputs:
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Arguments.swift": [1619829479, 185362339]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/CommandLine.swift": [1619829479, 186068534]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/EnumAssociable.swift": [1619829478, 895254135]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Examples.swift": [1619829479, 186545133]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Formatter.swift": [1619829479, 187012195]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/FormattingHelpers.swift": [1619829479, 187664985]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Globs.swift": [1619829479, 188004493]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Inference.swift": [1619829478, 897403240]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/OptionDescriptor.swift": [1619829479, 188570022]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Options.swift": [1619829479, 189047813]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/ParsingHelpers.swift": [1619829479, 189718246]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Rules.swift": [1619829479, 191796302]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/SwiftFormat.swift": [1619829479, 192260026]
+  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/Sources/Tokenizer.swift": [1619829479, 192878723]
