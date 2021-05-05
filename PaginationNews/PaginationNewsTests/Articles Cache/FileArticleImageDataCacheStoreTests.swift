@@ -67,14 +67,14 @@ class FileArticleImageDataCacheStoreTests: XCTestCase {
 
 	// MARK: - Helpers
 
-	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> FileArticleImageDataCacheStore {
+	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> ArticleImageDataCacheStore {
 		let sut = FileArticleImageDataCacheStore(baseDirectroy: testDirectory)
 		trackForMemoryLeaks(sut, file: file, line: line)
 		return sut
 	}
 
 	private func assertEmptyCache(
-		on sut: FileArticleImageDataCacheStore,
+		on sut: ArticleImageDataCacheStore,
 		retriveCount: RetrieveCount,
 		file: StaticString = #filePath, line: UInt = #line) throws {
 		let article = uniqueArticle
@@ -84,7 +84,7 @@ class FileArticleImageDataCacheStoreTests: XCTestCase {
 	}
 
 	private func asserttNonEmptyCache(
-		on sut: FileArticleImageDataCacheStore,
+		on sut: ArticleImageDataCacheStore,
 		retriveCount: RetrieveCount,
 		file: StaticString = #filePath, line: UInt = #line) throws {
 		let article = uniqueArticle
@@ -97,7 +97,7 @@ class FileArticleImageDataCacheStoreTests: XCTestCase {
 	}
 
 	private func assertOverrideCachedValue(
-		on sut: FileArticleImageDataCacheStore,
+		on sut: ArticleImageDataCacheStore,
 		file: StaticString = #filePath, line: UInt = #line) throws {
 		try sut.save(for: UUID().uuidString, "random data".data(using: .utf8)!)
 		try asserttNonEmptyCache(on: sut, retriveCount: .once)
