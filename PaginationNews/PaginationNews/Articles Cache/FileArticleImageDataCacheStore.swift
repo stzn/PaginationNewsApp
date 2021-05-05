@@ -14,8 +14,16 @@ public final class FileArticleImageDataCacheStore: ArticleImageDataCacheStore {
 	}
 
 	public func retrieve(for key: String) throws -> Data? {
-		nil
+		let url = baseDirectroy
+			.appendingPathComponent(key)
+			.appendingPathExtension("png")
+		return FileManager.default.contents(atPath: url.path)
 	}
 
-	public func save(for key: String, _ data: Data) throws {}
+	public func save(for key: String, _ data: Data) throws {
+		let url = baseDirectroy
+			.appendingPathComponent(key)
+			.appendingPathExtension("png")
+		try data.write(to: url)
+	}
 }
