@@ -8,7 +8,7 @@
 import Foundation
 
 public struct SearchArticlesViewModel {
-    public let articles: [Article]
-    public let keyword: String
-    public let pageNumber: Int
+	public let articles: [Article]
+	public let keyword: String
+	public let pageNumber: Int
 }

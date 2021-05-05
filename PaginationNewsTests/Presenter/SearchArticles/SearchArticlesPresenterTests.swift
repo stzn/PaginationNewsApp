@@ -9,19 +9,19 @@ import XCTest
 import PaginationNews
 
 class SearchArticlesPresenterTests: XCTestCase {
-    func test_localizedStrings_haveKeysAndValuesForAllSupportedLocalizations() {
-        let table = "SearchArticles"
-        let bundle = Bundle(for: SearchArticlesPresenter.self)
+	func test_localizedStrings_haveKeysAndValuesForAllSupportedLocalizations() {
+		let table = "SearchArticles"
+		let bundle = Bundle(for: SearchArticlesPresenter.self)
 
-        assertLocalizedKeyAndValuesExist(in: bundle, table)
-    }
+		assertLocalizedKeyAndValuesExist(in: bundle, table)
+	}
 
-    func test_map_createsViewModel() {
-        let articles = [uniqueArticle]
-        let viewModel = SearchArticlesPresenter.map(articles, keyword: "keyword", pageNumber: 1)
+	func test_map_createsViewModel() {
+		let articles = [uniqueArticle]
+		let viewModel = SearchArticlesPresenter.map(articles, keyword: "keyword", pageNumber: 1)
 
-        XCTAssertEqual(viewModel.articles, articles)
-        XCTAssertEqual(viewModel.pageNumber, 1)
-        XCTAssertEqual(viewModel.keyword, "keyword")
-    }
+		XCTAssertEqual(viewModel.articles, articles)
+		XCTAssertEqual(viewModel.pageNumber, 1)
+		XCTAssertEqual(viewModel.keyword, "keyword")
+	}
 }

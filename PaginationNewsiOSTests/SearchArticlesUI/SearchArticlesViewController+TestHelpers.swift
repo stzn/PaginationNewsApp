@@ -9,7 +9,7 @@ import Foundation
 import PaginationNewsiOS
 
 extension SearchArticlesViewController {
-    func setSearchText(_ input: String) {
-        searchBar.text = input
-    }
+	func setSearchText(_ input: String) {
+		searchBar.text = input
+	}
 }

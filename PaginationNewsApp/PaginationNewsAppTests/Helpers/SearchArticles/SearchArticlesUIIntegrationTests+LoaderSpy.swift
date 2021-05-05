@@ -10,82 +10,79 @@ import Foundation
 import PaginationNews
 
 extension SearchArticlesUIIntegrationTests {
+	class LoaderSpy {
+		// MARK: - ArticlesLoader
 
-    class LoaderSpy {
+		typealias ArticlesLoaderResult = Swift.Result<([Article], Int), Error>
+		typealias ArticlesLoaderPublisher = AnyPublisher<([Article], Int), Error>
 
-        // MARK: - ArticlesLoader
+		func loadPublisher(_ keyword: String, _ page: Int) -> ArticlesLoaderPublisher {
+			Deferred {
+				Future { self.load(keyword: keyword, completion: $0) }
+			}
+			.eraseToAnyPublisher()
+		}
 
-        typealias ArticlesLoaderResult = Swift.Result<([Article], Int), Error>
-        typealias ArticlesLoaderPublisher = AnyPublisher<([Article], Int), Error>
+		private var articlesRequests: [(keyword: String, completion: (ArticlesLoaderResult) -> Void)] = []
 
-        func loadPublisher(_ keyword: String, _ page: Int) -> ArticlesLoaderPublisher {
-            Deferred {
-                Future { self.load(keyword: keyword, completion: $0) }
-            }
-            .eraseToAnyPublisher()
-        }
+		var loadArticlesCallCount: Int {
+			return articlesRequests.count
+		}
 
-        private var articlesRequests: [(keyword: String, completion: (ArticlesLoaderResult) -> Void)] = []
+		func keyword(index: Int) -> String {
+			articlesRequests[index].keyword
+		}
 
-        var loadArticlesCallCount: Int {
-            return articlesRequests.count
-        }
+		func load(keyword: String, completion: @escaping (ArticlesLoaderResult) -> Void) {
+			articlesRequests.append((keyword, completion))
+		}
 
-        func keyword(index: Int) -> String {
-            articlesRequests[index].keyword
-        }
+		func completeArticlesLoading(with articles: [Article] = [], totalResults: Int = 20, at index: Int = 0) {
+			articlesRequests[index].completion(.success((articles, totalResults)))
+		}
 
-        func load(keyword: String, completion: @escaping (ArticlesLoaderResult) -> Void) {
-            articlesRequests.append((keyword, completion))
-        }
+		func completeArticlesLoadingWithError(at index: Int = 0) {
+			let error = NSError(domain: "an error", code: 0)
+			articlesRequests[index].completion(.failure(error))
+		}
 
-        func completeArticlesLoading(with articles: [Article] = [], totalResults: Int = 20, at index: Int = 0) {
-            articlesRequests[index].completion(.success((articles, totalResults)))
-        }
+		// MARK: - ArticlesImageDataLoader
 
-        func completeArticlesLoadingWithError(at index: Int = 0) {
-            let error = NSError(domain: "an error", code: 0)
-            articlesRequests[index].completion(.failure(error))
-        }
+		typealias ArticlesImageDataLoaderResult = Swift.Result<Data, Error>
+		typealias ArticlesImageDataLoaderPublisher = AnyPublisher<Data, Error>
 
-        // MARK: - ArticlesImageDataLoader
+		func loadImageDataPublisher(from url: URL) -> ArticlesImageDataLoaderPublisher {
+			var cancellable: AnyCancellable?
 
-        typealias ArticlesImageDataLoaderResult = Swift.Result<Data, Error>
-        typealias ArticlesImageDataLoaderPublisher = AnyPublisher<Data, Error>
+			return Deferred {
+				Future { completion in
+					cancellable = self.loadImageData(from: url, completion: completion)
+				}
+			}
+			.handleEvents(receiveCancel: { cancellable?.cancel() })
+			.eraseToAnyPublisher()
+		}
 
-        func loadImageDataPublisher(from url: URL) -> ArticlesImageDataLoaderPublisher {
-            var cancellable: AnyCancellable?
+		private var imageRequests = [(url: URL, completion: (ArticlesImageDataLoaderResult) -> Void)]()
 
-            return Deferred {
-                Future { completion in
-                    cancellable = self.loadImageData(from: url, completion: completion)
-                }
-            }
-            .handleEvents(receiveCancel: { cancellable?.cancel() })
-            .eraseToAnyPublisher()
-        }
+		var loadedImageURLs: [URL] {
+			return imageRequests.map { $0.url }
+		}
 
-        private var imageRequests = [(url: URL, completion: (ArticlesImageDataLoaderResult) -> Void)]()
+		private(set) var cancelledImageURLs = [URL]()
 
-        var loadedImageURLs: [URL] {
-            return imageRequests.map { $0.url }
-        }
+		func loadImageData(from url: URL, completion: @escaping (ArticlesImageDataLoaderResult) -> Void) -> AnyCancellable {
+			imageRequests.append((url, completion))
+			return AnyCancellable { [weak self] in self?.cancelledImageURLs.append(url) }
+		}
 
-        private(set) var cancelledImageURLs = [URL]()
+		func completeImageLoading(with imageData: Data = Data(), at index: Int = 0) {
+			imageRequests[index].completion(.success(imageData))
+		}
 
-        func loadImageData(from url: URL, completion: @escaping (ArticlesImageDataLoaderResult) -> Void) -> AnyCancellable {
-            imageRequests.append((url, completion))
-            return AnyCancellable { [weak self] in self?.cancelledImageURLs.append(url) }
-        }
-
-        func completeImageLoading(with imageData: Data = Data(), at index: Int = 0) {
-            imageRequests[index].completion(.success(imageData))
-        }
-
-        func completeImageLoadingWithError(at index: Int = 0) {
-            let error = NSError(domain: "an error", code: 0)
-            imageRequests[index].completion(.failure(error))
-        }
-    }
-
+		func completeImageLoadingWithError(at index: Int = 0) {
+			let error = NSError(domain: "an error", code: 0)
+			imageRequests[index].completion(.failure(error))
+		}
+	}
 }

@@ -8,5 +8,5 @@
 import Foundation
 
 public struct LoadingViewModel {
-    public let isLoading: Bool
+	public let isLoading: Bool
 }

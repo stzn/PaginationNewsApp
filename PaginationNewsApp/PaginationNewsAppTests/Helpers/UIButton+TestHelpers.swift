@@ -7,7 +7,7 @@
 import UIKit
 
 extension UIButton {
-    func simulateTap() {
-        simulate(event: .touchUpInside)
-    }
+	func simulateTap() {
+		simulate(event: .touchUpInside)
+	}
 }

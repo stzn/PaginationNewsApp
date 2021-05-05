@@ -8,36 +8,36 @@
 import UIKit
 
 final class LoadingUIView: UIView {
-    private lazy var indicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .large)
-        indicator.hidesWhenStopped = true
-        addSubview(indicator)
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            indicator.centerXAnchor.constraint(equalTo: centerXAnchor),
-            indicator.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-        return indicator
-    }()
+	private lazy var indicator: UIActivityIndicatorView = {
+		let indicator = UIActivityIndicatorView(style: .large)
+		indicator.hidesWhenStopped = true
+		addSubview(indicator)
+		indicator.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			indicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+			indicator.centerYAnchor.constraint(equalTo: centerYAnchor)
+		])
+		return indicator
+	}()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		setup()
+	}
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
-    func start() {
-        indicator.startAnimating()
-    }
+	func start() {
+		indicator.startAnimating()
+	}
 
-    func stop() {
-        indicator.stopAnimating()
-    }
+	func stop() {
+		indicator.stopAnimating()
+	}
 
-    private func setup() {
-        backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
-    }
+	private func setup() {
+		backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+	}
 }
