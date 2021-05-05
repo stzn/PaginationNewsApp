@@ -14,10 +14,16 @@ public final class LocalArticleImageDataManager {
 	}
 
 	public func load(for article: Article) throws -> Data? {
-		try store.retrieve(for: article.id.uuidString)
+		guard let key = article.imageKey else {
+			return nil
+		}
+		return try store.retrieve(for: key)
 	}
 
 	public func save(for article: Article, _ data: Data) throws {
-		try store.save(for: article.id.uuidString, data)
+		guard let key = article.imageKey else {
+			return
+		}
+		try store.save(for: key, data)
 	}
 }

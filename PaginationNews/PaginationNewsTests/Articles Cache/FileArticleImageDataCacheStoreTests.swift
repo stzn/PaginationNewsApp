@@ -90,7 +90,7 @@ class FileArticleImageDataCacheStoreTests: XCTestCase {
 		let article = uniqueArticle
 		let data = "test data".data(using: .utf8)!
 
-		try sut.save(for: article.id.uuidString, data)
+		try sut.save(for: article.imageKey!, data)
 		let cached = try sut.retrieve(for: article, count: retriveCount)
 
 		XCTAssertEqual(cached, data)
@@ -112,14 +112,14 @@ private extension ArticleImageDataCacheStore {
 	func retrieve(for article: Article, count: RetrieveCount) throws -> Data? {
 		switch count {
 		case .once:
-			return try retrieve(for: article.idString)
+			return try retrieve(for: article.imageKey!)
 		case .twice:
 			return try retrieveTwice(for: article)
 		}
 	}
 
 	func retrieveTwice(for article: Article) throws -> Data? {
-		_ = try retrieve(for: article.idString)
-		return try retrieve(for: article.idString)
+		_ = try retrieve(for: article.imageKey!)
+		return try retrieve(for: article.imageKey!)
 	}
 }

@@ -21,7 +21,7 @@ class LoadArticleImageFromCacheUseCaseTests: XCTestCase {
 
 		_ = try sut.load(for: article)
 
-		XCTAssertEqual(store.receivedMessages, [.retrieve(article.idString)])
+		XCTAssertEqual(store.receivedMessages, [.retrieve(article.imageKey!)])
 	}
 
 	func test_load_throwsErrorOnRetrievalError() throws {
@@ -30,7 +30,7 @@ class LoadArticleImageFromCacheUseCaseTests: XCTestCase {
 		store.retrieveError = anyNSError
 
 		XCTAssertThrowsError(try sut.load(for: article))
-		XCTAssertEqual(store.receivedMessages, [.retrieve(article.idString)])
+		XCTAssertEqual(store.receivedMessages, [.retrieve(article.imageKey!)])
 	}
 
 	func test_load_deliversNoDataOnEmptyCache() throws {
@@ -39,7 +39,7 @@ class LoadArticleImageFromCacheUseCaseTests: XCTestCase {
 
 		let received = try sut.load(for: article)
 
-		XCTAssertEqual(store.receivedMessages, [.retrieve(article.idString)])
+		XCTAssertEqual(store.receivedMessages, [.retrieve(article.imageKey!)])
 		XCTAssertEqual(received, nil)
 	}
 
@@ -47,7 +47,7 @@ class LoadArticleImageFromCacheUseCaseTests: XCTestCase {
 		let (sut, store) = makeSUT()
 		let expectedData = "expectedData".data(using: .utf8)!
 		let article = uniqueArticle
-		let articleKey = article.idString
+		let articleKey = article.imageKey!
 
 		try sut.save(for: article, expectedData)
 		let received = try sut.load(for: article)
@@ -63,7 +63,7 @@ class LoadArticleImageFromCacheUseCaseTests: XCTestCase {
 		store.saveError = anyNSError
 
 		XCTAssertThrowsError(try sut.save(for: article, expected))
-		XCTAssertEqual(store.receivedMessages, [.save(article.idString, expected)])
+		XCTAssertEqual(store.receivedMessages, [.save(article.imageKey!, expected)])
 	}
 
 	// MARK: - Helpers

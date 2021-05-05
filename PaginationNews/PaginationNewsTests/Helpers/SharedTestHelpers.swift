@@ -13,7 +13,7 @@ var anyNSError: NSError {
 }
 
 var anyURL: URL {
-	URL(string: "http://any-url.com")!
+	URL(string: "http://any-url.com/random")!
 }
 
 var uniqueArticle: Article {

@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Article: Hashable {
-	public let id: UUID
+	let id: UUID
 	let author: String?
 	let title: String
 	let description: String?
@@ -17,5 +17,7 @@ public struct Article: Hashable {
 	let publishedAt: Date
 	let sourceName: String
 
-	public var idString: String { id.uuidString }
+	public var imageKey: String? {
+		urlToImage?.deletingPathExtension().lastPathComponent
+	}
 }
