@@ -18,6 +18,18 @@ class ArticlesAcceptanceTests: XCTestCase {
 		XCTAssertEqual(article.numberOfRenderedArticleViews(), 2)
 		XCTAssertEqual(article.renderedArticleImageData(at: 0), makeImageData0())
 		XCTAssertEqual(article.renderedArticleImageData(at: 1), makeImageData1())
+
+		article.simulateUserScrollToBottom()
+		XCTAssertEqual(article.numberOfRenderedArticleViews(), 3)
+		XCTAssertEqual(article.renderedArticleImageData(at: 0), makeImageData0())
+		XCTAssertEqual(article.renderedArticleImageData(at: 1), makeImageData1())
+		XCTAssertEqual(article.renderedArticleImageData(at: 2), makeImageData2())
+
+		article.simulateUserScrollToBottom()
+		XCTAssertEqual(article.numberOfRenderedArticleViews(), 3)
+		XCTAssertEqual(article.renderedArticleImageData(at: 0), makeImageData0())
+		XCTAssertEqual(article.renderedArticleImageData(at: 1), makeImageData1())
+		XCTAssertEqual(article.renderedArticleImageData(at: 2), makeImageData2())
 	}
 
 	// MARK: - Helpers
@@ -46,21 +58,26 @@ class ArticlesAcceptanceTests: XCTestCase {
 
 	private func makeImageData0() -> Data { UIImage.make(withColor: .red).pngData()! }
 	private func makeImageData1() -> Data { UIImage.make(withColor: .green).pngData()! }
+	private func makeImageData2() -> Data { UIImage.make(withColor: .blue).pngData()! }
 
 	private func makeData(for url: URL) -> Data {
 		switch url.path {
 		case "/image-0": return makeImageData0()
 		case "/image-1": return makeImageData1()
-		case "/v2/top-headlines": return makeArticlesData()
+		case "/image-2": return makeImageData2()
+		case "/v2/top-headlines" where url.query?.contains("page=1") == true:
+			return makeFirstPageArticlesData()
+		case "/v2/top-headlines" where url.query?.contains("page=2") == true:
+			return makeSecondPageArticlesData()
 		default: return Data()
 		}
 	}
 
-	private func makeArticlesData() -> Data {
+	private func makeFirstPageArticlesData() -> Data {
 		return try! JSONSerialization.data(
 			withJSONObject: [
 				"status": "ok",
-				"totalResults": 10,
+				"totalResults": 3,
 				"articles": [
 					[
 						"source": ["id": "bbc-news", "name": "BBC News"],
@@ -81,6 +98,27 @@ class ArticlesAcceptanceTests: XCTestCase {
 						"urlToImage": "https://techcrunch.com/image-1",
 						"publishedAt": "2020-12-20T11:39:03Z",
 						"content": "Tesla’s relationship with bitcoin is not a dalliance, according to the comments made by the company’s CFO and dubbed “master of coin” Zach Kirkhorn during an earnings call Monday. Instead, the compan… [+3073 chars]"
+					],
+				]
+			]
+		)
+	}
+
+	private func makeSecondPageArticlesData() -> Data {
+		return try! JSONSerialization.data(
+			withJSONObject: [
+				"status": "ok",
+				"totalResults": 3,
+				"articles": [
+					[
+						"source": ["id": "bbc-news", "name": "BBC News"],
+						"author": "BBC News",
+						"title": "Indonesian firm busted for reusing Covid nasal swab tests",
+						"description": "Up to 9,000 passengers at a local airport may have been tested with washed and reused swab sticks.",
+						"url": "http://www.bbc.co.uk/news/world-asia-56990253",
+						"urlToImage": "https://ichef.bbci.co.uk/image-2",
+						"publishedAt": "2021-05-20T00:39:57Z",
+						"content": "image captionCovid nasal swab testing has become routine in many countries hit by the global pandemic (file picture)\r\nSeveral employees of a pharmaceutical company have been arrested in Indonesia for… [+2416 chars]"
 					],
 				]
 			]
