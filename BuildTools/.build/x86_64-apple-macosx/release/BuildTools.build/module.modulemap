@@ -1,4 +1,0 @@
-module BuildTools {
-    header "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/x86_64-apple-macosx/release/BuildTools.build/BuildTools-Swift.h"
-    requires objc
-}

@@ -1,6 +1,0 @@
-version: "Apple Swift version 5.5-dev (LLVM 159d0efd5633014, Swift d0d9bef703e549a)"
-options: "ebde5c1629be89f605c8c5a1327e88f75fb304a18a6799ed793c2d37cfc993ec"
-build_start_time: [1619934413, 574872970]
-build_end_time: [1619934414, 365056037]
-inputs:
-  "/Users/shinzantakata/Desktop/PaginationNews/BuildTools/.build/checkouts/SwiftFormat/CommandLineTool/main.swift": [1619829478, 635008335]

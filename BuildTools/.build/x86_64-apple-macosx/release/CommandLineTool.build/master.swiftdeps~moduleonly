@@ -1,5 +1,0 @@
-version: "Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)"
-options: "7cae64e91e57f01aaf884d8db0087654"
-build_time: [1619829527, 412930000]
-inputs:
-  "/Users/shinzantakata/Documents/swift/ios-lead-essentials-image-comments-challenge/BuildTools/.build/checkouts/SwiftFormat/CommandLineTool/main.swift": [9223372036, 854775807]
