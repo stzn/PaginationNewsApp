@@ -24,10 +24,10 @@ private enum EmptyReason {
 
 final class SearchArticlesViewAdapter: ContentView {
 	private weak var controller: SearchArticlesViewController?
-	private let imageLoader: (URL) -> AnyPublisher<Data, Error>
+	private let imageLoader: (Article) -> AnyPublisher<Data, Error>
 	private typealias PresentationAdapter = ImageDataPresentationAdapter<WeakReference<ArticleCellController>>
 
-	init(controller: SearchArticlesViewController, imageLoader: @escaping (URL) -> AnyPublisher<Data, Error>) {
+	init(controller: SearchArticlesViewController, imageLoader: @escaping (Article) -> AnyPublisher<Data, Error>) {
 		self.controller = controller
 		self.imageLoader = imageLoader
 		controller.displayEmpty(EmptyReason.noKeyword.message)
@@ -48,10 +48,7 @@ final class SearchArticlesViewAdapter: ContentView {
 	private struct NoImageError: Error {}
 
 	func map(_ model: Article) -> CellController {
-		let adapter = PresentationAdapter { model.urlToImage != nil ?
-			self.imageLoader(model.urlToImage!)
-			: Fail(error: NoImageError()).eraseToAnyPublisher()
-		}
+		let adapter = PresentationAdapter(loader: { self.imageLoader(model) })
 		let view = ArticleCellController(viewModel: ArticlePresenter.map(model),
 		                                 delegate: adapter)
 

@@ -28,10 +28,7 @@ final class ArticlesViewAdapter: ContentView {
 	private struct NoImageError: Error {}
 
 	private func map(_ model: Article) -> CellController {
-		let adapter = PresentationAdapter { model.urlToImage != nil ?
-			self.imageLoader(model)
-			: Fail(error: NoImageError()).eraseToAnyPublisher()
-		}
+		let adapter = PresentationAdapter(loader: { self.imageLoader(model) })
 		let view = ArticleCellController(viewModel: ArticlePresenter.map(model),
 		                                 delegate: adapter)
 

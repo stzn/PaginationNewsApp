@@ -29,6 +29,7 @@ final class SearchArticlesPagingPresentationAdapter<View: ContentView> {
 	var presenter: Presenter<SearchArticlesViewModel, View>?
 	private var pageState: PageState = .initial
 	private let perPageCount: Int
+	private var currentArticles: [Article] = []
 
 	init(loader: @escaping (String, Int) -> AnyPublisher<[Article], Error>,
 	     perPageCount: Int) {
@@ -67,7 +68,12 @@ final class SearchArticlesPagingPresentationAdapter<View: ContentView> {
 						return
 					}
 					self.pageState.isLast = articles.isEmpty
-					self.pageState.pageNumber = nextPage
+					if let nextPage = self.pageState.nextPage {
+						self.pageState.pageNumber = nextPage
+					}
+
+					self.currentArticles = articles
+
 					self.presenter?.didFinishLoading(
 						.init(articles: articles, keyword: self.pageState.keyword, pageNumber: nextPage)
 					)

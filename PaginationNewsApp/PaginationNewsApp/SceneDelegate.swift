@@ -128,16 +128,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	private var searchArticlesViewController: UIViewController {
 		let viewController = SearchArticlesUIComposer.articlesComposedWith(
-			articlesLoader: self.makeRemoteSearchArticlesLoader(keyword:page:),
-			imageLoader: self.makeRemoteImageLoader(url:))
+			articlesLoader: self.makeRemoteSearchArticlesLoaderWithFallback(keyword:page:),
+			imageLoader: self.makeRemoteArticleImageDataLoaderWithFallback(article:))
 		viewController.tabBarItem = UITabBarItem(title: SearchArticlesPresenter.title, image: UIImage(systemName: "magnifyingglass"), tag: 1)
 		return viewController
 	}
 
-	private func makeRemoteSearchArticlesLoader(keyword: String, page: Int) -> AnyPublisher<[Article], Error> {
+	private func makeRemoteSearchArticlesLoaderWithFallback(keyword: String, page: Int) -> AnyPublisher<[Article], Error> {
 		let remoteURL = SearchArticlesEndpoint.get(keyword: keyword, page: page).url()
+		return page == 1 ?
+			makeRemoteSearchArticlesLoader(url: remoteURL)
+			.fallback(to: localArticlesManager.loadPublisher)
+			.caching(to: { [localArticlesManager] in
+				try? localArticlesManager.save($0)
+			})
+			: localArticlesManager.loadPublisher()
+			.zip(makeRemoteSearchArticlesLoader(url: remoteURL))
+			.map { $0 + $1 }
+			.caching(to: { [localArticlesManager] in
+				try? localArticlesManager.save($0)
+			})
+	}
+
+	private func makeRemoteSearchArticlesLoader(url: URL) -> AnyPublisher<[Article], Error> {
 		return httpClient
-			.send(request: .init(url: remoteURL))
+			.send(request: .init(url: url))
 			.tryMap(ArticlesMapper.map)
 			.eraseToAnyPublisher()
 	}
