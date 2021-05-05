@@ -59,6 +59,12 @@ class FileArticleImageDataCacheStoreTests: XCTestCase {
 		XCTAssertNoThrow(try sut.save(for: "any key", data))
 	}
 
+	func test_insert_overridesPreviouslyInsertedCacheValue() throws {
+		let sut = makeSUT()
+
+		try assertOverrideCachedValue(on: sut)
+	}
+
 	// MARK: - Helpers
 
 	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> FileArticleImageDataCacheStore {
@@ -88,6 +94,13 @@ class FileArticleImageDataCacheStoreTests: XCTestCase {
 		let cached = try sut.retrieve(for: article, count: retriveCount)
 
 		XCTAssertEqual(cached, data)
+	}
+
+	private func assertOverrideCachedValue(
+		on sut: FileArticleImageDataCacheStore,
+		file: StaticString = #filePath, line: UInt = #line) throws {
+		try sut.save(for: UUID().uuidString, "random data".data(using: .utf8)!)
+		try asserttNonEmptyCache(on: sut, retriveCount: .once)
 	}
 }
 
