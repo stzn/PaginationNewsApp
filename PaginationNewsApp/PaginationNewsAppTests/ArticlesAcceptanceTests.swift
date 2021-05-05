@@ -55,6 +55,12 @@ class ArticlesAcceptanceTests: XCTestCase {
 		XCTAssertEqual(offline.renderedArticleImageData(at: 2), makeImageData2())
 	}
 
+	func test_onLaunch_displaysEmptyArticlesWhenCustomerHasNoConnectivityAndNoCache() {
+		let offline = launch(httpClient: .offline)
+		offline.loadViewIfNeeded()
+		XCTAssertEqual(offline.numberOfRenderedArticleViews(), 0)
+	}
+
 	// MARK: - Helpers
 	private func launch(
 		httpClient: HTTPClientStub = .offline,
