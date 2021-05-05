@@ -50,12 +50,12 @@ extension ArticlesUIIntegrationTests {
 		typealias ArticlesImageDataLoaderResult = Swift.Result<Data, Error>
 		typealias ArticlesImageDataLoaderPublisher = AnyPublisher<Data, Error>
 
-		func loadImageDataPublisher(from url: URL) -> ArticlesImageDataLoaderPublisher {
+		func loadImageDataPublisher(for article: Article) -> ArticlesImageDataLoaderPublisher {
 			var cancellable: AnyCancellable?
 
 			return Deferred {
 				Future { completion in
-					cancellable = self.loadImageData(from: url, completion: completion)
+					cancellable = self.loadImageData(for: article, completion: completion)
 				}
 			}
 			.handleEvents(receiveCancel: { cancellable?.cancel() })
@@ -70,7 +70,8 @@ extension ArticlesUIIntegrationTests {
 
 		private(set) var cancelledImageURLs = [URL]()
 
-		func loadImageData(from url: URL, completion: @escaping (ArticlesImageDataLoaderResult) -> Void) -> AnyCancellable {
+		func loadImageData(for article: Article, completion: @escaping (ArticlesImageDataLoaderResult) -> Void) -> AnyCancellable {
+			let url = article.urlToImage!
 			imageRequests.append((url, completion))
 			return AnyCancellable { [weak self] in self?.cancelledImageURLs.append(url) }
 		}

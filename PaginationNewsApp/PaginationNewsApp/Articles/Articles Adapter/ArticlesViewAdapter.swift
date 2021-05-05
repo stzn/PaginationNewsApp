@@ -12,10 +12,10 @@ import PaginationNewsiOS
 
 final class ArticlesViewAdapter: ContentView {
 	private weak var controller: ListViewController?
-	private let imageLoader: (URL) -> AnyPublisher<Data, Error>
+	private let imageLoader: (Article) -> AnyPublisher<Data, Error>
 	private typealias PresentationAdapter = ImageDataPresentationAdapter<WeakReference<ArticleCellController>>
 
-	init(controller: ListViewController, imageLoader: @escaping (URL) -> AnyPublisher<Data, Error>) {
+	init(controller: ListViewController, imageLoader: @escaping (Article) -> AnyPublisher<Data, Error>) {
 		self.controller = controller
 		self.imageLoader = imageLoader
 	}
@@ -29,7 +29,7 @@ final class ArticlesViewAdapter: ContentView {
 
 	private func map(_ model: Article) -> CellController {
 		let adapter = PresentationAdapter { model.urlToImage != nil ?
-			self.imageLoader(model.urlToImage!)
+			self.imageLoader(model)
 			: Fail(error: NoImageError()).eraseToAnyPublisher()
 		}
 		let view = ArticleCellController(viewModel: ArticlePresenter.map(model),

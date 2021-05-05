@@ -28,6 +28,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		LocalArticlesManager(store: store, currentDate: Date.init)
 	}()
 
+	private lazy var imageDataCacheBaseDirectory: URL = {
+		let url = FileManager.default
+			.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+			.appendingPathComponent("imageData")
+		if !FileManager.default.fileExists(atPath: url.path) {
+			try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+		}
+		return url
+	}()
+
+	private lazy var imageDataStore: ArticleImageDataCacheStore = {
+		FileArticleImageDataCacheStore(baseDirectroy: imageDataCacheBaseDirectory)
+	}()
+
+	private lazy var localArticleImageDataManager: LocalArticleImageDataManager = {
+		LocalArticleImageDataManager(store: imageDataStore)
+	}()
+
 	convenience init(httpClient: HTTPClient) {
 		self.init()
 		self.httpClient = httpClient
@@ -57,7 +75,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	private var articlesViewController: UIViewController {
 		let viewController = ArticlesUIComposer.articlesComposedWith(
 			articlesLoader: self.makeRemoteArticlesLoaderWithFallback(category:page:),
-			imageLoader: self.makeRemoteImageLoader(url:))
+			imageLoader: self.makeRemoteArticleImageDataLoaderWithFallback(article:))
 		viewController.tabBarItem = UITabBarItem(title: ArticlesPresenter.title, image: UIImage(systemName: "clock.fill"), tag: 0)
 		return viewController
 	}
@@ -83,6 +101,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			.send(request: .init(url: url))
 			.tryMap(ArticlesMapper.map)
 			.eraseToAnyPublisher()
+	}
+
+	private func makeRemoteArticleImageDataLoaderWithFallback(article: Article) -> AnyPublisher<Data, Error> {
+		struct NoURLError: Error {}
+		guard let url = article.urlToImage else {
+			return Fail(error: NoURLError()).eraseToAnyPublisher()
+		}
+		return localArticleImageDataManager
+			.loadPublisher(for: article)
+			.fallback(to: { [makeRemoteImageLoader, localArticleImageDataManager] in
+				makeRemoteImageLoader(url)
+					.caching(to: { data in
+						try? localArticleImageDataManager.save(for: article, data)
+					})
+			})
 	}
 
 	private func makeRemoteImageLoader(url: URL) -> AnyPublisher<Data, Error> {

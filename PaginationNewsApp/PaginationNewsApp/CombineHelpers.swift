@@ -25,6 +25,29 @@ extension Publisher {
 	func caching(to cache: @escaping ([Article]) -> Void) -> AnyPublisher<Output, Failure> where Output == [Article] {
 		handleEvents(receiveOutput: cache).eraseToAnyPublisher()
 	}
+
+	func caching(to cache: @escaping (Data) -> Void) -> AnyPublisher<Output, Failure> where Output == Data {
+		handleEvents(receiveOutput: cache).eraseToAnyPublisher()
+	}
+}
+
+public extension LocalArticleImageDataManager {
+	typealias Publisher = AnyPublisher<Data, Error>
+	struct NoDataError: Error {}
+
+	func loadPublisher(for article: Article) -> Publisher {
+		Deferred {
+			Future { completion in
+				completion(Result {
+					guard let data = try self.load(for: article) else {
+						throw NoDataError()
+					}
+					return data
+				})
+			}
+		}
+		.eraseToAnyPublisher()
+	}
 }
 
 public extension LocalArticlesManager {

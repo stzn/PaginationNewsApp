@@ -15,7 +15,7 @@ final class ArticlesUIComposer {
 
 	static func articlesComposedWith(
 		articlesLoader: @escaping (TopHeadlineCategory, Int) -> AnyPublisher<[Article], Error>,
-		imageLoader: @escaping (URL) -> AnyPublisher<Data, Error>,
+		imageLoader: @escaping (Article) -> AnyPublisher<Data, Error>,
 		category: TopHeadlineCategory = .all,
 		perPageCount: Int = APIConstants.articlesPerPageCount
 	) -> ArticlesViewController {
