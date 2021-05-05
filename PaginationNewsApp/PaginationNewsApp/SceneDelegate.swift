@@ -61,9 +61,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		LocalArticleImageDataManager(store: imageDataStore)
 	}()
 
-	convenience init(httpClient: HTTPClient) {
+	convenience init(httpClient: HTTPClient,
+	                 articlesCacheStore: ArticlesCacheStore,
+	                 imageDataStore: ArticleImageDataCacheStore,
+	                 scheduler: AnyDispatchQueueScheduler) {
 		self.init()
 		self.httpClient = httpClient
+		self.articlesCacheStore = articlesCacheStore
+		self.imageDataStore = imageDataStore
+		self.scheduler = scheduler
 	}
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -73,27 +79,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		configureWindow()
 	}
 
-	private func configureWindow() {
+	func configureWindow() {
 		window?.rootViewController = tabBarController
 		window?.makeKeyAndVisible()
 	}
 
-	private var tabBarController: UITabBarController {
+	private lazy var tabBarController: UITabBarController = {
 		let tabBarController = UITabBarController()
 		tabBarController.viewControllers = [
 			UINavigationController(rootViewController: articlesViewController),
 			UINavigationController(rootViewController: searchArticlesViewController),
 		]
 		return tabBarController
-	}
+	}()
 
-	private var articlesViewController: UIViewController {
+	private lazy var articlesViewController: UIViewController = {
 		let viewController = ArticlesUIComposer.articlesComposedWith(
-			articlesLoader: self.makeRemoteArticlesLoaderWithFallback(category:page:),
-			imageLoader: self.makeRemoteArticleImageDataLoaderWithFallback(article:))
+			articlesLoader: makeRemoteArticlesLoaderWithFallback(category:page:),
+			imageLoader: makeRemoteArticleImageDataLoaderWithFallback(article:))
 		viewController.tabBarItem = UITabBarItem(title: ArticlesPresenter.title, image: UIImage(systemName: "clock.fill"), tag: 0)
 		return viewController
-	}
+	}()
 
 	private func makeRemoteArticlesLoaderWithFallback(category: TopHeadlineCategory, page: Int) -> AnyPublisher<[Article], Error> {
 		let remoteURL = TopHeadlineEndpoint.get(category: category, page: page).url()
@@ -145,8 +151,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	private var searchArticlesViewController: UIViewController {
 		let viewController = SearchArticlesUIComposer.articlesComposedWith(
-			articlesLoader: self.makeRemoteSearchArticlesLoaderWithFallback(keyword:page:),
-			imageLoader: self.makeRemoteArticleImageDataLoaderWithFallback(article:))
+			articlesLoader: makeRemoteSearchArticlesLoaderWithFallback(keyword:page:),
+			imageLoader: makeRemoteArticleImageDataLoaderWithFallback(article:))
 		viewController.tabBarItem = UITabBarItem(title: SearchArticlesPresenter.title, image: UIImage(systemName: "magnifyingglass"), tag: 1)
 		return viewController
 	}
