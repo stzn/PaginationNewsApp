@@ -13,11 +13,11 @@ public final class LocalArticleImageDataManager {
 		self.store = store
 	}
 
-	public func load() throws -> Data? {
-		try store.retrieve()
+	public func load(for article: Article) throws -> Data? {
+		try store.retrieve(for: article.id.uuidString)
 	}
 
-	public func save(_ data: Data) throws {
-		try store.save(data)
+	public func save(for article: Article, _ data: Data) throws {
+		try store.save(for: article.id.uuidString, data)
 	}
 }

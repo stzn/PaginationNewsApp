@@ -6,6 +6,6 @@
 //
 
 public protocol ArticleImageDataCacheStore {
-	func retrieve() throws -> Data?
-	func save(_ data: Data) throws
+	func retrieve(for key: String) throws -> Data?
+	func save(for key: String, _ data: Data) throws
 }

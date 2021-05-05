@@ -17,47 +17,53 @@ class LoadArticleImageFromCacheUseCaseTests: XCTestCase {
 
 	func test_load_requestsCacheRetrieval() throws {
 		let (sut, store) = makeSUT()
+		let article = uniqueArticle
 
-		_ = try sut.load()
+		_ = try sut.load(for: article)
 
-		XCTAssertEqual(store.receivedMessages, [.retrieve])
+		XCTAssertEqual(store.receivedMessages, [.retrieve(article.idString)])
 	}
 
 	func test_load_throwsErrorOnRetrievalError() throws {
 		let (sut, store) = makeSUT()
+		let article = uniqueArticle
 		store.retrieveError = anyNSError
 
-		XCTAssertThrowsError(try sut.load())
-		XCTAssertEqual(store.receivedMessages, [.retrieve])
+		XCTAssertThrowsError(try sut.load(for: article))
+		XCTAssertEqual(store.receivedMessages, [.retrieve(article.idString)])
 	}
 
 	func test_load_deliversNoDataOnEmptyCache() throws {
 		let (sut, store) = makeSUT()
+		let article = uniqueArticle
 
-		let received = try sut.load()
+		let received = try sut.load(for: article)
 
-		XCTAssertEqual(store.receivedMessages, [.retrieve])
+		XCTAssertEqual(store.receivedMessages, [.retrieve(article.idString)])
 		XCTAssertEqual(received, nil)
 	}
 
 	func test_load_deliversCachedData() throws {
 		let (sut, store) = makeSUT()
 		let expectedData = "expectedData".data(using: .utf8)!
+		let article = uniqueArticle
+		let articleKey = article.idString
 
-		try sut.save(expectedData)
-		let received = try sut.load()
+		try sut.save(for: article, expectedData)
+		let received = try sut.load(for: article)
 
-		XCTAssertEqual(store.receivedMessages, [.save(expectedData), .retrieve])
+		XCTAssertEqual(store.receivedMessages, [.save(articleKey, expectedData), .retrieve(articleKey)])
 		XCTAssertEqual(received, expectedData)
 	}
 
 	func test_save_failsOnInsertionError() throws {
-		let expected = "expectedData".data(using: .utf8)!
 		let (sut, store) = makeSUT()
+		let expected = "expectedData".data(using: .utf8)!
+		let article = uniqueArticle
 		store.saveError = anyNSError
 
-		XCTAssertThrowsError(try sut.save(expected))
-		XCTAssertEqual(store.receivedMessages, [.save(expected)])
+		XCTAssertThrowsError(try sut.save(for: article, expected))
+		XCTAssertEqual(store.receivedMessages, [.save(article.idString, expected)])
 	}
 
 	// MARK: - Helpers

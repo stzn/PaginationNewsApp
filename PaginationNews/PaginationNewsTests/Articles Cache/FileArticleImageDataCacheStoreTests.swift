@@ -34,7 +34,8 @@ class FileArticleImageDataCacheStoreTests: XCTestCase {
 		on sut: FileArticleImageDataCacheStore,
 		retriveCount: RetrieveCount,
 		file: StaticString = #filePath, line: UInt = #line) throws {
-		let cached = try sut.retrieve(count: retriveCount)
+		let article = uniqueArticle
+		let cached = try sut.retrieve(for: article, count: retriveCount)
 
 		XCTAssertNil(cached)
 	}
@@ -45,17 +46,17 @@ private enum RetrieveCount {
 }
 
 private extension ArticleImageDataCacheStore {
-	func retrieve(count: RetrieveCount) throws -> Data? {
+	func retrieve(for article: Article, count: RetrieveCount) throws -> Data? {
 		switch count {
 		case .once:
-			return try retrieve()
+			return try retrieve(for: article.idString)
 		case .twice:
-			return try retrieveTwice()
+			return try retrieveTwice(for: article)
 		}
 	}
 
-	func retrieveTwice() throws -> Data? {
-		_ = try retrieve()
-		return try retrieve()
+	func retrieveTwice(for article: Article) throws -> Data? {
+		_ = try retrieve(for: article.idString)
+		return try retrieve(for: article.idString)
 	}
 }

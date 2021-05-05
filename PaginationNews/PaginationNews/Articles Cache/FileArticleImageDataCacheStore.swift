@@ -13,9 +13,9 @@ public final class FileArticleImageDataCacheStore: ArticleImageDataCacheStore {
 		self.baseDirectroy = baseDirectroy
 	}
 
-	public func retrieve() throws -> Data? {
+	public func retrieve(for key: String) throws -> Data? {
 		nil
 	}
 
-	public func save(_ data: Data) throws {}
+	public func save(for key: String, _ data: Data) throws {}
 }

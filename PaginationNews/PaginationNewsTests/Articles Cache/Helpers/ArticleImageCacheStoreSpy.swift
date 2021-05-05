@@ -10,8 +10,8 @@ import PaginationNews
 
 final class ArticleImageCacheStoreSpy: ArticleImageDataCacheStore {
 	enum Message: Equatable {
-		case save(Data)
-		case retrieve
+		case save(String, Data)
+		case retrieve(String)
 	}
 
 	private(set) var receivedMessages: [Message] = []
@@ -19,16 +19,16 @@ final class ArticleImageCacheStoreSpy: ArticleImageDataCacheStore {
 	var retrieveError: Error?
 	var saveError: Error?
 
-	func retrieve() throws -> Data? {
-		receivedMessages.append(.retrieve)
+	func retrieve(for key: String) throws -> Data? {
+		receivedMessages.append(.retrieve(key))
 		if let error = retrieveError {
 			throw error
 		}
 		return expectedCachedData
 	}
 
-	func save(_ data: Data) throws {
-		receivedMessages.append(.save(data))
+	func save(for key: String, _ data: Data) throws {
+		receivedMessages.append(.save(key, data))
 		if let error = saveError {
 			throw error
 		}
