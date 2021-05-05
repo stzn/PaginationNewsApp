@@ -8,6 +8,7 @@
 import Combine
 import CoreData
 import UIKit
+import os
 import PaginationNews
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -23,11 +24,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		attributes: .concurrent
 	).eraseToAnyScheduler()
 
+	private lazy var logger = Logger(subsystem: "shiz.sample.PaginationNews", category: "main")
+
 	private lazy var store: ArticlesCacheStore = {
-		try! CoreDataArticlesCacheStore(
-			storeURL: NSPersistentContainer
-				.defaultDirectoryURL()
-				.appendingPathComponent("articles-store.sqlite"))
+		do {
+			return try CoreDataArticlesCacheStore(
+				storeURL: NSPersistentContainer
+					.defaultDirectoryURL()
+					.appendingPathComponent("articles-store.sqlite"))
+		} catch {
+			assertionFailure("Failed to instantiate CoreData store with error: \(error.localizedDescription)")
+			logger.fault("Failed to instantiate CoreData store with error: \(error.localizedDescription)")
+			return NullStore()
+		}
 	}()
 
 	private lazy var localArticlesManager: LocalArticlesManager = {
