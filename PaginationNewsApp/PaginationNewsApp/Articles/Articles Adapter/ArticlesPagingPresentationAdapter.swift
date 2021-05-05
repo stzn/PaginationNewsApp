@@ -28,6 +28,7 @@ final class ArticlesPagingPresentationAdapter<View: ContentView> {
 	var presenter: Presenter<ArticlesViewModel, View>?
 	private var pageState: PageState = .initial
 	private let perPageCount: Int
+	private var currentArticles: [Article] = []
 
 	init(loader: @escaping (TopHeadlineCategory, Int) -> AnyPublisher<[Article], Error>,
 	     perPageCount: Int) {
@@ -59,8 +60,13 @@ final class ArticlesPagingPresentationAdapter<View: ContentView> {
 						return
 					}
 					self.pageState.isLoading = false
-					self.pageState.isLast = articles.isEmpty
-					self.pageState.pageNumber = nextPage
+					self.pageState.isLast = self.currentArticles == articles
+					if let nextPage = self.pageState.nextPage {
+						self.pageState.pageNumber = nextPage
+					}
+
+					self.currentArticles = articles
+
 					self.presenter?.didFinishLoading(
 						.init(articles: articles, pageNumber: nextPage)
 					)
