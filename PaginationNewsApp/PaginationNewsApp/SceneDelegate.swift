@@ -26,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	private lazy var logger = Logger(subsystem: "shiz.sample.PaginationNews", category: "main")
 
-	private lazy var store: ArticlesCacheStore = {
+	private lazy var articlesCacheStore: ArticlesCacheStore = {
 		do {
 			return try CoreDataArticlesCacheStore(
 				storeURL: NSPersistentContainer
@@ -40,7 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}()
 
 	private lazy var localArticlesManager: LocalArticlesManager = {
-		LocalArticlesManager(store: store, currentDate: Date.init)
+		LocalArticlesManager(store: articlesCacheStore, currentDate: Date.init)
 	}()
 
 	private lazy var imageDataCacheBaseDirectory: URL = {
