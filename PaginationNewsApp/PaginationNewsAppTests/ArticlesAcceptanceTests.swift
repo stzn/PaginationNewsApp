@@ -32,6 +32,29 @@ class ArticlesAcceptanceTests: XCTestCase {
 		XCTAssertEqual(article.renderedArticleImageData(at: 2), makeImageData2())
 	}
 
+	func test_onLaunch_displaysCachedArticlesWhenCustomerHasNoConnectivity() {
+		let sharedArticlesStore = InMemoryArticlesCacheStore.empty
+		let sharedImageDataStore = InMemoryArticleImageDataCacheStore.empty
+
+		let online = launch(httpClient: .online(response),
+		                    articlesCacheStore: sharedArticlesStore,
+		                    imageDataStore: sharedImageDataStore)
+		online.loadViewIfNeeded()
+		online.simulateArticleViewVisible(at: 0)
+		online.simulateArticleViewVisible(at: 1)
+		online.simulateUserScrollToBottom()
+		online.simulateArticleViewVisible(at: 2)
+
+		let offline = launch(httpClient: .offline,
+		                     articlesCacheStore: sharedArticlesStore,
+		                     imageDataStore: sharedImageDataStore)
+		offline.loadViewIfNeeded()
+		XCTAssertEqual(offline.numberOfRenderedArticleViews(), 3)
+		XCTAssertEqual(offline.renderedArticleImageData(at: 0), makeImageData0())
+		XCTAssertEqual(offline.renderedArticleImageData(at: 1), makeImageData1())
+		XCTAssertEqual(offline.renderedArticleImageData(at: 2), makeImageData2())
+	}
+
 	// MARK: - Helpers
 	private func launch(
 		httpClient: HTTPClientStub = .offline,
