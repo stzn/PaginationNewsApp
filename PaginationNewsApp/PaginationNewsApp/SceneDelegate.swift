@@ -17,6 +17,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
 	}()
 
+	private lazy var scheduler: AnyDispatchQueueScheduler = DispatchQueue(
+		label: "shiz.sample.scheduler.queue",
+		qos: .userInitiated,
+		attributes: .concurrent
+	).eraseToAnyScheduler()
+
 	private lazy var store: ArticlesCacheStore = {
 		try! CoreDataArticlesCacheStore(
 			storeURL: NSPersistentContainer
@@ -116,6 +122,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 						try? localArticleImageDataManager.save(for: article, data)
 					})
 			})
+			.subscribe(on: scheduler)
+			.eraseToAnyPublisher()
 	}
 
 	private func makeRemoteImageLoader(url: URL) -> AnyPublisher<Data, Error> {
@@ -142,12 +150,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			.caching(to: { [localArticlesManager] in
 				try? localArticlesManager.save($0)
 			})
+			.subscribe(on: scheduler)
+			.eraseToAnyPublisher()
 			: localArticlesManager.loadPublisher()
 			.zip(makeRemoteSearchArticlesLoader(url: remoteURL))
 			.map { $0 + $1 }
 			.caching(to: { [localArticlesManager] in
 				try? localArticlesManager.save($0)
 			})
+			.subscribe(on: scheduler)
+			.eraseToAnyPublisher()
 	}
 
 	private func makeRemoteSearchArticlesLoader(url: URL) -> AnyPublisher<[Article], Error> {
